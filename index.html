@@ -3,462 +3,657 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carbi - Smart Car Finding for Young Drivers</title>
-    <meta name="description" content="The smart way to find your first car. Coming soon - helping young drivers and parents find cars that won't break the bank on insurance.">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
-    
+    <title>Carbi - Your First Car Journey Starts Here</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #1a1a1a;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
-            overflow-x: hidden;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-            position: relative;
-            z-index: 2;
         }
-
-        /* Animated background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
+        
+        /* Header */
+        header {
+            padding: 30px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-
-        .car-icon {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.1;
-            animation: float 20s infinite linear;
-            color: white;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
-        }
-
-        .car-icon:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .car-icon:nth-child(2) { left: 30%; animation-delay: -5s; font-size: 1.5rem; }
-        .car-icon:nth-child(3) { left: 50%; animation-delay: -10s; }
-        .car-icon:nth-child(4) { left: 70%; animation-delay: -15s; font-size: 2.5rem; }
-        .car-icon:nth-child(5) { left: 90%; animation-delay: -20s; font-size: 1.8rem; }
-
-        /* Main content */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 60px 40px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            max-width: 600px;
-            transform: translateY(0);
-            animation: slideUp 0.8s ease-out;
-        }
-
-        @keyframes slideUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
+        
         .logo {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: #4c51bf;
-            margin-bottom: 10px;
-            letter-spacing: -0.02em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
-        .tagline {
-            font-size: 1.3rem;
-            color: #4a5568;
-            font-weight: 500;
-            margin-bottom: 30px;
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: white;
         }
-
-        .description {
-            font-size: 1.1rem;
+        
+        .hero h1 {
+            font-size: 3em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.4em;
             color: #666;
             margin-bottom: 40px;
-            line-height: 1.7;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .feature {
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .feature h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-
-        .feature p {
-            font-size: 0.95rem;
-            color: #666;
-        }
-
-        .email-signup {
-            margin-bottom: 30px;
-            max-width: 450px;
+            font-weight: 400;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
-
-        .user-type-selection {
+        
+        .signup-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        
+        .form-group {
             margin-bottom: 25px;
         }
-
+        
+        .form-label {
+            display: block;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
         .radio-group {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
-
+        
         .radio-option {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .radio-option:hover {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: rgba(76, 81, 191, 0.3);
-        }
-
-        .radio-option input[type="radio"] {
-            margin-right: 12px;
-            transform: scale(1.2);
-        }
-
-        .radio-option input[type="radio"]:checked + .radio-text {
-            color: #4c51bf;
-            font-weight: 600;
-        }
-
-        .radio-option:has(input[type="radio"]:checked) {
-            background: rgba(76, 81, 191, 0.1);
-            border-color: #4c51bf;
-        }
-
-        .radio-text {
-            font-size: 1rem;
-            color: #4a5568;
-            transition: all 0.3s ease;
-        }
-
-        .email-row {
-            display: flex;
-            gap: 12px;
-        }
-
-        .email-input {
+            position: relative;
             flex: 1;
-            padding: 16px 20px;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            border-radius: 12px;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.8);
-            transition: all 0.3s ease;
+            min-width: 150px;
         }
-
+        
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .radio-option label {
+            display: block;
+            padding: 15px 20px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .radio-option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #10B981 0%, #4F46E5 100%);
+            color: white;
+            border-color: #4F46E5;
+        }
+        
+        .radio-option label:hover {
+            border-color: #4F46E5;
+        }
+        
+        .email-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        
         .email-input:focus {
             outline: none;
-            border-color: #4c51bf;
-            box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.1);
+            border-color: #4F46E5;
         }
-
-        .notify-btn {
-            padding: 16px 24px;
-            background: linear-gradient(135deg, #4c51bf, #667eea);
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #10B981 0%, #4F46E5 100%);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
+            font-size: 1.1em;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .notify-btn:hover {
+        
+        .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(76, 81, 191, 0.3);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
         }
-
-        .social-links {
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .features .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #10B981 0%, #4F46E5 100%);
+            border-radius: 20px;
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .social-link {
-            display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            color: #4a5568;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
         }
-
-        .social-link:hover {
+        
+        .feature-card h3 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.05em;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 80px 0;
             background: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
-        .coming-soon {
-            font-size: 0.9rem;
-            color: #999;
-            margin-top: 20px;
+        
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 50px;
+            font-weight: 700;
         }
-
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #4F46E5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        
+        .step h3 {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .step p {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5em;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .cta p {
+            font-size: 1.3em;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+        }
+        
+        .cta .signup-form {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .cta .radio-option label {
+            background: rgba(255,255,255,0.9);
+            border-color: rgba(255,255,255,0.3);
+        }
+        
+        .cta .radio-option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #10B981 0%, #4F46E5 100%);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .cta .radio-option label:hover {
+            border-color: white;
+        }
+        
+        .cta .email-input {
+            background: white;
+            border: none;
+        }
+        
+        .cta .submit-btn {
+            background: white;
+            color: #4F46E5;
+            font-weight: 700;
+        }
+        
+        .cta .submit-btn:hover {
+            box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+        }
+        
+        .cta .form-label {
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            background: #1f2937;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        footer p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95em;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
-            .hero-content {
-                padding: 40px 30px;
-                margin: 20px;
+            .hero h1 {
+                font-size: 2em;
             }
             
-            .logo {
-                font-size: 2.8rem;
+            .hero .subtitle {
+                font-size: 1.1em;
             }
             
-            .tagline {
-                font-size: 1.1rem;
-            }
-            
-            .email-row {
-                flex-direction: column;
+            .features h2, .how-it-works h2, .cta h2 {
+                font-size: 2em;
             }
             
             .radio-group {
-                gap: 10px;
+                flex-direction: column;
             }
             
             .radio-option {
-                padding: 10px 14px;
-            }
-            
-            .features {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Success message */
-        .success-message {
-            display: none;
-            background: linear-gradient(135deg, #48bb78, #38a169);
-            color: white;
-            padding: 18px 24px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 600;
-            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-        }
-
-        .success-message.show {
-            display: block;
-            animation: successPulse 0.6s ease-out;
-        }
-
-        @keyframes successPulse {
-            0% { 
-                opacity: 0; 
-                transform: translateY(-20px) scale(0.95); 
-            }
-            50% {
-                transform: translateY(-10px) scale(1.02);
-            }
-            100% { 
-                opacity: 1; 
-                transform: translateY(0) scale(1); 
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-animation">
-        <div class="car-icon">🚗</div>
-        <div class="car-icon">🚙</div>
-        <div class="car-icon">🚗</div>
-        <div class="car-icon">🏎️</div>
-        <div class="car-icon">🚗</div>
-    </div>
-
-    <div class="container">
-        <div class="hero">
-            <div class="hero-content">
-                <div class="logo">Carbi</div>
-                <div class="tagline">Smart car finding for young drivers</div>
-                <div class="description">
-                    Finding your first car shouldn't be a nightmare. We're building the smart way for young drivers and parents to find cars that won't break the bank on insurance.
-                </div>
-
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">🎯</div>
-                        <h3>Targeted for You</h3>
-                        <p>Specifically designed for 17-19 year olds and their parents</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">💰</div>
-                        <h3>Insurance Smart</h3>
-                        <p>See insurance costs upfront, not as a nasty surprise</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">✨</div>
-                        <h3>Simple & Focused</h3>
-                        <p>No overwhelming choice - just cars that make sense</p>
-                    </div>
-                </div>
-
-                <div class="success-message" id="successMessage">
-                    🎉 Thanks! We'll notify you when Carbi launches. Keep an eye on your inbox!
-                </div>
-
-                <form class="email-signup" id="emailForm">
-                    <div class="user-type-selection">
-                        <p style="margin-bottom: 15px; font-weight: 600; color: #4a5568;">I am a:</p>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="userType" value="young_driver" required>
-                                <span class="radio-text">🚗 Young driver (17-21)</span>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="userType" value="parent" required>
-                                <span class="radio-text">👨‍👩‍👧‍👦 Parent</span>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="userType" value="dealer" required>
-                                <span class="radio-text">🏢 Car dealer</span>
-                            </label>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <svg width="140" height="100" viewBox="0 0 140 100">
+                    <!-- Logo Mark Centered -->
+                    <circle cx="50" cy="35" r="8" fill="#10B981"/>
+                    <path d="M 60 35 L 85 35" stroke="url(#grad-header)" stroke-width="4"/>
+                    <path d="M 78 27 L 88 35 L 78 43" fill="none" stroke="#4F46E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="grad-header" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#4F46E5;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Wordmark Below -->
+                    <text x="70" y="75" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="32" font-weight="600" fill="#333" text-anchor="middle">carbi</text>
+                </svg>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>We're Building Something New</h1>
+            <p class="subtitle">We're creating a new system to help young drivers and their parents find the perfect first car. We need young people, parents, and dealers to help us test early versions and shape the future of first car buying.</p>
+            
+            <form class="signup-form" id="hero-form">
+                <div class="form-group">
+                    <label class="form-label">I am a...</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="young-driver-1" name="user-type-1" value="young-driver" required>
+                            <label for="young-driver-1">Young Driver</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="parent-1" name="user-type-1" value="parent" required>
+                            <label for="parent-1">Parent</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="dealer-1" name="user-type-1" value="dealer" required>
+                            <label for="dealer-1">Car Dealer</label>
                         </div>
                     </div>
-                    <div class="email-row">
-                        <input 
-                            type="email" 
-                            class="email-input" 
-                            placeholder="Enter your email for early access"
-                            required
-                            id="emailInput"
-                        >
-                        <button type="submit" class="notify-btn">Get Notified</button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email-1">Email Address</label>
+                    <input type="email" id="email-1" class="email-input" placeholder="Enter your email" required>
+                </div>
+                <button type="submit" class="submit-btn">Join as Early Tester</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>How We're Different</h2>
+            <p class="subtitle">We find suitable cars from trusted local dealers and connect you with someone who understands first-time buyers.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
+                            <path d="M20 5 L25 15 L35 15 L27 22 L30 32 L20 25 L10 32 L13 22 L5 15 L15 15 Z" stroke="white" stroke-width="2" fill="none"/>
+                            <path d="M15 18 L18 21 L25 14" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                </form>
-
-                <div class="coming-soon">
-                    Coming 2025 • Built with ❤️ for first-time car buyers
+                    <h3>Trusted Local Dealers</h3>
+                    <p>We work with carefully selected local dealers who have a track record of treating young buyers fairly and offering suitable first cars.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
+                            <!-- Piggy bank body -->
+                            <ellipse cx="20" cy="22" rx="12" ry="10" stroke="white" stroke-width="2" fill="none"/>
+                            <!-- Coin slot on top -->
+                            <rect x="18" y="12" width="4" height="1" fill="white"/>
+                            <!-- Snout -->
+                            <ellipse cx="30" cy="22" rx="4" ry="3" stroke="white" stroke-width="2" fill="none"/>
+                            <!-- Legs -->
+                            <line x1="14" y1="30" x2="14" y2="34" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="18" y1="31" x2="18" y2="35" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="22" y1="31" x2="22" y2="35" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="26" y1="30" x2="26" y2="34" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <!-- Coin going in -->
+                            <circle cx="20" cy="8" r="3" stroke="white" stroke-width="1.5" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Insurance-First Search</h3>
+                    <p>We check insurance costs before showing you cars, so you only see vehicles you can actually afford to drive, not just to buy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
+                            <circle cx="20" cy="15" r="6" stroke="white" stroke-width="2" fill="none"/>
+                            <path d="M20 21 C12 21 8 27 8 33" stroke="white" stroke-width="2" fill="none"/>
+                            <circle cx="30" cy="15" r="4" stroke="white" stroke-width="2" fill="none"/>
+                            <path d="M30 19 C35 19 38 23 38 27" stroke="white" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Personal Matching</h3>
+                    <p>We'll put you in touch with a trusted dealer who has a car that matches your needs - no endless browsing or wasted viewings.</p>
                 </div>
             </div>
         </div>
-    </div>
-
+    </section>
+    
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How Carbi Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Share Your Needs</h3>
+                    <p>Tell us your budget, location, and what matters most to you in your first car.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>We Search Locally</h3>
+                    <p>Our system checks trusted local dealers for cars that match your criteria and insurance budget.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>See Real Costs</h3>
+                    <p>View the complete picture - purchase price, insurance estimates, and running costs.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Connect Direct</h3>
+                    <p>We introduce you to the right dealer who has your perfect match - no time wasting.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Help Us Build the Future</h2>
+            <p>Be part of creating a better way to buy your first car</p>
+            
+            <form class="signup-form" id="cta-form">
+                <div class="form-group">
+                    <label class="form-label">I am a...</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="young-driver-2" name="user-type-2" value="young-driver" required>
+                            <label for="young-driver-2">Young Driver</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="parent-2" name="user-type-2" value="parent" required>
+                            <label for="parent-2">Parent</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="dealer-2" name="user-type-2" value="dealer" required>
+                            <label for="dealer-2">Car Dealer</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email-2">Email Address</label>
+                    <input type="email" id="email-2" class="email-input" placeholder="Enter your email" required>
+                </div>
+                <button type="submit" class="submit-btn">Become an Early Tester</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <svg width="100" height="60" viewBox="0 0 100 60">
+                    <!-- Logo Mark -->
+                    <circle cx="30" cy="30" r="6" fill="#10B981"/>
+                    <path d="M 38 30 L 53 30" stroke="white" stroke-width="3"/>
+                    <path d="M 48 24 L 55 30 L 48 36" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- Wordmark -->
+                    <text x="50" y="50" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="600" fill="white" text-anchor="middle">carbi</text>
+                </svg>
+            </div>
+            <p>&copy; 2024 Carbi. All rights reserved. Making first cars happen.</p>
+        </div>
+    </footer>
+    
     <script>
-        document.getElementById('emailForm').addEventListener('submit', function(e) {
+        // Handle form submissions
+        function handleFormSubmit(e) {
             e.preventDefault();
             
-            const email = document.getElementById('emailInput').value;
-            const userType = document.querySelector('input[name="userType"]:checked')?.value;
-            const successMessage = document.getElementById('successMessage');
+            const form = e.target;
+            const formId = form.id;
+            const userTypeInput = form.querySelector('input[name^="user-type"]:checked');
+            const emailInput = form.querySelector('.email-input');
+            const button = form.querySelector('.submit-btn');
+            const originalText = button.textContent;
+            const originalBg = window.getComputedStyle(button).background;
             
-            if (email && userType) {
-                // Here you would typically send both email and userType to your backend
-                const userData = {
-                    email: email,
-                    userType: userType,
-                    timestamp: new Date().toISOString()
-                };
-                
-                successMessage.classList.add('show');
-                document.getElementById('emailInput').value = '';
-                document.querySelectorAll('input[name="userType"]').forEach(radio => radio.checked = false);
-                
-                // Hide success message after 5 seconds
-                setTimeout(() => {
-                    successMessage.classList.remove('show');
-                }, 5000);
-                
-                // Log the data (in production, send to your email service)
-                console.log('User data submitted:', userData);
-                
-                // You could also store in localStorage for now:
-                const existingData = JSON.parse(localStorage.getItem('carbiSignups') || '[]');
-                existingData.push(userData);
-                localStorage.setItem('carbiSignups', JSON.stringify(existingData));
+            // Check if user type is selected
+            if (!userTypeInput) {
+                alert('Please select who you are (Young Driver, Parent, or Car Dealer)');
+                return false;
             }
-        });
-
-        // Add some interaction to the car icons
-        document.querySelectorAll('.car-icon').forEach(icon => {
-            icon.addEventListener('mouseover', function() {
-                this.style.animationPlayState = 'paused';
-                this.style.opacity = '0.3';
-            });
             
-            icon.addEventListener('mouseout', function() {
-                this.style.animationPlayState = 'running';
-                this.style.opacity = '0.1';
+            // Check email validity
+            if (!emailInput.value || emailInput.value.trim() === '') {
+                alert('Please enter your email address');
+                emailInput.focus();
+                return false;
+            }
+            
+            // Basic email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value)) {
+                alert('Please enter a valid email address');
+                emailInput.focus();
+                return false;
+            }
+            
+            // Get values after validation passes
+            const userType = userTypeInput.value;
+            const email = emailInput.value;
+            
+            // Success message based on user type
+            let successMessage = '';
+            if (userType === 'young-driver') {
+                successMessage = 'Awesome! Early access coming soon!';
+            } else if (userType === 'parent') {
+                successMessage = 'Perfect! We\'ll be in touch!';
+            } else if (userType === 'dealer') {
+                successMessage = 'Great! Partnership info coming!';
+            } else {
+                successMessage = 'Thanks! We\'ll be in touch!';
+            }
+            
+            // Show success
+            button.textContent = successMessage;
+            button.style.cssText = 'background: #10B981 !important; color: white !important;';
+            button.disabled = true;
+            
+            // Log for development
+            console.log('Form submitted successfully!');
+            console.log('Form ID:', formId);
+            console.log('User Type:', userType);
+            console.log('Email:', email);
+            
+            // Reset after 4 seconds
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.cssText = '';
+                button.disabled = false;
+                form.reset();
+            }, 4000);
+            
+            return false;
+        }
+        
+        // Attach event listeners when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get both forms
+            const heroForm = document.getElementById('hero-form');
+            const ctaForm = document.getElementById('cta-form');
+            
+            // Add submit handlers
+            if (heroForm) {
+                heroForm.addEventListener('submit', handleFormSubmit);
+            }
+            
+            if (ctaForm) {
+                ctaForm.addEventListener('submit', handleFormSubmit);
+            }
+            
+            // Test that script is running
+            console.log('Forms initialized:', {
+                heroForm: !!heroForm,
+                ctaForm: !!ctaForm
             });
         });
     </script>
