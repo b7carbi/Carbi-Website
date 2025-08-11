@@ -145,12 +145,62 @@
         }
 
         .email-signup {
-            display: flex;
-            gap: 12px;
             margin-bottom: 30px;
-            max-width: 400px;
+            max-width: 450px;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .user-type-selection {
+            margin-bottom: 25px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(76, 81, 191, 0.3);
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .radio-option input[type="radio"]:checked + .radio-text {
+            color: #4c51bf;
+            font-weight: 600;
+        }
+
+        .radio-option:has(input[type="radio"]:checked) {
+            background: rgba(76, 81, 191, 0.1);
+            border-color: #4c51bf;
+        }
+
+        .radio-text {
+            font-size: 1rem;
+            color: #4a5568;
+            transition: all 0.3s ease;
+        }
+
+        .email-row {
+            display: flex;
+            gap: 12px;
         }
 
         .email-input {
@@ -235,8 +285,16 @@
                 font-size: 1.1rem;
             }
             
-            .email-signup {
+            .email-row {
                 flex-direction: column;
+            }
+            
+            .radio-group {
+                gap: 10px;
+            }
+            
+            .radio-option {
+                padding: 10px 14px;
             }
             
             .features {
@@ -247,22 +305,35 @@
         /* Success message */
         .success-message {
             display: none;
-            background: #48bb78;
+            background: linear-gradient(135deg, #48bb78, #38a169);
             color: white;
-            padding: 15px 20px;
-            border-radius: 12px;
+            padding: 18px 24px;
+            border-radius: 16px;
             margin-bottom: 20px;
             text-align: center;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
         }
 
         .success-message.show {
             display: block;
-            animation: slideDown 0.5s ease-out;
+            animation: successPulse 0.6s ease-out;
         }
 
-        @keyframes slideDown {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes successPulse {
+            0% { 
+                opacity: 0; 
+                transform: translateY(-20px) scale(0.95); 
+            }
+            50% {
+                transform: translateY(-10px) scale(1.02);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
         }
     </style>
 </head>
@@ -278,10 +349,6 @@
     <div class="container">
         <div class="hero">
             <div class="hero-content">
-                <div class="success-message" id="successMessage">
-                    Thanks! We'll notify you when Carbi launches 🎉
-                </div>
-                
                 <div class="logo">Carbi</div>
                 <div class="tagline">Smart car finding for young drivers</div>
                 <div class="description">
@@ -306,25 +373,42 @@
                     </div>
                 </div>
 
+                <div class="success-message" id="successMessage">
+                    🎉 Thanks! We'll notify you when Carbi launches. Keep an eye on your inbox!
+                </div>
+
                 <form class="email-signup" id="emailForm">
-                    <input 
-                        type="email" 
-                        class="email-input" 
-                        placeholder="Enter your email for early access"
-                        required
-                        id="emailInput"
-                    >
-                    <button type="submit" class="notify-btn">Get Notified</button>
+                    <div class="user-type-selection">
+                        <p style="margin-bottom: 15px; font-weight: 600; color: #4a5568;">I am a:</p>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="userType" value="young_driver" required>
+                                <span class="radio-text">🚗 Young driver (17-21)</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="userType" value="parent" required>
+                                <span class="radio-text">👨‍👩‍👧‍👦 Parent</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="userType" value="dealer" required>
+                                <span class="radio-text">🏢 Car dealer</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="email-row">
+                        <input 
+                            type="email" 
+                            class="email-input" 
+                            placeholder="Enter your email for early access"
+                            required
+                            id="emailInput"
+                        >
+                        <button type="submit" class="notify-btn">Get Notified</button>
+                    </div>
                 </form>
 
                 <div class="coming-soon">
                     Coming 2025 • Built with ❤️ for first-time car buyers
-                </div>
-
-                <div class="social-links">
-                    <a href="#" class="social-link" title="Twitter">🐦</a>
-                    <a href="#" class="social-link" title="LinkedIn">💼</a>
-                    <a href="#" class="social-link" title="Email">📧</a>
                 </div>
             </div>
         </div>
@@ -335,22 +419,33 @@
             e.preventDefault();
             
             const email = document.getElementById('emailInput').value;
+            const userType = document.querySelector('input[name="userType"]:checked')?.value;
             const successMessage = document.getElementById('successMessage');
             
-            // Here you would typically send the email to your backend
-            // For now, we'll just show the success message
-            
-            if (email) {
+            if (email && userType) {
+                // Here you would typically send both email and userType to your backend
+                const userData = {
+                    email: email,
+                    userType: userType,
+                    timestamp: new Date().toISOString()
+                };
+                
                 successMessage.classList.add('show');
                 document.getElementById('emailInput').value = '';
+                document.querySelectorAll('input[name="userType"]').forEach(radio => radio.checked = false);
                 
                 // Hide success message after 5 seconds
                 setTimeout(() => {
                     successMessage.classList.remove('show');
                 }, 5000);
                 
-                // Optional: Send to a service like Mailchimp, ConvertKit, etc.
-                console.log('Email submitted:', email);
+                // Log the data (in production, send to your email service)
+                console.log('User data submitted:', userData);
+                
+                // You could also store in localStorage for now:
+                const existingData = JSON.parse(localStorage.getItem('carbiSignups') || '[]');
+                existingData.push(userData);
+                localStorage.setItem('carbiSignups', JSON.stringify(existingData));
             }
         });
 
