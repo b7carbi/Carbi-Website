@@ -154,6 +154,39 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
         }
+
+        /* Success message styling */
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 18px 24px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .success-message.show {
+            display: block;
+            animation: successPulse 0.6s ease-out;
+        }
+
+        @keyframes successPulse {
+            0% { 
+                opacity: 0; 
+                transform: translateY(-20px) scale(0.95); 
+            }
+            50% {
+                transform: translateY(-10px) scale(1.02);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
         
         /* Features Section */
         .features {
@@ -405,27 +438,31 @@
             <h1>We're Building Something New</h1>
             <p class="subtitle">We're creating a new system to help young drivers and their parents find the perfect first car. We need young people, parents, and dealers to help us test early versions and shape the future of first car buying.</p>
             
-            <form class="signup-form" id="hero-form">
+            <div class="success-message" id="successMessage1">
+                🎉 Thanks! We'll notify you when we're ready for early testers!
+            </div>
+            
+            <form class="signup-form" id="hero-form" action="https://app.kit.com/forms/8431468/subscriptions" method="post">
                 <div class="form-group">
                     <label class="form-label">I am a...</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="young-driver-1" name="user-type-1" value="young-driver" required>
+                            <input type="radio" id="young-driver-1" name="fields[user_type]" value="Young Driver" required>
                             <label for="young-driver-1">Young Driver</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="parent-1" name="user-type-1" value="parent" required>
+                            <input type="radio" id="parent-1" name="fields[user_type]" value="Parent" required>
                             <label for="parent-1">Parent</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="dealer-1" name="user-type-1" value="dealer" required>
+                            <input type="radio" id="dealer-1" name="fields[user_type]" value="Car Dealer" required>
                             <label for="dealer-1">Car Dealer</label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="email-1">Email Address</label>
-                    <input type="email" id="email-1" class="email-input" placeholder="Enter your email" required>
+                    <input type="email" id="email-1" name="email_address" class="email-input" placeholder="Enter your email" required>
                 </div>
                 <button type="submit" class="submit-btn">Join as Early Tester</button>
             </form>
@@ -520,27 +557,31 @@
             <h2>Help Us Build the Future</h2>
             <p>Be part of creating a better way to buy your first car</p>
             
-            <form class="signup-form" id="cta-form">
+            <div class="success-message" id="successMessage2">
+                🎉 Thanks! We'll notify you when we're ready for early testers!
+            </div>
+            
+            <form class="signup-form" id="cta-form" action="https://app.kit.com/forms/8431468/subscriptions" method="post">
                 <div class="form-group">
                     <label class="form-label">I am a...</label>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="young-driver-2" name="user-type-2" value="young-driver" required>
+                            <input type="radio" id="young-driver-2" name="fields[user_type]" value="Young Driver" required>
                             <label for="young-driver-2">Young Driver</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="parent-2" name="user-type-2" value="parent" required>
+                            <input type="radio" id="parent-2" name="fields[user_type]" value="Parent" required>
                             <label for="parent-2">Parent</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="dealer-2" name="user-type-2" value="dealer" required>
+                            <input type="radio" id="dealer-2" name="fields[user_type]" value="Car Dealer" required>
                             <label for="dealer-2">Car Dealer</label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="email-2">Email Address</label>
-                    <input type="email" id="email-2" class="email-input" placeholder="Enter your email" required>
+                    <input type="email" id="email-2" name="email_address" class="email-input" placeholder="Enter your email" required>
                 </div>
                 <button type="submit" class="submit-btn">Become an Early Tester</button>
             </form>
@@ -560,31 +601,28 @@
                     <text x="50" y="50" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="20" font-weight="600" fill="white" text-anchor="middle">carbi</text>
                 </svg>
             </div>
-            <p>&copy; 2024 Carbi. All rights reserved. Making first cars happen.</p>
+            <p>&copy; 2025 Carbi. All rights reserved. Making first cars happen.</p>
         </div>
     </footer>
     
     <script>
-        // Handle form submissions
+        // Handle form submissions for ConvertKit
         function handleFormSubmit(e) {
-            e.preventDefault();
-            
             const form = e.target;
             const formId = form.id;
-            const userTypeInput = form.querySelector('input[name^="user-type"]:checked');
-            const emailInput = form.querySelector('.email-input');
-            const button = form.querySelector('.submit-btn');
-            const originalText = button.textContent;
-            const originalBg = window.getComputedStyle(button).background;
+            const userTypeInput = form.querySelector('input[name="fields[user_type]"]:checked');
+            const emailInput = form.querySelector('input[name="email_address"]');
             
             // Check if user type is selected
             if (!userTypeInput) {
+                e.preventDefault();
                 alert('Please select who you are (Young Driver, Parent, or Car Dealer)');
                 return false;
             }
             
             // Check email validity
             if (!emailInput.value || emailInput.value.trim() === '') {
+                e.preventDefault();
                 alert('Please enter your email address');
                 emailInput.focus();
                 return false;
@@ -593,47 +631,32 @@
             // Basic email validation
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(emailInput.value)) {
+                e.preventDefault();
                 alert('Please enter a valid email address');
                 emailInput.focus();
                 return false;
             }
             
-            // Get values after validation passes
-            const userType = userTypeInput.value;
-            const email = emailInput.value;
+            // Show success message after form submission
+            setTimeout(function() {
+                const successMessageId = formId === 'hero-form' ? 'successMessage1' : 'successMessage2';
+                const successMessage = document.getElementById(successMessageId);
+                
+                if (successMessage) {
+                    successMessage.classList.add('show');
+                    
+                    // Clear the form
+                    form.reset();
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.classList.remove('show');
+                    }, 5000);
+                }
+            }, 100);
             
-            // Success message based on user type
-            let successMessage = '';
-            if (userType === 'young-driver') {
-                successMessage = 'Awesome! Early access coming soon!';
-            } else if (userType === 'parent') {
-                successMessage = 'Perfect! We\'ll be in touch!';
-            } else if (userType === 'dealer') {
-                successMessage = 'Great! Partnership info coming!';
-            } else {
-                successMessage = 'Thanks! We\'ll be in touch!';
-            }
-            
-            // Show success
-            button.textContent = successMessage;
-            button.style.cssText = 'background: #0EA5E9 !important; color: white !important;';
-            button.disabled = true;
-            
-            // Log for development
-            console.log('Form submitted successfully!');
-            console.log('Form ID:', formId);
-            console.log('User Type:', userType);
-            console.log('Email:', email);
-            
-            // Reset after 4 seconds
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.style.cssText = '';
-                button.disabled = false;
-                form.reset();
-            }, 4000);
-            
-            return false;
+            // Allow form to submit to ConvertKit
+            return true;
         }
         
         // Attach event listeners when DOM is loaded
@@ -652,7 +675,7 @@
             }
             
             // Test that script is running
-            console.log('Forms initialized:', {
+            console.log('ConvertKit forms initialized:', {
                 heroForm: !!heroForm,
                 ctaForm: !!ctaForm
             });
