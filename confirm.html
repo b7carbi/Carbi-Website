@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carbi - Confirm Your Email</title>
-    <link rel="shortcut icon" type="image/png" href="favicon.png">    
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1S8XELP34H"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        // Minimal configuration
+        gtag('config', 'G-1S8XELP34H', {
+            'anonymize_ip': true,
+            'allow_google_signals': false,
+            'allow_ad_personalization_signals': false
+        });
+    </script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             min-height: 100vh;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         /* Header */
         header {
             padding: 30px 0;
             background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
-        
+
         .logo {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        
+
         /* Main Content */
         .main-content {
             padding: 80px 0;
@@ -47,15 +62,15 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .content-card {
             max-width: 600px;
             background: #f8fafc;
             padding: 60px 40px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-        
+
         .icon {
             width: 80px;
             height: 80px;
@@ -66,7 +81,7 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .main-content h1 {
             font-size: 2.5em;
             font-weight: 700;
@@ -74,7 +89,7 @@
             margin-bottom: 20px;
             line-height: 1.2;
         }
-        
+
         .main-content .subtitle {
             font-size: 1.3em;
             color: #64748B;
@@ -82,7 +97,7 @@
             font-weight: 400;
             line-height: 1.5;
         }
-        
+
         .steps {
             background: white;
             border-radius: 15px;
@@ -90,18 +105,18 @@
             margin: 30px 0;
             border: 2px solid #e2e8f0;
         }
-        
+
         .step {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
             text-align: left;
         }
-        
+
         .step:last-child {
             margin-bottom: 0;
         }
-        
+
         .step-number {
             width: 40px;
             height: 40px;
@@ -115,12 +130,12 @@
             margin-right: 20px;
             flex-shrink: 0;
         }
-        
+
         .step-text {
             color: #475569;
             font-size: 1.1em;
         }
-        
+
         .back-link {
             display: inline-block;
             margin-top: 30px;
@@ -132,48 +147,48 @@
             font-weight: 600;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .back-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
         }
-        
+
         /* Footer */
         footer {
             padding: 40px 0;
             background: #0F172A;
             text-align: center;
         }
-        
+
         .footer-logo {
             margin-bottom: 20px;
         }
-        
+
         footer p {
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.95em;
         }
-        
+
         /* Responsive */
         @media (max-width: 768px) {
             .main-content h1 {
                 font-size: 2em;
             }
-            
+
             .main-content .subtitle {
                 font-size: 1.1em;
             }
-            
+
             .content-card {
                 padding: 40px 30px;
                 margin: 20px;
             }
-            
+
             .step {
                 flex-direction: column;
                 text-align: center;
             }
-            
+
             .step-number {
                 margin-right: 0;
                 margin-bottom: 10px;
@@ -181,6 +196,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -188,9 +204,10 @@
             <div class="logo">
                 <svg width="140" height="100" viewBox="0 0 140 100">
                     <!-- Logo Mark Centered -->
-                    <circle cx="50" cy="35" r="8" fill="#0EA5E9"/>
-                    <path d="M 60 35 L 85 35" stroke="url(#grad-header)" stroke-width="4"/>
-                    <path d="M 78 27 L 88 35 L 78 43" fill="none" stroke="#1E40AF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="50" cy="35" r="8" fill="#0EA5E9" />
+                    <path d="M 60 35 L 85 35" stroke="url(#grad-header)" stroke-width="4" />
+                    <path d="M 78 27 L 88 35 L 78 43" fill="none" stroke="#1E40AF" stroke-width="4"
+                        stroke-linecap="round" stroke-linejoin="round" />
                     <defs>
                         <linearGradient id="grad-header" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
@@ -198,26 +215,29 @@
                         </linearGradient>
                     </defs>
                     <!-- Wordmark Below -->
-                    <text x="70" y="75" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="32" font-weight="600" fill="#0F172A" text-anchor="middle">carbi</text>
+                    <text x="70" y="75" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="32"
+                        font-weight="600" fill="#0F172A" text-anchor="middle">carbi</text>
                 </svg>
             </div>
         </div>
     </header>
-    
+
     <!-- Main Content -->
     <section class="main-content">
         <div class="container">
             <div class="content-card">
                 <div class="icon">
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
-                        <path d="M20 4 L24 16 L36 16 L26 24 L30 36 L20 28 L10 36 L14 24 L4 16 L16 16 Z" fill="white"/>
-                        <path d="M12 18 L16 22 L28 10" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20 4 L24 16 L36 16 L26 24 L30 36 L20 28 L10 36 L14 24 L4 16 L16 16 Z" fill="white" />
+                        <path d="M12 18 L16 22 L28 10" stroke="white" stroke-width="3" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                
+
                 <h1>Check Your Email!</h1>
-                <p class="subtitle">We've sent you a confirmation email to complete your signup as an early tester for Carbi.</p>
-                
+                <p class="subtitle">We've sent you a confirmation email to complete your signup as an early tester for
+                    Carbi.</p>
+
                 <div class="steps">
                     <div class="step">
                         <div class="step-number">1</div>
@@ -232,31 +252,34 @@
                         <div class="step-text">Click the confirmation link to join our early testers</div>
                     </div>
                 </div>
-                
+
                 <p style="color: #64748B; font-size: 1em; margin: 20px 0;">
                     Once confirmed, you'll be first to know when we're ready for testing and feedback.
                 </p>
-                
+
                 <a href="/" class="back-link">Back to Carbi.co</a>
             </div>
         </div>
     </section>
-    
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-logo">
                 <svg width="100" height="60" viewBox="0 0 100 60">
                     <!-- Logo Mark -->
-                    <circle cx="30" cy="30" r="6" fill="#0EA5E9"/>
-                    <path d="M 38 30 L 53 30" stroke="white" stroke-width="3"/>
-                    <path d="M 48 24 L 55 30 L 48 36" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="30" cy="30" r="6" fill="#0EA5E9" />
+                    <path d="M 38 30 L 53 30" stroke="white" stroke-width="3" />
+                    <path d="M 48 24 L 55 30 L 48 36" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round" />
                     <!-- Wordmark -->
-                    <text x="50" y="50" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="20" font-weight="600" fill="white" text-anchor="middle">carbi</text>
+                    <text x="50" y="50" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="20"
+                        font-weight="600" fill="white" text-anchor="middle">carbi</text>
                 </svg>
             </div>
             <p>&copy; 2025 Carbi. All rights reserved. Making first cars happen.</p>
         </div>
     </footer>
 </body>
+
 </html>
