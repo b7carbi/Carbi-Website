@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your Free First Car Budget Calculator - Carbi</title>
+    <meta name="description"
+        content="Find out exactly what your first car will really cost. Include insurance, tax, MOT and hidden costs - don't get caught short!">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1S8XELP34H"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        // Minimal configuration
+        gtag('config', 'G-1S8XELP34H', {
+            'anonymize_ip': true,
+            'allow_google_signals': false,
+            'allow_ad_personalization_signals': false
+        });
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 30px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0 80px;
+            text-align: center;
+            background: white;
+        }
+
+        .hero h1 {
+            font-size: 3.2em;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5em;
+            color: #64748B;
+            margin-bottom: 15px;
+            font-weight: 400;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero .problem {
+            font-size: 1.2em;
+            color: #DC2626;
+            margin-bottom: 40px;
+            font-weight: 500;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .benefit-card {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: left;
+            border: 2px solid #e2e8f0;
+        }
+
+        .benefit-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.3em;
+            color: #0F172A;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .benefit-card p {
+            color: #64748B;
+            line-height: 1.5;
+            font-size: 1.05em;
+        }
+
+        .signup-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f8fafc;
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #0EA5E9;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-size: 1.8em;
+            color: #0F172A;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .form-header p {
+            color: #64748B;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 15px;
+            color: #0F172A;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            position: relative;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .radio-option label {
+            display: block;
+            padding: 15px 20px;
+            background: white;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .radio-option input[type="radio"]:checked+label {
+            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
+            color: white;
+            border-color: #1E40AF;
+        }
+
+        .radio-option label:hover {
+            border-color: #0EA5E9;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #0EA5E9;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+        }
+
+        /* Social Proof */
+        .social-proof {
+            background: #e0f2fe;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .social-proof h3 {
+            color: #0F172A;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .testimonial {
+            font-style: italic;
+            color: #475569;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-author {
+            color: #64748B;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            background: #0F172A;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2em;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2em;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .radio-group {
+                flex-direction: column;
+            }
+
+            .radio-option {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <svg width="140" height="100" viewBox="0 0 140 100">
+                    <!-- Logo Mark Centered -->
+                    <circle cx="50" cy="35" r="8" fill="#0EA5E9" />
+                    <path d="M 60 35 L 85 35" stroke="url(#grad-header)" stroke-width="4" />
+                    <path d="M 78 27 L 88 35 L 78 43" fill="none" stroke="#1E40AF" stroke-width="4"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <defs>
+                        <linearGradient id="grad-header" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Wordmark Below -->
+                    <text x="70" y="75" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="32"
+                        font-weight="600" fill="#0F172A" text-anchor="middle">carbi</text>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>💰 Get Your Free First Car Budget Calculator</h1>
+            <p class="subtitle">See what your first car will actually cost in the first year</p>
+            <p class="problem">Includes insurance, tax and other hidden costs</p>
+
+            <!-- Benefits Grid -->
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <span class="benefit-icon">🔢</span>
+                    <h3>Detailed Cost Calculator</h3>
+                    <p>A comprehensive spreadsheet that factors in insurance groups, location, road tax, MOT, fuel and
+                        maintenance</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">💡</span>
+                    <h3>Budget Reality Check</h3>
+                    <p>Find out if you can actually afford the car before you buy it</p>
+                </div>
+                <div class="benefit-card">
+                    <span class="benefit-icon">📱</span>
+                    <h3>Easy to Use</h3>
+                    <p>Open with Google Sheets or Excel, fill in your details and see how different options affect the
+                        cost</p>
+                </div>
+            </div>
+
+            <!-- Social Proof -- (include this once we have social proof)>
+            <div class="social-proof">
+                <h3>Used by 300+ First-Time Buyers</h3>
+                <p class="testimonial">"I thought I could afford a £4k car - turns out my real budget was £2.5k once I factored in everything!"</p>
+                <p class="testimonial-author">- Jake, 17, Leeds</p>
+            </div> -->
+
+            <!-- Signup Form -->
+            <form class="signup-form" id="calculator-form" action="https://app.kit.com/forms/8510420/subscriptions"
+                method="post">
+                <div class="form-header">
+                    <h2>Get Your Free Calculator Now</h2>
+                    <p>Get the download and help us build the future of car buying for young drivers</p>
+                </div>
+
+                <!-- Hidden field to track source -->
+                <input type="hidden" name="fields[source]" value="Budget Calculator">
+
+                <div class="form-group">
+                    <label class="form-label">I am a...</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="young-driver" name="fields[user_type]" value="Young Driver"
+                                required>
+                            <label for="young-driver">Young Driver</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="parent" name="fields[user_type]" value="Parent" required>
+                            <label for="parent">Parent</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="dealer" name="fields[user_type]" value="Car Dealer" required>
+                            <label for="dealer">Car Dealer</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" id="email" name="email_address" class="email-input"
+                        placeholder="Enter your email to get the calculator" required>
+                </div>
+                <button type="submit" class="submit-btn">Give Me The Calculator</button>
+
+                <p style="text-align: center; margin-top: 20px; color: #64748B; font-size: 0.95em;">
+                    ✅ Instant access after signup<br>
+                    ✅ No spam, just helpful first car tips
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <!-- What You Get Section -->
+    <section style="padding: 80px 0; background: white;">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5em; color: #0F172A; margin-bottom: 20px; font-weight: 700;">
+                What's Inside the Calculator</h2>
+            <p
+                style="text-align: center; font-size: 1.2em; color: #475569; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                A simple but comprehensive tool that calculates your real first-year car costs
+            </p>
+
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1000px; margin: 0 auto;">
+                <div style="background: #f8fafc; padding: 30px; border-radius: 15px; border-left: 5px solid #0EA5E9;">
+                    <h3 style="color: #0F172A; font-size: 1.4em; margin-bottom: 15px; font-weight: 600;">💸 Insurance
+                        Estimator</h3>
+                    <ul style="color: #64748B; line-height: 1.8; list-style: none; padding: 0;">
+                        <li>✓ Insurance group</li>
+                        <li>✓ Black box</li>
+                        <li>✓ Location</li>
+
+                    </ul>
+                </div>
+
+                <div style="background: #f8fafc; padding: 30px; border-radius: 15px; border-left: 5px solid #0EA5E9;">
+                    <h3 style="color: #0F172A; font-size: 1.4em; margin-bottom: 15px; font-weight: 600;">⛽ Running Costs
+                    </h3>
+                    <ul style="color: #64748B; line-height: 1.8; list-style: none; padding: 0;">
+                        <li>✓ Fuel costs by mileage</li>
+                        <li>✓ Maintenance budget</li>
+                        <li>✓ Fuel</li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <svg width="100" height="60" viewBox="0 0 100 60">
+                    <!-- Logo Mark -->
+                    <circle cx="30" cy="30" r="6" fill="#0EA5E9" />
+                    <path d="M 38 30 L 53 30" stroke="white" stroke-width="3" />
+                    <path d="M 48 24 L 55 30 L 48 36" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <!-- Wordmark -->
+                    <text x="50" y="50" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="20"
+                        font-weight="600" fill="white" text-anchor="middle">carbi</text>
+                </svg>
+            </div>
+            <p>&copy; 2025 Carbi. All rights reserved. Making first cars happen.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Handle form submission
+        function handleFormSubmit(e) {
+            const form = e.target;
+            const userTypeInput = form.querySelector('input[name="fields[user_type]"]:checked');
+            const emailInput = form.querySelector('input[name="email_address"]');
+            const button = form.querySelector('.submit-btn');
+            const originalText = button.textContent;
+
+            // Check if user type is selected
+            if (!userTypeInput) {
+                e.preventDefault();
+                alert('Please select who you are (Young Driver, Parent, or Car Dealer)');
+                return false;
+            }
+
+            // Check email validity
+            if (!emailInput.value || emailInput.value.trim() === '') {
+                e.preventDefault();
+                alert('Please enter your email address');
+                emailInput.focus();
+                return false;
+            }
+
+            // Basic email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value)) {
+                e.preventDefault();
+                alert('Please enter a valid email address');
+                emailInput.focus();
+                return false;
+            }
+
+            // Show success feedback
+            setTimeout(function () {
+                button.textContent = 'Check your email for the calculator!';
+                button.style.cssText = 'background: #16A34A !important; color: white !important;';
+                button.disabled = true;
+
+
+            }, 100);
+
+            // Allow form to submit to ConvertKit
+            return true;
+        }
+
+        // Attach event listener when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('calculator-form');
+            if (form) {
+                form.addEventListener('submit', handleFormSubmit);
+            }
+        });
+    </script>
+</body>
+
+</html>
