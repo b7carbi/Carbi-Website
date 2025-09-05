@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloading Car Viewing Checklist - Carbi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            margin: 0;
+        }
+
+        .download-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #0F172A;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        p {
+            color: #64748B;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .download-button {
+            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #0EA5E9;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="download-box">
+        <div class="logo">
+            <svg width="140" height="100" viewBox="0 0 140 100">
+                <!-- Logo Mark Centered -->
+                <circle cx="50" cy="35" r="8" fill="#0EA5E9" />
+                <path d="M 60 35 L 85 35" stroke="url(#grad-header)" stroke-width="4" />
+                <path d="M 78 27 L 88 35 L 78 43" fill="none" stroke="#1E40AF" stroke-width="4" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <defs>
+                    <linearGradient id="grad-header" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <!-- Wordmark Below -->
+                <text x="70" y="75" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="32"
+                    font-weight="600" fill="#0F172A" text-anchor="middle">carbi</text>
+            </svg>
+        </div>
+
+        <h1>📋 Car Viewing Checklist Download</h1>
+        <p>Your download should start automatically...</p>
+        <div class="spinner"></div>
+        <p>If the download doesn't start, click the button below:</p>
+        <a href="Carbi-Car-Viewing-Checklist.pdf" class="download-button" download>Download Car Viewing
+            Checklist</a>
+
+        <p style="margin-top: 30px; font-size: 0.9em;">
+            <strong>How to use:</strong> Open and print it out. Or use the <a href="checklist.html">HTML version</a> on
+            your phone.
+        </p>
+    </div>
+
+    <script>
+        // Auto-download after 2 seconds
+        setTimeout(function () {
+            window.open("Carbi-Car-Viewing-Checklist.pdf", "_blank");
+        }, 2000);
+    </script>
+</body>
+
+</html>
