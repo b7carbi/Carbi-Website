@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Your Email for the Budget Calculator - Carbi</title>
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            margin-bottom: 40px;
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: checkmark 0.6s ease-in-out;
+        }
+
+        @keyframes checkmark {
+            0% {
+                transform: scale(0);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .checkmark svg {
+            width: 40px;
+            height: 40px;
+            stroke: white;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: #0F172A;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #64748B;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .next-steps {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .next-steps h3 {
+            color: #0F172A;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .next-steps ol {
+            color: #475569;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+
+        .next-steps li {
+            margin-bottom: 10px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: white;
+            color: #1E40AF;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <svg width="140" height="100" viewBox="0 0 140 100">
+                <circle cx="50" cy="35" r="8" fill="#0EA5E9" />
+                <path d="M 60 35 L 85 35" stroke="url(#grad-header)" stroke-width="4" />
+                <path d="M 78 27 L 88 35 L 78 43" fill="none" stroke="#1E40AF" stroke-width="4" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <defs>
+                    <linearGradient id="grad-header" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <text x="70" y="75" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="32"
+                    font-weight="600" fill="#0F172A" text-anchor="middle">carbi</text>
+            </svg>
+        </div>
+
+        <div class="checkmark">
+            <svg viewBox="0 0 24 24">
+                <polyline points="20,6 9,17 4,12"></polyline>
+            </svg>
+        </div>
+
+        <h1>Check Your Email!</h1>
+        <p class="subtitle">Your budget calculator is on its way, plus a couple of other tools to help with your first
+            car purchase.</p>
+
+        <div class="next-steps">
+            <h3>What happens next:</h3>
+            <ol>
+                <li><strong>Check your email</strong> (including spam folder) for your budget calculator</li>
+                <li><strong>Open the calculator</strong> in Google Sheets or download the Excel version</li>
+                <li><strong>Follow the instructions tab</strong> to calculate your true first-year car costs</li>
+                <li><strong>Use the bonus tools</strong> - viewing checklist and quote comparison template</li>
+            </ol>
+        </div>
+
+        <div class="cta-box">
+            <h3>Welcome to the Carbi community!</h3>
+            <p>By downloading these tools, you're already helping us build the future of first car buying. We'll keep
+                you updated on our progress.</p>
+        </div>
+    </div>
+</body>
+
+</html>
