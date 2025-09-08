@@ -353,6 +353,111 @@
             color: white;
         }
 
+        /* Resources Section */
+        .resources {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .resources h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #0F172A;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .resources .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: #475569;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .resource-card {
+            background: white;
+            border: 2px solid #E2E8F0;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+            border-color: #0EA5E9;
+        }
+
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
+        }
+
+        .resource-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .resource-card h3 {
+            font-size: 1.4em;
+            color: #0F172A;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .resource-card p {
+            color: #64748B;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .resource-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .resource-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .resources h2 {
+                font-size: 2em;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Footer */
         footer {
             padding: 40px 0;
@@ -458,7 +563,34 @@
             </form>
         </div>
     </section>
-
+    <!-- Resources Section -->
+    <section class="resources">
+        <div class="container">
+            <h2>Help for First Car Buyers</h2>
+            <p class="subtitle">Guides and tools to help you make the right choice and avoid costly mistakes</p>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <span class="resource-icon">📚</span>
+                    <h3>Low Insurance Group Cars Guide</h3>
+                    <p>Find the best insurance group 1-10 cars for young drivers in 2025.</p>
+                    <a href="/blog/low-insurance-group-cars-2025.html" class="resource-link">Read the Guide</a>
+                </div>
+                <div class="resource-card">
+                    <span class="resource-icon">🚗</span>
+                    <h3>Car Viewing Checklist</h3>
+                    <p>Know exactly what to look for when viewing
+                        your first car. Everything from paperwork to test drives.</p>
+                    <a href="/downloads/car-viewing-checklist/index.html" class="resource-link">Get Checklist</a>
+                </div>
+                <div class="resource-card">
+                    <span class="resource-icon">💰</span>
+                    <h3>First Car Budget Calculator</h3>
+                    <p>Work out your true first year costs including insurance, tax, MOT and maintenance. </p>
+                    <a href="/downloads/budget-calculator/index.html" class="resource-link">Calculate Costs</a>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Features Section -->
     <section class="features">
         <div class="container">
