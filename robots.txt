@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /testing/
+Allow: /
+
+Sitemap: https://carbi.co/sitemap.xml

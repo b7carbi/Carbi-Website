@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbi - Internal Testing</title>
+    <link rel="shortcut icon" type="image/png" href="../favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #E2E8F0;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #0F172A;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #64748B;
+            font-size: 1.1em;
+        }
+
+        h2 {
+            color: #1E40AF;
+            font-size: 1.8em;
+            margin: 40px 0 20px 0;
+            font-weight: 600;
+        }
+
+        .version {
+            background: #F8FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .version:hover {
+            border-color: #0EA5E9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.2);
+        }
+
+        .version h3 {
+            color: #0F172A;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .version p {
+            color: #64748B;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .version a {
+            display: inline-block;
+            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .version a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .status.current {
+            background: #16A34A;
+            color: white;
+        }
+
+        .status.previous {
+            background: #F59E0B;
+            color: white;
+        }
+
+        .testing-notes {
+            background: #FEF2F2;
+            border: 2px solid #FCA5A5;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .testing-notes h3 {
+            color: #DC2626;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .testing-notes ul {
+            color: #7F1D1D;
+            padding-left: 20px;
+        }
+
+        .testing-notes li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .contact-info {
+            background: #F0F9FF;
+            border: 2px solid #7DD3FC;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .contact-info p {
+            color: #0369A1;
+            font-weight: 500;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .back-link a {
+            color: #0EA5E9;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <svg width="80" height="60" viewBox="0 0 80 60">
+                    <circle cx="25" cy="30" r="6" fill="#0EA5E9" />
+                    <path d="M 33 30 L 48 30" stroke="url(#grad-testing)" stroke-width="3" />
+                    <path d="M 43 24 L 50 30 L 43 36" fill="none" stroke="#1E40AF" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <defs>
+                        <linearGradient id="grad-testing" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <text x="40" y="50" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="16"
+                        font-weight="600" fill="#0F172A" text-anchor="middle">carbi</text>
+                </svg>
+            </div>
+            <h1>Internal Testing</h1>
+            <p class="subtitle">Prototype versions for user testing and feedback</p>
+        </div>
+
+        <h2>🚗 Current Prototypes</h2>
+
+        <div class="version">
+            <h3>Version 1.1 <span class="status current">CURRENT</span></h3>
+            <p><strong>Changes:</strong> Updated "Value" section to "Regular cars", improved privacy messaging on
+                contact preferences page</p>
+            <p><strong>Based on:</strong> Parent interview feedback + prototype testing insights</p>
+            <a href="https://carbi-multi-step-car-zku3.bolt.host/" target="_blank">Test Version 1.1 →</a>
+            <p style="margin-top: 10px; font-size: 0.9em; color: #64748B;"></p>
+        </div>
+        <!--
+        <div class="version">
+            <h3>Version 2.0 <span class="status previous">PREVIOUS</span></h3>
+            <p><strong>Original prototype</strong> with basic journey flow - brand selection, budget, contact
+                preferences</p>
+            <p><strong>Status:</strong> Tested with Jane (positive feedback, minor tweaks needed)</p>
+            <a href="#" target="_blank">Test Version 2.0 →</a>
+            <p style="margin-top: 10px; font-size: 0.9em; color: #64748B;"><em>Replace # with your Bolt URL</em></p>
+        </div>
+-->
+        <h2>📝 Testing Instructions</h2>
+        <div class="testing-notes">
+            <h3>What We're Testing:</h3>
+            <ul>
+                <li><strong>User journey:</strong> Does the step-by-step flow make sense?</li>
+                <li><strong>Language clarity:</strong> Are instructions and options clear?</li>
+                <li><strong>Mobile experience:</strong> How does it work on your phone?</li>
+                <li><strong>Parent perspective:</strong> Does this solve your car-buying problem?</li>
+                <li><strong>Trust factors:</strong> Do you feel confident sharing your details?</li>
+            </ul>
+        </div>
+        <!--
+        <div class="contact-info">
+            <p><strong>Send feedback to:</strong> [your-email@domain.com]</p>
+            <p>Or text any quick thoughts to [your phone number]</p>
+        </div>
+-->
+        <h2>🎯 Who We're Looking For</h2>
+        <p>We especially want feedback from:</p>
+        <ul style="margin: 15px 0; padding-left: 30px; color: #475569;">
+            <li>Parents who've recently helped their teen buy a first car</li>
+            <li>Young drivers (17-19) currently looking for their first car</li>
+            <li>Anyone who's experienced the "dealership tour" frustration</li>
+        </ul>
+
+        <div class="back-link">
+            <a href="../">← Back to Carbi.co</a>
+        </div>
+    </div>
+</body>
+
+</html>
