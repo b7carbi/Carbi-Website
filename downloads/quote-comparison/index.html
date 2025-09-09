@@ -460,8 +460,7 @@
             const form = e.target;
             const userTypeInput = form.querySelector('input[name="fields[user_type]"]:checked');
             const emailInput = form.querySelector('input[name="email_address"]');
-            //const button = form.querySelector('.submit-btn');
-            const originalText = button.textContent;
+
 
             // Check if user type is selected
             if (!userTypeInput) {
@@ -487,19 +486,7 @@
                 return false;
             }
 
-            // Show success feedback
-            /*  setTimeout(function () {
-                  button.textContent = 'Check your email for the template!';
-                  button.style.cssText = 'background: #16A34A !important; color: white !important;';
-                  button.disabled = true;
-  
-                  // Redirect to template download after 2 seconds
-                  setTimeout(() => {
-                      // Update this to point to your quote comparison CSV
-                      window.location.href = 'Lead Magnet  Carbi Quote Comparison Template  Quote Comparison.csv';
-                  }, 2000);
-              }, 100);
-  */
+
             // Allow form to submit to ConvertKit
             return true;
         }

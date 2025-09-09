@@ -487,8 +487,7 @@
             const form = e.target;
             const userTypeInput = form.querySelector('input[name="fields[user_type]"]:checked');
             const emailInput = form.querySelector('input[name="email_address"]');
-            const button = form.querySelector('.submit-btn');
-            const originalText = button.textContent;
+
 
             // Check if user type is selected
             if (!userTypeInput) {
@@ -514,14 +513,7 @@
                 return false;
             }
 
-            // Show success feedback
-            setTimeout(function () {
-                button.textContent = 'Check your email for the calculator!';
-                button.style.cssText = 'background: #16A34A !important; color: white !important;';
-                button.disabled = true;
 
-
-            }, 100);
 
             // Allow form to submit to ConvertKit
             return true;
