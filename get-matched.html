@@ -288,7 +288,7 @@
         }
 
         .color-button[data-color="Yellow"]::before {
-            background: #fbbf24;
+            background: #fde047;
         }
 
         .color-button[data-color="Orange"]::before {
@@ -304,7 +304,7 @@
         }
 
         .color-button[data-color="Gold"]::before {
-            background: #fbbf24;
+            background: #d97706;
         }
 
         /* Radio buttons */
@@ -996,8 +996,8 @@
 
                     <input type="text" id="postcode" class="text-input" placeholder="Postcode or town">
                     <div class="slider-container">
-                        <div class="location-display" id="locationDisplay">Up to 50 miles</div>
-                        <input type="range" id="radiusSlider" class="slider" min="10" max="400" value="50" step="5">
+                        <div class="location-display" id="locationDisplay">Up to 30 miles</div>
+                        <input type="range" id="radiusSlider" class="slider" min="10" max="400" value="30" step="5">
                     </div>
                     <div class="error-message" id="error8"></div>
                     <button type="button" class="primary-button" id="next8" disabled>Next</button>
@@ -1020,7 +1020,7 @@
                     <p class="step-subtitle">We'll send your matches within 24 hours</p>
                     <input type="text" id="firstName" class="text-input" placeholder="First Name" required>
                     <input type="text" id="lastName" class="text-input" placeholder="Last Name" required>
-                    <input type="email" id="email" class="text-input" placeholder="Email Address" required>
+                    <input type="email" id="email" class="text-input" placeholder="Email Address">
                     <input type="tel" id="phone" class="text-input" placeholder="Phone Number" required>
 
                     <p class="input-label" style="margin-bottom: 15px;">How would you like to be contacted?</p>
@@ -1072,7 +1072,7 @@
             preferred_colours: [],
             custom_colour: '',
             max_mileage: null,
-            search_radius: 50,
+            search_radius: 30,
             postcode: '',
             location_coords: null,
             additional_notes: null,
@@ -1598,7 +1598,16 @@
             const submitBtn = document.getElementById('submitBtn');
             const errorMsg = document.getElementById('error10');
 
-            if (!firstName || !lastName || !email || !phone) {
+            // Phone is always required, email only required if selected as preference
+            const emailSelected = document.getElementById('prefEmail').checked;
+
+            if (!firstName || !lastName || !phone) {
+                submitBtn.disabled = true;
+                return false;
+            }
+
+            if (emailSelected && !email) {
+                errorMsg.textContent = 'Email address needed (you selected it as contact preference)';
                 submitBtn.disabled = true;
                 return false;
             }
