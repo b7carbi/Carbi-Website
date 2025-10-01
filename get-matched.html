@@ -952,6 +952,7 @@
                     <p class="step-subtitle">Pick your top choice</p>
                     <div class="radio-group" id="favouriteGroup"></div>
                     <div class="error-message" id="error5"></div>
+                    <button type="button" class="primary-button" id="next5" disabled>Next</button>
                 </div>
 
                 <!-- Step 6: Colour -->
@@ -1371,16 +1372,9 @@
                 input.addEventListener('change', () => {
                     formData.favourite_brand = brand;
                     saveToLocalStorage();
+                    document.getElementById('next5').disabled = false; // Enable Next button
 
-                    // Navigate to next step based on important features
-                    if (formData.important_features.includes('Colour')) {
-                        initializeStep6();
-                        goToStep(6);
-                    } else if (formData.important_features.includes('Low Mileage')) {
-                        goToStep(7);
-                    } else {
-                        goToStep(8);
-                    }
+
                 });
 
                 option.appendChild(input);
@@ -1407,15 +1401,7 @@
                 formData.favourite_brand = null;
                 saveToLocalStorage();
 
-                // Navigate to next step based on important features
-                if (formData.important_features.includes('Colour')) {
-                    initializeStep6();
-                    goToStep(6);
-                } else if (formData.important_features.includes('Low Mileage')) {
-                    goToStep(7);
-                } else {
-                    goToStep(8);
-                }
+
             });
 
             noFavOption.appendChild(noFavInput);
@@ -1425,6 +1411,10 @@
 
         // Step 6: Colour
         function initializeStep6() {
+            // Only initialize if Colour was selected as important
+            if (!formData.important_features.includes('Colour')) {
+                return;
+            }
             const grid = document.getElementById('coloursGrid');
             const customColourContainer = document.getElementById('customColourContainer');
             const customColourInput = document.getElementById('customColour');
@@ -1685,6 +1675,20 @@
                 saveToLocalStorage();
                 goToStep(8);
             });
+
+            // Step 5 Next button
+            document.getElementById('next5').addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (formData.important_features.includes('Colour')) {
+                    initializeStep6();
+                    goToStep(6);
+                } else if (formData.important_features.includes('Low Mileage')) {
+                    goToStep(7);
+                } else {
+                    goToStep(8);
+                }
+            });
+
 
             // Step 6 Next button
             document.getElementById('next6').addEventListener('click', (e) => {
