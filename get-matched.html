@@ -856,16 +856,20 @@
     <header>
         <div class="container">
             <div class="logo">
-                <svg width="100" height="60" viewBox="0 0 100 60">
-                    <!-- Blue dot -->
-                    <circle cx="20" cy="20" r="8" fill="#0EA5E9" />
-
-                    <!-- Chevron only (no connecting line) -->
-                    <path d="M 35 13 L 45 20 L 35 27" fill="none" stroke="#1E40AF" stroke-width="4"
+                <svg width="140" height="100" viewBox="0 0 140 100">
+                    <!-- Logo Mark Centered -->
+                    <circle cx="50" cy="35" r="8" fill="#0EA5E9" />
+                    <path d="M 60 35 L 85 35" stroke="url(#grad-header)" stroke-width="4" />
+                    <path d="M 78 27 L 88 35 L 78 43" fill="none" stroke="#1E40AF" stroke-width="4"
                         stroke-linecap="round" stroke-linejoin="round" />
-
+                    <defs>
+                        <linearGradient id="grad-header" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
                     <!-- Wordmark -->
-                    <text x="50" y="45" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="24"
+                    <text x="70" y="70" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="28"
                         font-weight="700" fill="#0F172A" text-anchor="middle">carbi</text>
                 </svg>
             </div>
