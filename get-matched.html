@@ -1535,13 +1535,59 @@
                 useLocationBtn.innerHTML = '<span>⏳</span> Getting location...';
 
                 navigator.geolocation.getCurrentPosition(
-                    (position) => {
+                    async (position) => {
                         const lat = position.coords.latitude;
                         const lon = position.coords.longitude;
 
+                        // Store coordinates
                         formData.location_coords = { lat, lon };
-                        formData.postcode = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
-                        postcodeInput.value = formData.postcode;
+
+                        // Try to get human-readable address via reverse geocoding
+                        try {
+                            const response = await fetch(
+                                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`,
+                                {
+                                    headers: {
+                                        'User-Agent': 'Carbi-Website/1.0 (car matching service)'
+                                    }
+                                }
+                            );
+
+                            if (response.ok) {
+                                const data = await response.json();
+
+                                // Try to extract postcode, fallback to city/town
+                                let locationText = '';
+                                if (data.address) {
+                                    if (data.address.postcode) {
+                                        locationText = data.address.postcode;
+                                    } else if (data.address.city) {
+                                        locationText = data.address.city;
+                                    } else if (data.address.town) {
+                                        locationText = data.address.town;
+                                    } else if (data.address.village) {
+                                        locationText = data.address.village;
+                                    }
+                                }
+
+                                // Fallback to coordinates if no readable location found
+                                if (!locationText) {
+                                    locationText = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+                                }
+
+                                formData.postcode = locationText;
+                                postcodeInput.value = locationText;
+                            } else {
+                                // API failed, use coordinates
+                                formData.postcode = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+                                postcodeInput.value = formData.postcode;
+                            }
+                        } catch (error) {
+                            console.error('Reverse geocoding error:', error);
+                            // Fallback to coordinates
+                            formData.postcode = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+                            postcodeInput.value = formData.postcode;
+                        }
 
                         saveToLocalStorage();
                         updateLocationDisplay();
