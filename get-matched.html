@@ -1799,12 +1799,13 @@
 
             currentStep = stepNumber;
 
-            // Scroll to step
-            if (targetStepEl) {
-                setTimeout(() => {
-                    targetStepEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
-            }
+            // Scroll to step with padding above
+            setTimeout(() => {
+                window.scrollTo({
+                    top: targetStepEl.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }, 100);
         }
 
         // Local Storage
