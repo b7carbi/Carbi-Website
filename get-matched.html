@@ -1777,12 +1777,30 @@
 
         // Navigation - go to specific step
         function goToStep(stepNumber) {
-            // Mark all steps before target as completed
+            // Helper function to check if a step should be visible
+            function shouldShowStep(stepNum) {
+                if (stepNum === 1) return true; // Always show Step 1
+                if (stepNum === 2) return formData.important_features.length >= 2; // Show if 2+ features
+                if (stepNum === 3) return true; // Always show budget
+                if (stepNum === 4) return true; // Always show brands
+                if (stepNum === 5) return formData.selected_brands.length >= 2; // Show if 2+ brands
+                if (stepNum === 6) return formData.important_features.includes('Colour'); // Only if Colour selected
+                if (stepNum === 7) return formData.important_features.includes('Low Mileage'); // Only if Low Mileage selected
+                if (stepNum >= 8) return true; // Always show Steps 8, 9, 10
+                return false;
+            }
+
+            // Mark visible steps before target as completed
             for (let i = 1; i < stepNumber; i++) {
                 const stepEl = document.getElementById(`step${i}`);
                 if (stepEl) {
-                    stepEl.classList.remove('active');
-                    stepEl.classList.add('completed');
+                    if (shouldShowStep(i)) {
+                        stepEl.classList.remove('active');
+                        stepEl.classList.add('completed');
+                    } else {
+                        // Hide steps that shouldn't be visible
+                        stepEl.classList.remove('completed', 'active');
+                    }
                 }
             }
 
@@ -1804,12 +1822,14 @@
             currentStep = stepNumber;
 
             // Scroll to step with padding above
-            setTimeout(() => {
-                window.scrollTo({
-                    top: targetStepEl.offsetTop - 100,
-                    behavior: 'smooth'
-                });
-            }, 100);
+            if (targetStepEl) {
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: targetStepEl.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
         }
 
         // Local Storage
