@@ -128,7 +128,7 @@ export default async function handler(req, res) {
 
       // Metadata
 
-      status: 'pending'
+      status: 'new'
     };
 
     // Insert into Supabase
