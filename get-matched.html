@@ -1404,6 +1404,7 @@
             noFavInput.addEventListener('change', () => {
                 formData.favourite_brand = null;
                 saveToLocalStorage();
+                document.getElementById('next5').disabled = false;
 
 
             });
