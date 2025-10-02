@@ -1023,7 +1023,8 @@
                     <input type="email" id="email" class="text-input" placeholder="Email Address">
                     <input type="tel" id="phone" class="text-input" placeholder="Phone Number" required>
 
-                    <p class="input-label" style="margin-bottom: 15px;">How would you like to be contacted?</p>
+                    <p class="input-label" style="margin-bottom: 15px;">How would you like to be contacted? <span
+                            style="color: #ef4444;">*</span></p>
                     <div class="checkbox-group" id="contactPreferences">
                         <div class="checkbox-option">
                             <input type="checkbox" id="prefEmail" value="Email">
@@ -1676,11 +1677,7 @@
                 return false;
             }
 
-            if (checkboxes.length === 0) {
-                errorMsg.textContent = 'Please select at least one contact preference';
-                submitBtn.disabled = true;
-                return false;
-            }
+
 
             errorMsg.textContent = '';
             submitBtn.disabled = false;
@@ -1797,6 +1794,14 @@
         // Form submission
         document.getElementById('matchForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // Check contact preferences before submission
+            const checkboxes = document.querySelectorAll('#contactPreferences input[type="checkbox"]:checked');
+            if (checkboxes.length === 0) {
+                const errorMsg = document.getElementById('error10');
+                errorMsg.textContent = 'Please select at least one contact preference';
+                return;
+            }
 
             formData.first_name = document.getElementById('firstName').value.trim();
             formData.last_name = document.getElementById('lastName').value.trim();
