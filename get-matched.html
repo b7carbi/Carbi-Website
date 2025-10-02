@@ -1094,7 +1094,7 @@
 
         // Brand options by category
         const brands = {
-            'Premium': ['Audi', 'BMW', 'Mercedes', 'Mini', 'Volvo'],
+            'Premium': ['Audi', 'BMW', 'Mercedes', 'MINI', 'Volvo'],
             'Established': ['Ford', 'Honda', 'Mazda', 'SEAT', 'Skoda', 'Smart', 'Toyota', 'Volkswagen'],
             'Regular': ['Citroen', 'Dacia', 'DS', 'Fiat', 'Hyundai', 'Kia', 'MG', 'Mitsubishi', 'Nissan', 'Peugeot', 'Renault', 'Suzuki', 'Vauxhall']
         };
@@ -1630,6 +1630,9 @@
             ['firstName', 'lastName', 'email', 'phone'].forEach(id => {
                 document.getElementById(id).addEventListener('input', validateStep10);
             });
+
+            // Only validate email on blur (when they leave the field)
+            document.getElementById('email').addEventListener('blur', validateStep10);
 
             ['prefEmail', 'prefText', 'prefPhone'].forEach(id => {
                 document.getElementById(id).addEventListener('change', validateStep10);
