@@ -1,16 +1,7 @@
 {
   "name": "carbi-website",
   "version": "1.0.0",
-  "description": "Carbi car matching service website",
-  "type": "module",
-  "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'Static site - no build needed'"
-  },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0"
-  },
-  "devDependencies": {
-    "vercel": "^33.0.0"
   }
 }
