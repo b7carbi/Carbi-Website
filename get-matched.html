@@ -1791,7 +1791,7 @@
         }
 
         // Form submission
-        document.getElementById('matchForm').addEventListener('submit', (e) => {
+        document.getElementById('matchForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
             formData.first_name = document.getElementById('firstName').value.trim();
@@ -1807,31 +1807,54 @@
             }
 
             const submitBtn = document.getElementById('submitBtn');
-            submitBtn.textContent = 'Finding your matches...';
+            submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
 
-            // Format colors for display
-            const displayData = { ...formData };
-            if (displayData.preferred_colours.includes('Other') && displayData.custom_colour) {
-                displayData.preferred_colours = displayData.preferred_colours.map(c =>
-                    c === 'Other' ? `Other (${displayData.custom_colour})` : c
-                );
-            }
+            try {
+                // Submit to API
+                const response = await fetch('/api/submit-match', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
 
-            console.log('Form Data:', displayData);
+                const result = await response.json();
 
-            setTimeout(() => {
-                localStorage.removeItem('carbi_match_form');
-                document.getElementById('matchForm').style.display = 'none';
-                document.getElementById('successScreen').classList.add('active');
+                if (!response.ok || !result.success) {
+                    throw new Error(result.error || 'Submission failed');
+                }
 
+                // Success - track conversions
                 if (typeof fbq !== 'undefined') {
                     fbq('track', 'Lead');
                 }
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'conversion', { 'send_to': 'AW-882133742/XXXXX' });
                 }
-            }, 1500);
+
+                // Log for debugging
+                console.log('Match request submitted:', result.id);
+
+                // Clear form data and show success
+                localStorage.removeItem('carbi_match_form');
+                document.getElementById('matchForm').style.display = 'none';
+                document.getElementById('successScreen').classList.add('active');
+
+            } catch (error) {
+                console.error('Submission error:', error);
+
+                // Reset button and show error
+                submitBtn.textContent = 'Find My Car';
+                submitBtn.disabled = false;
+
+                // Show error message
+                const errorMsg = document.getElementById('error10');
+                errorMsg.textContent = 'Failed to submit. Please try again or contact us directly.';
+
+                alert('There was a problem submitting your request. Please try again.');
+            }
         });
 
         // Navigation - go to specific step
