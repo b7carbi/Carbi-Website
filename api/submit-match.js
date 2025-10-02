@@ -127,7 +127,7 @@ export default async function handler(req, res) {
       additional_notes: formData.additional_notes || null,
 
       // Metadata
-      submitted_at: new Date().toISOString(),
+
       status: 'pending'
     };
 
