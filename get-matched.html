@@ -70,16 +70,51 @@
         header {
             padding: 20px 0;
             background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid #E2E8F0;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .logo {
             display: flex;
-            justify-content: center;
             align-items: center;
+        }
+
+        /* Subtle wink animation */
+        @keyframes wink {
+            0%, 95%, 100% {
+                transform: scaleY(1);
+            }
+            97.5% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        .logo svg circle:first-child {
+            transform-origin: center;
+            animation: wink 15s ease-in-out 3s infinite;
+        }
+
+        /* Playful font for beta badge */
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+
+        .beta-badge {
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            border: 2px dashed #F59E0B;
+            font-family: 'Caveat', cursive;
+            transform: rotate(2deg);
         }
 
         /* Intro Screen */
@@ -796,6 +831,11 @@
                 padding: 0 15px;
             }
 
+            .beta-badge {
+                font-size: 0.75em;
+                padding: 5px 10px;
+            }
+
             .step {
                 padding: 30px 20px;
             }
@@ -855,23 +895,28 @@
     <!-- Header -->
     <header>
         <div class="container">
-            <div class="logo">
-                <svg width="140" height="100" viewBox="0 0 140 100">
-                    <!-- Logo Mark Centered -->
-                    <circle cx="50" cy="35" r="8" fill="#0EA5E9" />
-                    <path d="M 60 35 L 85 35" stroke="url(#grad-header)" stroke-width="4" />
-                    <path d="M 78 27 L 88 35 L 78 43" fill="none" stroke="#1E40AF" stroke-width="4"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <defs>
-                        <linearGradient id="grad-header" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <!-- Wordmark -->
-                    <text x="70" y="70" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="28"
-                        font-weight="700" fill="#0F172A" text-anchor="middle">carbi</text>
-                </svg>
+            <div class="header-content">
+                <div class="logo">
+                    <a href="landing.html" style="text-decoration: none;">
+                        <svg width="110" height="40" viewBox="0 0 110 40">
+                            <circle cx="20" cy="20" r="6" fill="#0EA5E9" />
+                            <defs>
+                                <linearGradient id="gradient" x1="26" y1="20" x2="38" y2="20" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#0EA5E9;stop-opacity:0" />
+                                </linearGradient>
+                            </defs>
+                            <line x1="26" y1="20" x2="38" y2="20" stroke="url(#gradient)" stroke-width="2" />
+                            <path d="M 38 14 L 45 20 L 38 26" fill="none" stroke="#0EA5E9" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <text x="58" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto"
+                                font-size="20" font-weight="600" fill="#0F172A">carbi</text>
+                        </svg>
+                    </a>
+                </div>
+                <div class="beta-badge">
+                    Beta - Limited Spots
+                </div>
             </div>
         </div>
     </header>
@@ -1055,7 +1100,7 @@
                 <h2 class="success-heading">Thanks!</h2>
                 <p class="success-text">We're finding your perfect match. We'll be in touch within 24 hours with cars
                     that meet your needs.</p>
-                <a href="index.html" class="home-button">Back to Home</a>
+                <a href="landing.html" class="home-button">Back to Home</a>
             </div>
         </div>
     </div>
@@ -2056,6 +2101,29 @@
             validateStep10();
         }
     </script>
+
+    <!-- Footer -->
+    <footer style="background: #0F172A; padding: 40px 0; margin-top: 80px;">
+        <div class="container">
+            <div style="text-align: center;">
+                <!-- Logo -->
+                <div style="margin-bottom: 20px;">
+                    <svg width="100" height="40" viewBox="0 0 110 40">
+                        <circle cx="20" cy="20" r="6" fill="#0EA5E9" />
+                        <path d="M 38 14 L 45 20 L 38 26" fill="none" stroke="#0EA5E9" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <text x="58" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto"
+                            font-size="20" font-weight="600" fill="white">carbi</text>
+                    </svg>
+                </div>
+
+                <!-- Copyright -->
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin: 0;">
+                    © 2025 Carbi. Making first cars happen.
+                </p>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
