@@ -890,7 +890,7 @@
 
 <body>
 
-    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: none;" id="debugButton">
         <button onclick="localStorage.clear(); location.reload();"
             style="padding: 10px 20px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer;">
             Clear & Reset
@@ -1162,7 +1162,16 @@
             initializeStep10Validation();
             setupNextButtonHandlers();
             restoreFormState();
+            // Show debug button if ?debug=true in URL
+            const debugBtn = document.getElementById('debugButton');
+            if (debugBtn) {
+                if (window.location.search.includes('debug=true')) {
+                    debugBtn.style.display = 'block';
+                }
+            }
         });
+
+
 
         // Get Started Button
         function setupGetStarted() {
