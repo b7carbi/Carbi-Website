@@ -4,48 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carbi - Your First Car Journey Starts Here</title>
-    <link rel="shortcut icon" type="image/png" href="favicon.png">
-
-    <!-- Meta Pixel Code -->
-    <script>
-        !function (f, b, e, v, n, t, s) {
-            if (f.fbq) return; n = f.fbq = function () {
-                n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-            };
-            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-            n.queue = []; t = b.createElement(e); t.async = !0;
-            t.src = v; s = b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t, s)
-        }(window, document, 'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '1455041752448144');
-        fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=1455041752448144&ev=PageView&noscript=1" /></noscript>
-    <!-- End Meta Pixel Code -->
-
-    <!-- Google Analytics & Ads -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1S8XELP34H"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-882133742"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        // Google Analytics
-        gtag('config', 'G-1S8XELP34H', {
-            'anonymize_ip': true,
-            'allow_google_signals': false,
-            'allow_ad_personalization_signals': false
-        });
-
-        // Google Ads
-        gtag('config', 'AW-882133742');
-    </script>
-
+    <title>Carbi - The New Way To Find A First Car</title>
     <style>
         * {
             margin: 0;
@@ -54,9 +13,10 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #ffffff;
+            color: #0F172A;
+            line-height: 1.6;
         }
 
         .container {
@@ -67,20 +27,62 @@
 
         /* Header */
         header {
-            padding: 30px 0;
+            padding: 20px 0;
             background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid #E2E8F0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
             display: flex;
-            justify-content: center;
             align-items: center;
+        }
+
+        /* Subtle wink animation */
+        @keyframes wink {
+
+            0%,
+            95%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            97.5% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        .logo svg circle:first-child {
+            transform-origin: center;
+            animation: wink 15s ease-in-out 3s infinite;
+        }
+
+        /* Playful font for beta badge */
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+
+        .beta-badge {
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            border: 2px dashed #F59E0B;
+            font-family: 'Caveat', cursive;
+            transform: rotate(2deg);
         }
 
         /* Hero Section */
         .hero {
-            padding: 80px 0;
+            padding: 80px 0 60px;
             text-align: center;
             background: white;
         }
@@ -94,413 +96,234 @@
         }
 
         .hero .subtitle {
-            font-size: 1.4em;
+            font-size: 1.3em;
             color: #64748B;
-            margin-bottom: 40px;
-            font-weight: 400;
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 40px;
         }
 
-        .signup-form {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #f8fafc;
-            padding: 30px;
-            border-radius: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 15px;
-            color: #0F172A;
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.2em;
             font-weight: 600;
-            font-size: 1.1em;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
         }
 
-        .radio-group {
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .trust-signals {
             display: flex;
-            gap: 20px;
             justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
             flex-wrap: wrap;
         }
 
-        .radio-option {
-            position: relative;
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .radio-option input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-        }
-
-        .radio-option label {
-            display: block;
-            padding: 15px 20px;
-            background: white;
-            border: 2px solid #cbd5e1;
-            border-radius: 10px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            color: #475569;
-        }
-
-        .radio-option input[type="radio"]:checked+label {
-            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
-            color: white;
-            border-color: #1E40AF;
-        }
-
-        .radio-option label:hover {
-            border-color: #0EA5E9;
-        }
-
-        .email-input {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid #cbd5e1;
-            border-radius: 10px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-
-        .email-input:focus {
-            outline: none;
-            border-color: #0EA5E9;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
-        }
-
-        /* Remove success message styling since we're using button feedback */
-
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background: #f0f9ff;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 2.5em;
-            color: #0F172A;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .features .subtitle {
-            text-align: center;
-            font-size: 1.2em;
-            color: #475569;
-            margin-bottom: 50px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 25px;
-            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5em;
-            color: #0F172A;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .feature-card p {
+        .trust-signal {
             color: #64748B;
-            line-height: 1.6;
-            font-size: 1.05em;
+            font-size: 0.95em;
+        }
+
+        .trust-signal::before {
+            content: "✓";
+            color: #10B981;
+            font-weight: bold;
+            font-size: 1.2em;
         }
 
         /* How It Works Section */
         .how-it-works {
             padding: 80px 0;
-            background: white;
+            background: #F8FAFC;
         }
 
         .how-it-works h2 {
             text-align: center;
             font-size: 2.5em;
             color: #0F172A;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             font-weight: 700;
         }
 
         .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 40px;
             max-width: 1000px;
             margin: 0 auto;
         }
 
         .step {
+            background: white;
+            padding: 40px 25px;
+            border-radius: 16px;
             text-align: center;
-            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
         }
 
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: #1E40AF;
-            color: white;
-            border-radius: 50%;
+        .step:hover {
+            transform: none;
+        }
+
+        .step-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5em;
-            font-weight: 700;
-            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .step-icon img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        /* Make step 1 car bigger since it's wider/shorter */
+        .step:first-child .step-icon img {
+            width: 130px;
+            height: 130px;
         }
 
         .step h3 {
-            font-size: 1.3em;
-            color: #0F172A;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .step p {
-            color: #64748B;
-            line-height: 1.5;
-        }
-
-        /* CTA Section */
-        .cta {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #1E40AF 0%, #0EA5E9 100%);
-            text-align: center;
-        }
-
-        .cta h2 {
-            font-size: 2.5em;
-            color: white;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .cta p {
-            font-size: 1.3em;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 40px;
-        }
-
-        .cta .signup-form {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .cta .radio-option label {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .cta .radio-option input[type="radio"]:checked+label {
-            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
-            color: white;
-            border-color: transparent;
-        }
-
-        .cta .radio-option label:hover {
-            border-color: white;
-        }
-
-        .cta .email-input {
-            background: white;
-            border: none;
-        }
-
-        .cta .submit-btn {
-            background: white;
-            color: #1E40AF;
-            font-weight: 700;
-        }
-
-        .cta .submit-btn:hover {
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
-        }
-
-        .cta .form-label {
-            color: white;
-        }
-
-        /* Resources Section */
-        .resources {
-            padding: 80px 0;
-            background: white;
-        }
-
-        .resources h2 {
-            text-align: center;
-            font-size: 2.5em;
-            color: #0F172A;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .resources .subtitle {
-            text-align: center;
-            font-size: 1.2em;
-            color: #475569;
-            margin-bottom: 50px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .resources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .resource-card {
-            background: white;
-            border: 2px solid #E2E8F0;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .resource-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-            border-color: #0EA5E9;
-        }
-
-        .resource-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
-        }
-
-        .resource-icon {
-            font-size: 3em;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .resource-card h3 {
-            font-size: 1.4em;
+            font-size: 1.35em;
             color: #0F172A;
             margin-bottom: 15px;
             font-weight: 600;
+            line-height: 1.3;
         }
 
-        .resource-card p {
-            color: #64748B;
+        .step p {
+            color: #475569;
             line-height: 1.6;
-            margin-bottom: 25px;
+            font-size: 1.05em;
+            margin-bottom: 8px;
         }
 
-        .resource-link {
-            display: inline-block;
-            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .step ul {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0 0 0;
+            text-align: left;
         }
 
-        .resource-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
-        }
-
-        /* Mobile responsive */
-        @media (max-width: 768px) {
-            .resources h2 {
-                font-size: 2em;
-            }
-
-            .resources-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Footer */
-        footer {
-            padding: 40px 0;
-            background: #0F172A;
-            text-align: center;
-        }
-
-        .footer-logo {
-            margin-bottom: 20px;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.7);
+        .step li {
+            color: #475569;
             font-size: 0.95em;
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
         }
 
-        /* Responsive */
+        .step li::before {
+            content: "•";
+            color: #0EA5E9;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .step-time {
+            display: inline-block;
+            background: #E0F2FE;
+            color: #0369A1;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Trust Badge */
+        .trust-badge {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .trust-badge-stars {
+            margin-bottom: 10px;
+        }
+
+        .trust-badge p {
+            color: #64748B;
+            font-size: 1em;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #0F172A;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #E2E8F0;
+            padding: 25px 0;
+        }
+
+        .faq-question {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #0F172A;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: "+";
+            font-size: 1.5em;
+            color: #0EA5E9;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-top: 15px;
+        }
+
+        .faq-answer p {
+            color: #475569;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2em;
@@ -510,18 +333,29 @@
                 font-size: 1.1em;
             }
 
-            .features h2,
+            .cta-button {
+                font-size: 1.1em;
+                padding: 14px 35px;
+            }
+
+            .trust-signals {
+                flex-direction: column;
+                gap: 10px;
+            }
+
             .how-it-works h2,
-            .cta h2 {
+            .faq-section h2 {
                 font-size: 2em;
             }
 
-            .radio-group {
-                flex-direction: column;
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
 
-            .radio-option {
-                width: 100%;
+            .beta-badge {
+                font-size: 0.75em;
+                padding: 5px 10px;
             }
         }
     </style>
@@ -531,23 +365,19 @@
     <!-- Header -->
     <header>
         <div class="container">
-            <div class="logo">
-                <svg width="140" height="100" viewBox="0 0 140 100">
-                    <!-- Logo Mark Centered -->
-                    <circle cx="50" cy="35" r="8" fill="#0EA5E9" />
-                    <path d="M 60 35 L 85 35" stroke="url(#grad-header)" stroke-width="4" />
-                    <path d="M 78 27 L 88 35 L 78 43" fill="none" stroke="#1E40AF" stroke-width="4"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <defs>
-                        <linearGradient id="grad-header" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <!-- Wordmark Below -->
-                    <text x="70" y="75" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="32"
-                        font-weight="600" fill="#0F172A" text-anchor="middle">carbi</text>
-                </svg>
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="110" height="40" viewBox="0 0 110 40">
+                        <circle cx="20" cy="20" r="6" fill="#0EA5E9" />
+                        <path d="M 38 14 L 45 20 L 38 26" fill="none" stroke="#1E40AF" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <text x="58" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto"
+                            font-size="20" font-weight="600" fill="#0F172A">carbi</text>
+                    </svg>
+                </div>
+                <div class="beta-badge">
+                    Beta - Limited Spots
+                </div>
             </div>
         </div>
     </header>
@@ -555,127 +385,17 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>We're Building Something New</h1>
-            <p class="subtitle">We're creating a new system to help young drivers and their parents find the perfect
-                first car. We need young people, parents, and dealers to help us test early versions and shape the
-                future of first car buying.</p>
+            <h1>The New Way To Find A First Car</h1>
+            <p class="subtitle">
+                Stop wasting weeks searching online.
+            </p>
 
-            <form class="signup-form" id="hero-form" action="https://app.kit.com/forms/8431468/subscriptions"
-                method="post">
-                <div class="form-group">
-                    <label class="form-label">I am a...</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="young-driver-1" name="fields[user_type]" value="Young Driver"
-                                required>
-                            <label for="young-driver-1">Young Driver</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="parent-1" name="fields[user_type]" value="Parent" required>
-                            <label for="parent-1">Parent</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="dealer-1" name="fields[user_type]" value="Car Dealer" required>
-                            <label for="dealer-1">Car Dealer</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="email-1">Email Address</label>
-                    <input type="email" id="email-1" name="email_address" class="email-input"
-                        placeholder="Enter your email" required>
-                </div>
-                <button type="submit" class="submit-btn">Join as Early Tester</button>
-            </form>
-        </div>
-    </section>
-    <!-- Resources Section -->
-    <section class="resources">
-        <div class="container">
-            <h2>Help for First Car Buyers</h2>
-            <p class="subtitle">Guides and tools to help you make the right choice and avoid costly mistakes</p>
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <span class="resource-icon">📚</span>
-                    <h3>Low Insurance Group Cars Guide</h3>
-                    <p>Find the best insurance group 1-10 cars for young drivers in 2025.</p>
-                    <a href="/blog/low-insurance-group-cars-2025.html" class="resource-link">Read the Guide</a>
-                </div>
-                <div class="resource-card">
-                    <span class="resource-icon">🚗</span>
-                    <h3>Car Viewing Checklist</h3>
-                    <p>Know exactly what to look for when viewing
-                        your first car. Everything from paperwork to test drives.</p>
-                    <a href="/downloads/car-viewing-checklist/index.html" class="resource-link">Get Checklist</a>
-                </div>
-                <div class="resource-card">
-                    <span class="resource-icon">💰</span>
-                    <h3>First Car Budget Calculator</h3>
-                    <p>Work out your true first year costs including insurance, tax, MOT and maintenance. </p>
-                    <a href="/downloads/budget-calculator/index.html" class="resource-link">Calculate Costs</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <h2>How We're Different</h2>
-            <p class="subtitle">We solve the first car puzzle by finding cars that balance what young drivers want with
-                what parents need. All from trusted local dealers.</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
-                            <path d="M20 5 L25 15 L35 15 L27 22 L30 32 L20 25 L10 32 L13 22 L5 15 L15 15 Z"
-                                stroke="white" stroke-width="2" fill="none" />
-                            <path d="M15 18 L18 21 L25 14" stroke="white" stroke-width="2.5" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                    <h3>Trusted Local Dealers</h3>
-                    <p>We only work with reputable local dealers we'd trust with our own families, vetted for
-                        exceptional customer service.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
-                            <!-- Piggy bank body -->
-                            <ellipse cx="20" cy="22" rx="12" ry="10" stroke="white" stroke-width="2" fill="none" />
-                            <!-- Coin slot on top -->
-                            <rect x="18" y="12" width="4" height="1" fill="white" />
-                            <!-- Snout -->
-                            <ellipse cx="30" cy="22" rx="4" ry="3" stroke="white" stroke-width="2" fill="none" />
-                            <!-- Legs -->
-                            <line x1="14" y1="30" x2="14" y2="34" stroke="white" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="18" y1="31" x2="18" y2="35" stroke="white" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="22" y1="31" x2="22" y2="35" stroke="white" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="26" y1="30" x2="26" y2="34" stroke="white" stroke-width="2"
-                                stroke-linecap="round" />
-                            <!-- Coin going in -->
-                            <circle cx="20" cy="8" r="3" stroke="white" stroke-width="1.5" fill="none" />
-                        </svg>
-                    </div>
-                    <h3>Insurance First Search</h3>
-                    <p>We know insurance can cost more than the car itself for young drivers, so we only show you low
-                        insurance group vehicles.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="white">
-                            <circle cx="20" cy="15" r="6" stroke="white" stroke-width="2" fill="none" />
-                            <path d="M20 21 C12 21 8 27 8 33" stroke="white" stroke-width="2" fill="none" />
-                            <circle cx="30" cy="15" r="4" stroke="white" stroke-width="2" fill="none" />
-                            <path d="M30 19 C35 19 38 23 38 27" stroke="white" stroke-width="2" fill="none" />
-                        </svg>
-                    </div>
-                    <h3>Personal Matching</h3>
-                    <p>We do the legwork to find cars that work for your family, then arrange viewings with dealers who
-                        have them. No endless browsing or wasted trips.</p>
-                </div>
+            <a href="get-matched.html" class="cta-button">Find My Car</a>
+
+            <div class="trust-signals">
+                <div class="trust-signal">24-hour matches</div>
+                <div class="trust-signal">Low insurance groups</div>
+                <div class="trust-signal">4.6★+ dealers only</div>
             </div>
         </div>
     </section>
@@ -683,174 +403,221 @@
     <!-- How It Works Section -->
     <section class="how-it-works">
         <div class="container">
-            <h2>How Carbi Works</h2>
+            <h2>How It Works</h2>
+
             <div class="steps">
+                <!-- Step 1: What You Want -->
                 <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Share Your Needs</h3>
-                    <p>Tell us your budget, location and what matters most to you in your first car.</p>
+                    <div class="step-icon">
+                        <img src="images/step1-car.png" alt="Your ideal first car">
+                    </div>
+                    <h3>1. Tell Us What's Important</h3>
+                    <p>Quick form (no endless scrolling)</p>
+                    <span class="step-time">Takes 2 minutes</span>
                 </div>
+
+                <!-- Step 2: We Search For It -->
                 <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>We Search Locally</h3>
-                    <p>Our system checks trusted local dealers for cars that match your criteria and insurance budget.
-                    </p>
+                    <div class="step-icon">
+                        <img src="images/step2-search.png" alt="We search for your car">
+                    </div>
+                    <h3>2. We Do The Legwork</h3>
+                    <p>Checking 100s of trusted dealers (low insurance groups only)</p>
                 </div>
+
+                <!-- Step 3: You Get The Car -->
                 <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>See Costs and Connect</h3>
-                    <p>See your matched car with estimated first year costs then connect directly with the dealer who
-                        has what you want.</p>
+                    <div class="step-icon">
+                        <img src="images/step3-handshake.png" alt="Deal done with trusted dealer">
+                    </div>
+                    <h3>3. Get Your Match</h3>
+                    <p>24-hour match (no pushy sales)</p>
                 </div>
+            </div>
+
+            <!-- Trust Badge Below Steps -->
+            <div class="trust-badge">
+                <div class="trust-badge-stars">
+                    <svg width="150" height="30" viewBox="0 0 150 30" fill="none">
+                        <!-- 4 full stars + 1 at 60% -->
+                        <path d="M 5 5 L 7 11 L 13 11 L 8 15 L 10 21 L 5 17 L 0 21 L 2 15 L -3 11 L 3 11 Z"
+                            fill="#F59E0B" />
+                        <path d="M 35 5 L 37 11 L 43 11 L 38 15 L 40 21 L 35 17 L 30 21 L 32 15 L 27 11 L 33 11 Z"
+                            fill="#F59E0B" />
+                        <path d="M 65 5 L 67 11 L 73 11 L 68 15 L 70 21 L 65 17 L 60 21 L 62 15 L 57 11 L 63 11 Z"
+                            fill="#F59E0B" />
+                        <path d="M 95 5 L 97 11 L 103 11 L 98 15 L 100 21 L 95 17 L 90 21 L 92 15 L 87 11 L 93 11 Z"
+                            fill="#F59E0B" />
+                        <defs>
+                            <linearGradient id="partialStarFill" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="60%" style="stop-color:#F59E0B;stop-opacity:1" />
+                                <stop offset="60%" style="stop-color:#E2E8F0;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path
+                            d="M 125 5 L 127 11 L 133 11 L 128 15 L 130 21 L 125 17 L 120 21 L 122 15 L 117 11 L 123 11 Z"
+                            fill="url(#partialStarFill)" />
+                    </svg>
+                </div>
+                <p>We only work with trusted dealers rated 4.6+ stars</p>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
+    <!-- FAQ Section -->
+    <section class="faq-section">
         <div class="container">
-            <h2>Help Us Build the Future</h2>
-            <p>Be part of creating a better way to buy your first car</p>
+            <h2>Frequently Asked Questions</h2>
 
-            <form class="signup-form" id="cta-form" action="https://app.kit.com/forms/8431468/subscriptions"
-                method="post">
-                <div class="form-group">
-                    <label class="form-label">I am a...</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="young-driver-2" name="fields[user_type]" value="Young Driver"
-                                required>
-                            <label for="young-driver-2">Young Driver</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="parent-2" name="fields[user_type]" value="Parent" required>
-                            <label for="parent-2">Parent</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="dealer-2" name="fields[user_type]" value="Car Dealer" required>
-                            <label for="dealer-2">Car Dealer</label>
-                        </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">What is Carbi?</div>
+                    <div class="faq-answer">
+                        <p>Carbi matches young drivers with their first car from trusted local dealers. Fill in
+                            a quick form, we check hundreds of dealers for low insurance cars and you get matched
+                            within 24 hours. No endless scrolling or no pushy sales guys.</p>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label" for="email-2">Email Address</label>
-                    <input type="email" id="email-2" name="email_address" class="email-input"
-                        placeholder="Enter your email" required>
+
+                <div class="faq-item">
+                    <div class="faq-question">Do I have to pay to use Carbi?</div>
+                    <div class="faq-answer">
+                        <p>Not while we're in BETA phase and learning. In the future, car buyers or dealers
+                            might pay a small fee. For now, you pay the dealer for the car that's it.</p>
+                    </div>
                 </div>
-                <button type="submit" class="submit-btn">Become an Early Tester</button>
-            </form>
+
+                <div class="faq-item">
+                    <div class="faq-question">How quickly will I hear from a dealer?</div>
+                    <div class="faq-answer">
+                        <p>We'll start looking for your car as soon as you submit the form. If we find a match, we'll be
+                            in touch within
+                            24 hours and the trusted dealer will reach out so you can arrange a viewing.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What if I don't like the car you find?</div>
+                    <div class="faq-answer">
+                        <p>Just let us know and we'll keep searching. There's no obligation to buy and we won't stop
+                            until you find the right car. That said, we put a lot of effort into matching based on your
+                            specific requirements, so we're hopeful that your first match will be a good one.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Do you only work with trusted dealers?</div>
+                    <div class="faq-answer">
+                        <p>Yes. Every dealer must have at least 4.6 stars in online ratings. If any customer has a bad
+                            experience with a dealer we recommended, they'll be removed from our list.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Why should I trust Carbi?</div>
+                    <div class="faq-answer">
+                        <p>We're unbiased and want the same as you - to find the best car for your needs.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Do you make money from the dealers?</div>
+                    <div class="faq-answer">
+                        <p>Not while we're in the testing phase. In the future we might charge dealers a small fee for
+                            finding them a customer.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Will I get pressured to buy?</div>
+                    <div class="faq-answer">
+                        <p>No. If a dealer pressures you to buy, let us know and we'll stop recommending them.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How does Carbi choose which cars to recommend?</div>
+                    <div class="faq-answer">
+                        <p>We start with a list of available, low insurance group cars at trusted dealers within your
+                            search
+                            radius. Then we look at your individual requirements and find the best match.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Why not use Autotrader?</div>
+                    <div class="faq-answer">
+                        <p>AutoTrader is good if you already know exactly what you want. But it can be complicated and
+                            it shows you thousands of cars. We
+                            pre-filter for young driver friendly, low insurance group cars and quickliy find a single
+                            closest match instead of weeks of
+                            searching. Plus, not all dealers list all their cars on AutoTrader because it's expensive.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Why not go to a local dealer?</div>
+                    <div class="faq-answer">
+                        <p>We'll connect you with a trusted local dealer who has the best match for what you're looking
+                            for, once we've done the legwork. Or you can do that legwork yourself and take a bit longer.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Should I buy privately?</div>
+                    <div class="faq-answer">
+                        <p>If you know exactly what you're looking for, you can save a bit of money buying privately. It
+                            comes with more risk though - no warranties and you can't take it back.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-logo">
-                <svg width="100" height="60" viewBox="0 0 100 60">
-                    <!-- Logo Mark -->
-                    <circle cx="30" cy="30" r="6" fill="#0EA5E9" />
-                    <path d="M 38 30 L 53 30" stroke="white" stroke-width="3" />
-                    <path d="M 48 24 L 55 30 L 48 36" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    <!-- Wordmark -->
-                    <text x="50" y="50" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="20"
-                        font-weight="600" fill="white" text-anchor="middle">carbi</text>
-                </svg>
-            </div>
-            <p>&copy; 2025 Carbi. All rights reserved. Making first cars happen.</p>
-        </div>
-    </footer>
-
     <script>
-        // Handle form submissions for ConvertKit
-        function handleFormSubmit(e) {
-            const form = e.target;
-            const formId = form.id;
-            const userTypeInput = form.querySelector('input[name="fields[user_type]"]:checked');
-            const emailInput = form.querySelector('input[name="email_address"]');
-            const button = form.querySelector('.submit-btn');
-            const originalText = button.textContent;
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const wasActive = faqItem.classList.contains('active');
 
-            // Check if user type is selected
-            if (!userTypeInput) {
-                e.preventDefault();
-                alert('Please select who you are (Young Driver, Parent, or Car Dealer)');
-                return false;
-            }
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
 
-            // Check email validity
-            if (!emailInput.value || emailInput.value.trim() === '') {
-                e.preventDefault();
-                alert('Please enter your email address');
-                emailInput.focus();
-                return false;
-            }
-
-            // Basic email validation
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(emailInput.value)) {
-                e.preventDefault();
-                alert('Please enter a valid email address');
-                emailInput.focus();
-                return false;
-            }
-
-            // Get user type for personalized message
-            const userType = userTypeInput.value;
-
-            // Success message based on user type
-            let successMessage = '';
-            if (userType === 'Young Driver') {
-                successMessage = 'Awesome! Early access coming soon!';
-            } else if (userType === 'Parent') {
-                successMessage = 'Perfect! We\'ll be in touch!';
-            } else if (userType === 'Car Dealer') {
-                successMessage = 'Great! Partnership info coming!';
-            } else {
-                successMessage = 'Thanks! We\'ll be in touch!';
-            }
-
-            // Show success on button after form submission
-            setTimeout(function () {
-                button.textContent = successMessage;
-                button.style.cssText = 'background: #0EA5E9 !important; color: white !important;';
-                button.disabled = true;
-
-                // Reset after 4 seconds
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.cssText = '';
-                    button.disabled = false;
-                    form.reset();
-                }, 4000);
-            }, 100);
-
-            // Allow form to submit to ConvertKit
-            return true;
-        }
-
-        // Attach event listeners when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function () {
-            // Get both forms
-            const heroForm = document.getElementById('hero-form');
-            const ctaForm = document.getElementById('cta-form');
-
-            // Add submit handlers
-            if (heroForm) {
-                heroForm.addEventListener('submit', handleFormSubmit);
-            }
-
-            if (ctaForm) {
-                ctaForm.addEventListener('submit', handleFormSubmit);
-            }
-
-            // Test that script is running
-            console.log('ConvertKit forms initialized:', {
-                heroForm: !!heroForm,
-                ctaForm: !!ctaForm
+                // Open clicked item if it wasn't active
+                if (!wasActive) {
+                    faqItem.classList.add('active');
+                }
             });
         });
     </script>
+
+    <!-- Footer -->
+    <footer style="background: #0F172A; padding: 40px 0; margin-top: 80px;">
+        <div class="container">
+            <div style="text-align: center;">
+                <!-- Logo -->
+                <div style="margin-bottom: 20px;">
+                    <svg width="100" height="40" viewBox="0 0 110 40">
+                        <circle cx="20" cy="20" r="6" fill="#0EA5E9" />
+                        <path d="M 38 14 L 45 20 L 38 26" fill="none" stroke="#0EA5E9" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <text x="58" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto"
+                            font-size="20" font-weight="600" fill="white">carbi</text>
+                    </svg>
+                </div>
+
+                <!-- Copyright -->
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin: 0;">
+                    © 2025 Carbi. Making first cars happen.
+                </p>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
