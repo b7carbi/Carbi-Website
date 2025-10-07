@@ -1901,6 +1901,12 @@
                 document.getElementById('matchForm').style.display = 'none';
                 document.getElementById('successScreen').classList.add('active');
 
+                // Scroll to top to show success message
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+
             } catch (error) {
                 console.error('Submission error:', error);
 
