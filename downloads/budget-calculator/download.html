@@ -27,6 +27,12 @@
             margin-bottom: 30px;
         }
 
+        .main-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+        }
+
         h1 {
             color: #0F172A;
             margin-bottom: 20px;
@@ -40,7 +46,7 @@
         }
 
         .download-button {
-            background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%);
+            background: #0EA5E9;
             color: white;
             padding: 15px 30px;
             border: none;
@@ -50,6 +56,13 @@
             text-decoration: none;
             display: inline-block;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-button:hover {
+            background: #1E40AF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
         }
 
         .spinner {
@@ -70,6 +83,62 @@
             100% {
                 transform: rotate(360deg);
             }
+        }
+
+        /* Other Downloads Section */
+        .other-downloads {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #E2E8F0;
+        }
+
+        .other-downloads h3 {
+            color: #0F172A;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .download-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8fafc;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        .download-link:hover {
+            border-color: #0EA5E9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+        }
+
+        .download-link img {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+
+        .download-link-text {
+            text-align: left;
+            flex: 1;
+        }
+
+        .download-link-title {
+            color: #0F172A;
+            font-weight: 600;
+            font-size: 1em;
+            margin-bottom: 2px;
+        }
+
+        .download-link-desc {
+            color: #64748B;
+            font-size: 0.9em;
         }
     </style>
 </head>
@@ -95,7 +164,9 @@
             </svg>
         </div>
 
-        <h1>📊 Budget Calculator Download</h1>
+        <img src="/images/calculator-icon.png" alt="" class="main-icon">
+
+        <h1>Budget Calculator Download</h1>
         <p>Your download should start automatically...</p>
         <div class="spinner"></div>
         <p>If the download doesn't start, click the button below:</p>
@@ -104,7 +175,29 @@
         <p style="margin-top: 30px; font-size: 0.9em;">
             <strong>How to use:</strong> Open with Excel or Google Sheets and follow the instructions tab to calculate
             your true first-year costs.
+            your phone.
         </p>
+
+        <!-- Other Downloads Section -->
+        <div class="other-downloads">
+            <h3>Other Helpful Tools</h3>
+
+            <a href="/downloads/car-viewing-checklist/checklist.html" class="download-link">
+                <img src="/images/viewing-checklist-icon.png" alt="">
+                <div class="download-link-text">
+                    <div class="download-link-title">Car Viewing Checklist</div>
+                    <div class="download-link-desc">Don't buy a lemon</div>
+                </div>
+            </a>
+
+            <a href="/downloads/quote-comparison/download.html" class="download-link">
+                <img src="/images/Insurance-comparison-icon.png" alt="">
+                <div class="download-link-text">
+                    <div class="download-link-title">Insurance Quote Comparison</div>
+                    <div class="download-link-desc">Compare quotes side by side</div>
+                </div>
+            </a>
+        </div>
     </div>
 
     <script>
