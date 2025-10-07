@@ -242,29 +242,30 @@ Or download CSV: ${pageUrl}`,
                         url: pageUrl
                     }).catch((error) => {
                         console.log('Share cancelled');
-                    });else {
-                        // Fallback to mailto for browsers without Share API
-                        const subject = 'Carbi Budget Calculator';
-                        const body = `Here's your Carbi Budget Calculator download link:\n\n${pageUrl}\n\nOpen this on your laptop to download the spreadsheet.`;
-                        window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                    }
-                }
-
-                if (!isMobile()) {
-                    //desktop auto-download
-                    setTimeout(function () {
-                        window.open("Carbi-1st-Car-Budget-Calculator.csv", "_blank");
-                        document.getElementById('downloadMessage').innerHTML = 'Download started! If it doesn\'t appear, click below:';
-                        document.getElementById('spinner').style.display = 'none';
-                    }, 2000);
+                    });
                 } else {
-                    //mobile show all options
-                    document.getElementById('downloadMessage').style.display = 'none';
-                    document.getElementById('spinner').style.display = 'none';
-                    document.getElementById('manualMessage').style.display = 'block';
-                    document.getElementById('downloadButton').style.display = 'none';
-                    document.getElementById('mobileButtons').style.display = 'block';
+                    // Fallback to mailto for browsers without Share API
+                    const subject = 'Carbi Budget Calculator';
+                    const body = `Here's your Carbi Budget Calculator download link:\n\n${pageUrl}\n\nOpen this on your laptop to download the spreadsheet.`;
+                    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                 }
+            }
+
+            if (!isMobile()) {
+                //desktop auto-download
+                setTimeout(function () {
+                    window.open("Carbi-1st-Car-Budget-Calculator.csv", "_blank");
+                    document.getElementById('downloadMessage').innerHTML = 'Download started! If it doesn\'t appear, click below:';
+                    document.getElementById('spinner').style.display = 'none';
+                }, 2000);
+            } else {
+                //mobile show all options
+                document.getElementById('downloadMessage').style.display = 'none';
+                document.getElementById('spinner').style.display = 'none';
+                document.getElementById('manualMessage').style.display = 'block';
+                document.getElementById('downloadButton').style.display = 'none';
+                document.getElementById('mobileButtons').style.display = 'block';
+            }
         </script>
 
         <!-- Other Downloads Section -->
@@ -290,12 +291,12 @@ Or download CSV: ${pageUrl}`,
     </div>
 
     <script>
-            // Auto-download after 2 seconds except on mobile
-            if (!isMobile()) {
-                setTimeout(function () {
-                    window.location.href = "Carbi-1st-Car-Budget-Calculator.csv";
-                }, 2000);
-            }
+        // Auto-download after 2 seconds except on mobile
+        if (!isMobile()) {
+            setTimeout(function () {
+                window.location.href = "Carbi-1st-Car-Budget-Calculator.csv";
+            }, 2000);
+        }
     </script>
 </body>
 
