@@ -917,18 +917,10 @@
         </div>
     </header>
 
-    <!-- Intro Screen -->
-    <div class="intro-screen" id="introScreen">
-        <div class="container">
-            <h1 class="intro-heading">Let's Find Your Perfect First Car</h1>
-            <p class="intro-subtext">Answer a few questions and we'll match you with the best low-insurance cars from
-                trusted local dealers. Takes about 2 minutes.</p>
-            <button class="get-started-btn" id="getStartedBtn">Get Started</button>
-        </div>
-    </div>
+
 
     <!-- Form -->
-    <div class="form-wrapper hidden" id="formWrapper">
+    <div class="form-wrapper active" id="formWrapper">
         <div class="container">
             <form id="matchForm">
                 <!-- Step 1: Important Features -->
@@ -1153,7 +1145,7 @@
         // Initialize form
         document.addEventListener('DOMContentLoaded', function () {
             loadFromLocalStorage();
-            setupGetStarted();
+
             initializeStep1();
             initializeStep3();
             initializeStep4();
@@ -1174,14 +1166,7 @@
 
 
 
-        // Get Started Button
-        function setupGetStarted() {
-            document.getElementById('getStartedBtn').addEventListener('click', () => {
-                document.getElementById('introScreen').classList.add('hidden');
-                document.getElementById('formWrapper').classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
+
 
         // Helper: Format number with commas
         function formatNumber(num) {
