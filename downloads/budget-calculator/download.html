@@ -167,19 +167,51 @@
         </div>
 
         <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
-            <img src="/images/calculator-icon.png" alt="" style="width: 48px; height: 48px;">
+            <img src="/images/icon-calculator.png" alt="" style="width: 48px; height: 48px;">
             <h1 style="margin: 0;">Budget Calculator Download</h1>
         </div>
-        <p>Your download should start automatically...</p>
-        <div class="spinner"></div>
-        <p>If the download doesn't start, click the button below:</p>
-        <a href="Carbi-1st-Car-Budget-Calculator.csv" class="download-button" download>Download Budget Calculator</a>
 
-        <p style="margin-top: 30px; font-size: 0.9em;">
-            <strong>How to use:</strong> Open with Excel or Google Sheets and follow the instructions tab to calculate
-            your realistic first year costs.
+        <p id="downloadMessage">Your download should start automatically...</p>
+        <div class="spinner" id="spinner"></div>
+        <p id="manualMessage" style="display: none;">Choose how to access:</p>
 
-        </p>
+        <!-- Desktop button -->
+        <a href="Carbi-Budget-Calculator.csv" class="download-button" id="downloadButton" download>Download Budget
+            Calculator</a>
+
+        <!-- Mobile buttons -->
+        <div id="mobileButtons" style="display: none;">
+            <a href="https://docs.google.com/spreadsheets/d/YOUR_CALCULATOR_SHEET_ID/copy" class="download-button"
+                target="_blank" style="margin-bottom: 12px;">
+                Open in Google Sheets
+            </a>
+            <a href="Carbi-Budget-Calculator.csv" class="download-button" download
+                style="background: white; color: #0EA5E9; border: 2px solid #0EA5E6;">
+                Download CSV
+            </a>
+        </div>
+
+        <script>
+            function isMobile() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            }
+
+            if (!isMobile()) {
+                setTimeout(function () {
+                    window.open("Carbi-Budget-Calculator.csv", "_blank");
+                    document.getElementById('downloadMessage').innerHTML = 'Download started! If it doesn\'t appear, click below:';
+                    document.getElementById('spinner').style.display = 'none';
+                }, 2000);
+            } else {
+                document.getElementById('downloadMessage').style.display = 'none';
+                document.getElementById('spinner').style.display = 'none';
+                document.getElementById('manualMessage').style.display = 'block';
+                document.getElementById('downloadButton').style.display = 'none';
+                document.getElementById('mobileButtons').style.display = 'flex';
+                document.getElementById('mobileButtons').style.flexDirection = 'column';
+                document.getElementById('mobileButtons').style.gap = '12px';
+            }
+        </script>
 
         <!-- Other Downloads Section -->
         <div class="other-downloads">
