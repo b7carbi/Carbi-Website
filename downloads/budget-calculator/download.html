@@ -81,6 +81,16 @@
             }
         }
 
+        /* Consistent mobile button styling */
+        #mobileButtons .download-button,
+        #mobileButtons button.download-button {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            padding: 15px 30px;
+        }
+
         /* Other Downloads Section */
         .other-downloads {
             margin-top: 40px;
@@ -186,7 +196,8 @@
             <div
                 style="background: #f8fafc; border: 2px solid #E2E8F0; border-radius: 10px; padding: 15px; margin-bottom: 12px;">
                 <a href="https://docs.google.com/spreadsheets/d/17b6We6Z6oKr5vX4QjDDmqM3NoEQ5bn-GbkYV451_t4Q/copy"
-                    class="download-button" target="_blank" style="margin-bottom: 10px; width: 100%;">
+                    class="download-button" target="_blank"
+                    style="background: #0EA5E9; color: white; margin-bottom: 10px; display: block; box-sizing: border-box;">
                     Open in Google Sheets
                 </a>
                 <p style="font-size: 0.85em; color: #64748B; margin: 0; line-height: 1.4;">
@@ -198,7 +209,7 @@
             <div
                 style="background: #f8fafc; border: 2px solid #E2E8F0; border-radius: 10px; padding: 15px; margin-bottom: 12px;">
                 <a href="Carbi-1st-Car-Budget-Calculator.csv" class="download-button" download
-                    style="background: white; color: #0EA5E9; border: 2px solid #0EA5E9; width: 100%; margin-bottom: 10px;">
+                    style="background: white; color: #0EA5E9; border: 2px solid #0EA5E9; margin-bottom: 10px; display: block; box-sizing: border-box; font-weight: 600;">
                     Download CSV
                 </a>
                 <p style="font-size: 0.85em; color: #64748B; margin: 0; line-height: 1.4;">
@@ -209,7 +220,7 @@
             <!-- Option 3: Share Link -->
             <div style="background: #f8fafc; border: 2px solid #E2E8F0; border-radius: 10px; padding: 15px;">
                 <button onclick="shareLink()" class="download-button"
-                    style="background: white; color: #0EA5E9; border: 2px solid #0EA5E9; width: 100%; margin-bottom: 10px;">
+                    style="background: white; color: #0EA5E9; border: 2px solid #0EA5E9; margin-bottom: 10px; display: block; box-sizing: border-box; font-weight: 600;">
                     Share Link
                 </button>
                 <p style="font-size: 0.85em; color: #64748B; margin: 0; line-height: 1.4;">
@@ -239,7 +250,7 @@
 Google Sheets: ${googleSheetsUrl}
 
 Or download CSV: ${pageUrl}`,
-                        url: pageUrl
+
                     }).catch((error) => {
                         console.log('Share cancelled');
                     });
