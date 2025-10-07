@@ -812,6 +812,19 @@
             margin: 0 auto 30px;
         }
 
+        /* Lead Magnet Download Links */
+        .success-screen a[download],
+        .success-screen a[target="_blank"] {
+            transition: all 0.3s ease;
+        }
+
+        .success-screen a[download]:hover,
+        .success-screen a[target="_blank"]:hover {
+            border-color: #0EA5E9 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+        }
+
         .home-button {
             display: inline-block;
             padding: 15px 40px;
@@ -1086,9 +1099,54 @@
                     </svg>
                 </div>
                 <h2 class="success-heading">Thanks!</h2>
-                <p class="success-text">We're finding your perfect match. We'll be in touch within 24 hours with cars
-                    that meet your needs.</p>
-                <a href="landing.html" class="home-button">Back to Home</a>
+                <p class="success-text">We're looking for your perfect match. We'll be in touch within 24 hours with
+                    cars that meet your needs.</p>
+
+                <!-- Lead Magnets Section -->
+                <div style="margin: 40px 0; padding: 30px; background: #f8fafc; border-radius: 12px;">
+                    <h3 style="font-size: 1.3em; color: #0F172A; margin-bottom: 20px; font-weight: 600;">
+                        🎁 Free Tools to Help You
+                    </h3>
+                    <p style="color: #64748B; margin-bottom: 25px; font-size: 1em;">
+                        While we find your match, download these helpful resources:
+                    </p>
+
+                    <div style="display: grid; gap: 15px; max-width: 500px; margin: 0 auto;">
+                        <a href="/Lead Magnet - Carbi 1st Car Budget Calculator - Calculator.csv"
+                            download="Carbi-Budget-Calculator.csv"
+                            style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
+                            <span style="font-size: 1.8em;">📊</span>
+                            <div style="text-align: left; flex: 1;">
+                                <div style="color: #0F172A; font-weight: 600; font-size: 1em;">Budget Calculator</div>
+                                <div style="color: #64748B; font-size: 0.9em;">Work out your total first year costs
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="/Lead Magnet - Carbi Quote Comparison Template - Quote Comparison.csv"
+                            download="Carbi-Insurance-Quote-Comparison.csv"
+                            style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
+                            <span style="font-size: 1.8em;">💷</span>
+                            <div style="text-align: left; flex: 1;">
+                                <div style="color: #0F172A; font-weight: 600; font-size: 1em;">Insurance Quote
+                                    Comparison</div>
+                                <div style="color: #64748B; font-size: 0.9em;">Compare quotes side by side</div>
+                            </div>
+                        </a>
+
+                        <a href="/Lead Magnet - car_viewing_checklist_pdf.html" target="_blank"
+                            style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
+                            <span style="font-size: 1.8em;">✅</span>
+                            <div style="text-align: left; flex: 1;">
+                                <div style="color: #0F172A; font-weight: 600; font-size: 1em;">Car Viewing Checklist
+                                </div>
+                                <div style="color: #64748B; font-size: 0.9em;">Don't miss any red flags</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="landing.html" class="home-button" style="margin-top: 20px;">Back to Home</a>
             </div>
         </div>
     </div>
