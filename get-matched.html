@@ -106,6 +106,17 @@
             animation: wink 15s ease-in-out 3s infinite;
         }
 
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .logo a:hover {
+            opacity: 0.8;
+        }
+
         @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap');
 
         .beta-badge {
@@ -915,13 +926,15 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <svg width="110" height="40" viewBox="0 0 110 40">
-                        <circle cx="20" cy="20" r="6" fill="#0EA5E9" />
-                        <path d="M 38 14 L 45 20 L 38 26" fill="none" stroke="#1E40AF" stroke-width="3"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                        <text x="58" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto"
-                            font-size="20" font-weight="600" fill="#0F172A">carbi</text>
-                    </svg>
+                    <a href="https://carbi.co" style="display: flex; align-items: center; text-decoration: none;">
+                        <svg width="110" height="40" viewBox="0 0 110 40">
+                            <circle cx="20" cy="20" r="6" fill="#0EA5E9" />
+                            <path d="M 38 14 L 45 20 L 38 26" fill="none" stroke="#1E40AF" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <text x="58" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto"
+                                font-size="20" font-weight="600" fill="#0F172A">carbi</text>
+                        </svg>
+                    </a>
                 </div>
                 <div class="beta-badge">
                     BETA - LMITED SPOTS
@@ -1099,7 +1112,8 @@
                     </svg>
                 </div>
                 <h2 class="success-heading">Thanks!</h2>
-                <p class="success-text">We're looking for your perfect match. \n We'll be in touch within 24 hours.</p>
+                <p class="success-text">We're looking for your perfect match. <br> We'll be in touch within 24 hours.
+                </p>
 
                 <!-- Lead Magnets Section -->
                 <div style="margin: 40px 0; padding: 30px; background: #f8fafc; border-radius: 12px;">
@@ -1107,11 +1121,10 @@
                         Car Buying Toolkit
                     </h3>
                     <p style="color: #64748B; margin-bottom: 25px; font-size: 1em;">
-                        Here are some spreadsheets and a checklist to help you get behind the wheel:
+                        Here are some spreadsheets and a checklist to help you get behind the wheel.
                     </p>
 
-                    <a href="/Lead Magnet - Carbi 1st Car Budget Calculator - Calculator.csv"
-                        download="Carbi-Budget-Calculator.csv"
+                    <a href="/downloads/budget-calculator/download.html" download="Carbi-Budget-Calculator.csv"
                         style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
                         <img src="/images/calculator-icon.png" alt=""
                             style="width: 48px; height: 48px; flex-shrink: 0;">
@@ -1122,8 +1135,7 @@
                     </a>
 
 
-                    <a href="/Lead Magnet - Carbi Quote Comparison Template - Quote Comparison.csv"
-                        download="Carbi-Insurance-Quote-Comparison.csv"
+                    <a href="/downloads/quote-comparison/download.html" download="Carbi-Insurance-Quote-Comparison.csv"
                         style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
                         <img src="/images/Insurance-comparison-icon.png" alt=""
                             style="width: 48px; height: 48px; flex-shrink: 0;">
@@ -1135,20 +1147,20 @@
                     </a>
 
 
-                    <a href="/Lead Magnet - car_viewing_checklist_pdf.html"
+                    <a href="/downloads/car-viewing-checklist/checklist.html"
                         style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
                         <img src="/images/viewing-checklist-icon.png" alt=""
                             style="width: 48px; height: 48px; flex-shrink: 0;">
                         <div style="text-align: left; flex: 1;">
-                            <div style="color: #0F172A; font-weight: 600; font-size: 1em;">ar Viewing Checklist</div>
-                            <div style="color: #64748B; font-size: 0.9em;">Don't miss any red flags</div>
+                            <div style="color: #0F172A; font-weight: 600; font-size: 1em;">Car Viewing Checklist</div>
+                            <div style="color: #64748B; font-size: 0.9em;">Don't buy a lemon</div>
                         </div>
                     </a>
 
                 </div>
             </div>
 
-            <a href="landing.html" class="home-button" style="margin-top: 20px;">Back to Home</a>
+
         </div>
     </div>
     </div>
