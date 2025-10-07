@@ -228,12 +228,13 @@
 
             function shareLink() {
                 const pageUrl = window.location.href;
+                const googleSheetsUrl = 'https://docs.google.com/spreadsheets/d/17b6We6Z6oKr5vX4QjDDmqM3NoEQ5bn-GbkYV451_t4Q/copy'
 
                 // Check if Web Share API is available
                 if (navigator.share) {
                     navigator.share({
                         title: 'Carbi Budget Calculator',
-                        text: 'Download the Carbi Budget Calculator spreadsheet',
+                        text: `Carbi Budget Calculator\n\nGoogle Sheets: ${googleSheetsUrl}\n\nOr download CSV: ${pageUrl}`,
                         url: pageUrl
                     }).catch((error) => {
                         console.log('Share cancelled');
