@@ -90,7 +90,7 @@ export default async function handler(req, res) {
     }
 
     // Main driver validation
-    if (!body.main_driver_type || !['young_driver', 'older_driver', 'not_sure'].includes(body.main_driver_type)) {
+    if (!formData.main_driver_type || !['young_driver', 'older_driver', 'not_sure'].includes(formData.main_driver_type)) {
       return res.status(400).json({
         success: false,
         error: 'Invalid or missing main driver type'
@@ -109,6 +109,7 @@ export default async function handler(req, res) {
       // Car preferences
       important_features: formData.important_features,
       dealbreakers: formData.dealbreakers || [],
+      main_driver_type: formData.main_driver_type,
 
       // Budget
       budget_min: formData.budget_min,
