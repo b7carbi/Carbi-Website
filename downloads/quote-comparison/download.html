@@ -164,24 +164,65 @@
             </svg>
         </div>
 
-        <img src="/images/Insurance-comparison-icon.png" alt="" class="main-icon">
 
-        <h1>Insurance Quote Comparison Download</h1>
-        <p>Your download should start automatically...</p>
-        <div class="spinner"></div>
-        <p>If the download doesn't start, click the button below:</p>
-        <a href="Carbi-Quote-Comparison-Template.csv" class="download-button" download>Download Insurnace Quote
-            Comparison Template</a>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
+            <img src="/images/Insurance-comparison-icon.png" alt="" style="width: 48px; height: 48px;">
+            <h1 style="margin: 0;">Insurance Comparison Download</h1>
+        </div>
 
-        <p style="margin-top: 30px; font-size: 0.9em;">
-            <strong>How to use:</strong> Open with Excel or Google Sheets and fill in the detais of your insurance
-            quotes.
+        <p id="downloadMessage">Download started! If it doesn't appear, click below:</p>
+        <div class="spinner" id="spinner"></div>
+        <p id="manualMessage" style="display: none;">Choose how to access:</p>
 
-        </p>
+        <!-- Desktop button -->
+        <a href="Carbi-Quote-Comparison-Template.csv" class="download-button" id="downloadButton" download>Download
+            Quote Comparison Template</a>
 
-        <!-- Other Downloads Section -->
+        <!-- Mobile buttons -->
+        <div id="mobileButtons" style="display: none;">
+            <!-- Option 1: Google Sheets -->
+            <div
+                style="background: #f8fafc; border: 2px solid #E2E8F0; border-radius: 10px; padding: 15px; margin-bottom: 12px;">
+                <a href="https://docs.google.com/spreadsheets/d/1xi4_IhYWUbG-feol2B-7MipcdViSB0y3_25l_L7kNdA/copy"
+                    class="download-button" target="_blank"
+                    style="background: white; color: #0EA5E9; border: 2px solid #0EA5E9; margin-bottom: 10px; display: block; box-sizing: border-box; font-weight: 600;">
+                    Open in Google Sheets
+                </a>
+                <p style="font-size: 0.85em; color: #64748B; margin: 0; line-height: 1.4;">
+                    Edit online (Google sign-in to save your own copy)
+                </p>
+            </div>
+
+            <!-- Option 2: Download CSV -->
+            <div
+                style="background: #f8fafc; border: 2px solid #E2E8F0; border-radius: 10px; padding: 15px; margin-bottom: 12px;">
+                <a href="Carbi-Quote-Comparison-Template.csv" class="download-button" download
+                    style="background: white; color: #0EA5E9; border: 2px solid #0EA5E9; margin-bottom: 10px; display: block; box-sizing: border-box; font-weight: 600;">
+                    Download CSV
+                </a>
+                <p style="font-size: 0.85em; color: #64748B; margin: 0; line-height: 1.4;">
+                    Open in Excel, Numbers, or any spreadsheet app
+                </p>
+            </div>
+
+            <!-- Option 3: Share Link -->
+            <div style="background: #f8fafc; border: 2px solid #E2E8F0; border-radius: 10px; padding: 15px;">
+                <button onclick="shareLink()" class="download-button"
+                    style="background: white; color: #0EA5E9; border: 2px solid #0EA5E9; margin-bottom: 10px; display: block; box-sizing: border-box; font-weight: 600;">
+                    Share Link
+                </button>
+                <p style="font-size: 0.85em; color: #64748B; margin: 0; line-height: 1.4;">
+                    Email or text this spreadsheet link to yourself
+                </p>
+            </div>
+
+
+
+        </div>
+
+
         <div class="other-downloads">
-            <h3>Other Helpful Tools</h3>
+            <h3>Other Templates</h3>
 
             <a href="/downloads/car-viewing-checklist/checklist.html" class="download-link">
                 <img src="/images/viewing-checklist-icon.png" alt="">
@@ -200,6 +241,7 @@
             </a>
         </div>
     </div>
+
 
     <script>
         // Auto-download after 2 seconds

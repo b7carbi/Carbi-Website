@@ -1104,7 +1104,7 @@
                 <div class="step" id="step5">
                     <h2 class="step-heading">Do you have a favourite?</h2>
                     <p class="step-subtitle">Pick your top choice</p>
-                    <div class="radio-group" id="favouriteGroup"></div>
+                    <div class="button-grid" id="favouriteGroup"></div>
                     <div class="error-message" id="error5"></div>
                     <button type="button" class="primary-button" id="next5" disabled>Next</button>
                 </div>
@@ -1611,67 +1611,47 @@
             nextBtn.disabled = formData.selected_brands.length === 0;
         }
 
-        // Step 5: Favourite Brand (radio selection auto-advances)
+        // Step 5: Favourite Brand
         function initializeStep5() {
             const group = document.getElementById('favouriteGroup');
             group.innerHTML = '';
 
+            // Change from radio-group to button-grid
+            group.className = 'button-grid';
+
             formData.selected_brands.forEach(brand => {
-                const option = document.createElement('div');
-                option.className = 'radio-option';
-
-                const input = document.createElement('input');
-                input.type = 'radio';
-                input.name = 'favourite_brand';
-                input.id = `fav_${brand}`;
-                input.value = brand;
-
-                const label = document.createElement('label');
-                label.className = 'radio-label';
-                label.htmlFor = `fav_${brand}`;
-                label.textContent = brand;
-
-                input.addEventListener('change', () => {
+                const button = createOptionButton(brand);
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Deselect all others
+                    group.querySelectorAll('.option-button').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    // Select this one
+                    button.classList.add('selected');
                     formData.favourite_brand = brand;
                     saveToLocalStorage();
-                    document.getElementById('next5').disabled = false; // Enable Next button
-
-
+                    document.getElementById('next5').disabled = false;
                 });
-
-                option.appendChild(input);
-                option.appendChild(label);
-                group.appendChild(option);
+                group.appendChild(button);
             });
 
             // Add "no favourite" option
-            const noFavOption = document.createElement('div');
-            noFavOption.className = 'radio-option';
-
-            const noFavInput = document.createElement('input');
-            noFavInput.type = 'radio';
-            noFavInput.name = 'favourite_brand';
-            noFavInput.id = 'no_favourite';
-            noFavInput.value = 'none';
-
-            const noFavLabel = document.createElement('label');
-            noFavLabel.className = 'radio-label';
-            noFavLabel.htmlFor = 'no_favourite';
-            noFavLabel.textContent = "I don't have a favourite";
-
-            noFavInput.addEventListener('change', () => {
+            const noFavButton = createOptionButton("I don't have a favourite");
+            noFavButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Deselect all others
+                group.querySelectorAll('.option-button').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+                // Select this one
+                noFavButton.classList.add('selected');
                 formData.favourite_brand = null;
                 saveToLocalStorage();
                 document.getElementById('next5').disabled = false;
-
-
             });
-
-            noFavOption.appendChild(noFavInput);
-            noFavOption.appendChild(noFavLabel);
-            group.appendChild(noFavOption);
+            group.appendChild(noFavButton);
         }
-
         // Step 6: Colour
         function initializeStep6() {
 
