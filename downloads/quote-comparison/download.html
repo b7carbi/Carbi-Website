@@ -307,10 +307,12 @@ Or download CSV: ${pageUrl}`,
 
 
     <script>
-        // Auto-download after 2 seconds
-        setTimeout(function () {
-            window.location.href = "Carbi-Quote-Comparison-Template.csv";
-        }, 2000);
+        // Auto-download after 2 seconds except on mobile
+        if (!isMobile()) {
+            setTimeout(function () {
+                window.location.href = "Carbi-Quote-Comparison-Template.csv";
+            }, 2000);
+        }
     </script>
 </body>
 
