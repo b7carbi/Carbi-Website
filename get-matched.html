@@ -1044,7 +1044,7 @@
 
                         <div class="radio-option">
                             <input type="radio" name="main_driver" id="driver_older" value="older_driver">
-                            <label for="driver_older" class="radio-label">Someone older (parent/guardian)</label>
+                            <label for="driver_older" class="radio-label">Someone older</label>
                             <span class="radio-description">Insurance groups 1-16 available</span>
                         </div>
 
@@ -1316,6 +1316,7 @@
             initializeStep2b();
             initializeStep3();
             initializeStep4();
+            initializeStep6();
             initializeStep7();
             initializeStep8();
             initializeStep9();
@@ -1637,10 +1638,7 @@
 
         // Step 6: Colour
         function initializeStep6() {
-            // Only initialize if Colour was selected as important
-            if (!formData.important_features.includes('Colour')) {
-                return;
-            }
+
             const grid = document.getElementById('coloursGrid');
             const customColourContainer = document.getElementById('customColourContainer');
             const customColourInput = document.getElementById('customColour');
@@ -1939,8 +1937,8 @@
             document.getElementById('next4').addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (formData.selected_brands.length < 2) {
+                    // Skip Step 5, go straight to next appropriate step
                     if (formData.important_features.includes('Colour')) {
-                        initializeStep6();
                         goToStep(6);
                     } else if (formData.important_features.includes('Low Mileage')) {
                         goToStep(7);
@@ -1966,7 +1964,6 @@
             document.getElementById('next5').addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (formData.important_features.includes('Colour')) {
-                    initializeStep6();
                     goToStep(6);
                 } else if (formData.important_features.includes('Low Mileage')) {
                     goToStep(7);
