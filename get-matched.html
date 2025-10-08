@@ -422,6 +422,47 @@
             border-color: #0EA5E9;
         }
 
+        /* Radio option with description layout */
+        .radio-option {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .radio-option .radio-label {
+            flex: 0 0 auto;
+            min-width: 200px;
+            max-width: 300px;
+        }
+
+        .radio-description {
+            flex: 1;
+            font-size: 0.9em;
+            color: #64748B;
+            line-height: 1.4;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .radio-option {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .radio-option .radio-label {
+                width: 100%;
+                max-width: none;
+            }
+
+            .radio-description {
+                padding-left: 50px;
+                margin-top: -10px;
+                margin-bottom: 10px;
+            }
+        }
+
         /* Budget Inputs */
         .budget-display {
             font-size: 2.5em;
@@ -991,38 +1032,26 @@
 
                 <!-- Step 2B: Main Driver -->
                 <div class="step" id="step2b">
-                    <h2 class="step-heading">Who's going to be the main driver on the insurance?</h2>
-                    <p class="step-subtitle">This changes which cars we can recommend</p>
+                    <h2 class="step-heading">Who will be the main driver on the insurance policy?</h2>
+                    <p class="step-subtitle">This changes what car we recommend</p>
 
                     <div class="radio-group" id="mainDriverGroup">
                         <div class="radio-option">
                             <input type="radio" name="main_driver" id="driver_young" value="young_driver">
-                            <label for="driver_young" class="radio-label">
-                                The 17-19 year old
-                                <span style="display: block; font-size: 0.9em; color: #64748B; margin-top: 5px;">
-                                    Insurance groups 1-10 only
-                                </span>
-                            </label>
+                            <label for="driver_young" class="radio-label">The 17-19 year old</label>
+                            <span class="radio-description">Insurance groups 1-10 only</span>
                         </div>
 
                         <div class="radio-option">
                             <input type="radio" name="main_driver" id="driver_older" value="older_driver">
-                            <label for="driver_older" class="radio-label">
-                                Someone older (parent/guardian)
-                                <span style="display: block; font-size: 0.9em; color: #64748B; margin-top: 5px;">
-                                    Insurance groups 1-16 available
-                                </span>
-                            </label>
+                            <label for="driver_older" class="radio-label">Someone older (parent/guardian)</label>
+                            <span class="radio-description">Insurance groups 1-16 available</span>
                         </div>
 
                         <div class="radio-option">
                             <input type="radio" name="main_driver" id="driver_unsure" value="not_sure">
-                            <label for="driver_unsure" class="radio-label">
-                                Not sure yet
-                                <span style="display: block; font-size: 0.9em; color: #64748B; margin-top: 5px;">
-                                    We'll recommend both options
-                                </span>
-                            </label>
+                            <label for="driver_unsure" class="radio-label">Not sure yet</label>
+                            <span class="radio-description">We'll recommend both options</span>
                         </div>
                     </div>
 
