@@ -1957,7 +1957,15 @@
                 formData.brand_preference = 'dont_mind';
                 formData.selected_brands = [];
                 saveToLocalStorage();
-                goToStep(8);
+
+                // Follow same logic as next4 button
+                if (formData.important_features.includes('Colour')) {
+                    goToStep(6);
+                } else if (formData.important_features.includes('Low Mileage')) {
+                    goToStep(7);
+                } else {
+                    goToStep(8);
+                }
             });
 
             // Step 5 Next button
@@ -2097,46 +2105,61 @@
 
         // Navigation - go to specific step
         function goToStep(stepNumber) {
+            // Define step order including 2b
+            const stepOrder = [1, 2, '2b', 3, 4, 5, 6, 7, 8, 9, 10];
+            const targetIndex = stepOrder.indexOf(stepNumber);
+
+            if (targetIndex === -1) {
+                console.error('Invalid step:', stepNumber);
+                return;
+            }
+
             // Helper function to check if a step should be visible
             function shouldShowStep(stepNum) {
-                if (stepNum === 1) return true; // Always show Step 1
-                if (stepNum === 2) return formData.important_features.length >= 2; // Show if 2+ features
-                if (stepNum === 3) return true; // Always show budget
-                if (stepNum === 4) return true; // Always show brands
-                if (stepNum === 5) return formData.selected_brands.length >= 2; // Show if 2+ brands
-                if (stepNum === 6) return formData.important_features.includes('Colour'); // Only if Colour selected
-                if (stepNum === 7) return formData.important_features.includes('Low Mileage'); // Only if Low Mileage selected
-                if (stepNum >= 8) return true; // Always show Steps 8, 9, 10
+                if (stepNum === 1) return true;
+                if (stepNum === 2) return formData.important_features.length >= 2;
+                if (stepNum === '2b') return true; // Always show main driver question
+                if (stepNum === 3) return true;
+                if (stepNum === 4) return true;
+                if (stepNum === 5) return formData.selected_brands.length >= 2;
+                if (stepNum === 6) return formData.important_features.includes('Colour');
+                if (stepNum === 7) return formData.important_features.includes('Low Mileage');
+                if (stepNum >= 8) return true;
                 return false;
             }
 
-            // Mark visible steps before target as completed
-            for (let i = 1; i < stepNumber; i++) {
-                const stepEl = document.getElementById(`step${i}`);
+            // Mark all steps before target as completed or hidden
+            for (let i = 0; i < targetIndex; i++) {
+                const stepId = stepOrder[i];
+                const stepEl = document.getElementById(`step${stepId}`);
                 if (stepEl) {
-                    if (shouldShowStep(i)) {
+                    if (shouldShowStep(stepId)) {
                         stepEl.classList.remove('active');
                         stepEl.classList.add('completed');
+                        stepEl.style.display = 'block';
                     } else {
-                        // Hide steps that shouldn't be visible
                         stepEl.classList.remove('completed', 'active');
+                        stepEl.style.display = 'none';
                     }
                 }
             }
 
             // Hide all steps after target
-            for (let i = stepNumber + 1; i <= totalSteps; i++) {
-                const stepEl = document.getElementById(`step${i}`);
+            for (let i = targetIndex + 1; i < stepOrder.length; i++) {
+                const stepId = stepOrder[i];
+                const stepEl = document.getElementById(`step${stepId}`);
                 if (stepEl) {
                     stepEl.classList.remove('completed', 'active');
+                    stepEl.style.display = 'none';
                 }
             }
 
-            // Activate target step
+            // Activate and show target step
             const targetStepEl = document.getElementById(`step${stepNumber}`);
             if (targetStepEl) {
                 targetStepEl.classList.remove('completed');
                 targetStepEl.classList.add('active');
+                targetStepEl.style.display = 'block';
             }
 
             currentStep = stepNumber;
@@ -2144,14 +2167,17 @@
             // Scroll to step with padding above
             if (targetStepEl) {
                 setTimeout(() => {
+                    const headerHeight = document.querySelector('header').offsetHeight || 80;
+                    const elementPosition = targetStepEl.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+
                     window.scrollTo({
-                        top: targetStepEl.offsetTop - 100,
+                        top: offsetPosition,
                         behavior: 'smooth'
                     });
                 }, 100);
             }
         }
-
         // Local Storage
         function saveToLocalStorage() {
             localStorage.setItem('carbi_match_form', JSON.stringify(formData));
