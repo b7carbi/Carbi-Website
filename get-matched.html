@@ -7,6 +7,28 @@
     <title>Get Matched - Find Your Perfect First Car | Carbi</title>
     <link rel="shortcut icon" type="image/png" href="favicon.png">
 
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+    <script>
+        window.addEventListener("load", function () {
+            window.cookieconsent.initialise({
+                palette: {
+                    popup: { background: "#0F172A" },
+                    button: { background: "#0EA5E9", text: "#ffffff" }
+                },
+                theme: "classic",
+                position: "bottom",
+                content: {
+                    message: "We use cookies to improve your experience and measure our marketing.",
+                    dismiss: "Got it",
+                    link: "Privacy Policy",
+                    href: "/privacy.html"
+                }
+            })
+        });
+    </script>
+
     <!-- Meta Pixel Code -->
     <script>
         !function (f, b, e, v, n, t, s) {
@@ -2187,7 +2209,7 @@
                 </div>
                 <!-- Contact line -->
                 <p style="color: rgba(255,255,255,0.9); font-size: 1em; margin: 0 0 10px 0;">
-                    Questions or Feedback? <a href="mailto:hello@carbi.co"
+                    Email <a href="mailto:hello@carbi.co"
                         style="color: #0EA5E9; text-decoration: none; font-weight: 600;">hello@carbi.co</a>
                 </p>
                 <!-- Copyright -->

@@ -4,6 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+    <script>
+        window.addEventListener("load", function () {
+            window.cookieconsent.initialise({
+                palette: {
+                    popup: { background: "#0F172A" },
+                    button: { background: "#0EA5E9", text: "#ffffff" }
+                },
+                theme: "classic",
+                position: "bottom",
+                content: {
+                    message: "We use cookies to improve your experience and measure our marketing.",
+                    dismiss: "Got it",
+                    link: "Privacy Policy",
+                    href: "/privacy.html"
+                }
+            })
+        });
+    </script>
+    <!-- Meta Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1455041752448144');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1455041752448144&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Google Analytics & Ads -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1S8XELP34H"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-882133742"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        // Google Analytics
+        gtag('config', 'G-1S8XELP34H', {
+            'anonymize_ip': true,
+            'allow_google_signals': false,
+            'allow_ad_personalization_signals': false
+        });
+
+        // Google Ads
+        gtag('config', 'AW-882133742');
+    </script>
     <title>Carbi - The New Way To Find A First Car</title>
     <style>
         * {
@@ -623,7 +683,7 @@
                 </div>
                 <!-- Contact line -->
                 <p style="color: rgba(255,255,255,0.9); font-size: 1em; margin: 0 0 10px 0;">
-                    Questions or Feedback? <a href="mailto:hello@carbi.co"
+                    Email <a href="mailto:hello@carbi.co"
                         style="color: #0EA5E9; text-decoration: none; font-weight: 600;">hello@carbi.co</a>
                 </p>
                 <!-- Copyright -->
