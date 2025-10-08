@@ -85,6 +85,22 @@
             }
         }
 
+        /* Consistent mobile button styling */
+        #mobileButtons .download-button,
+        #mobileButtons button.download-button {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            padding: 15px 30px;
+
+        }
+
+        button.download-button {
+            font-family: inherit;
+            font-weight: 600;
+        }
+
         /* Other Downloads Section */
         .other-downloads {
             margin-top: 40px;
@@ -220,6 +236,52 @@
 
 
         </div>
+        <script>
+            function isMobile() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            }
+
+            function shareLink() {
+                const pageUrl = window.location.href;
+                const googleSheetsUrl = 'https://docs.google.com/spreadsheets/d/1xi4_IhYWUbG-feol2B-7MipcdViSB0y3_25l_L7kNdA/copy'
+
+                // Check if Web Share API is available
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Carbi Insurance Quote Comparison Template',
+                        text: `Carbi Insurance Quote Comparison Template
+
+Google Sheets: ${googleSheetsUrl}
+
+Or download CSV: ${pageUrl}`,
+
+                    }).catch((error) => {
+                        console.log('Share cancelled');
+                    });
+                } else {
+                    // Fallback to mailto for browsers without Share API
+                    const subject = 'Carbi Insurance Quote Comparison Template';
+                    const body = `Here's your Carbi Insurance Quote Comparison Template download link:\n\n${pageUrl}\n\nOpen this on your laptop to download the spreadsheet.`;
+                    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                }
+            }
+
+            if (!isMobile()) {
+                //desktop auto-download
+                setTimeout(function () {
+                    window.open("Carbi-Quote-Comparison-Template.csv", "_blank");
+                    document.getElementById('downloadMessage').innerHTML = 'Download started! If it doesn\'t appear, click the button:';
+                    document.getElementById('spinner').style.display = 'none';
+                }, 2000);
+            } else {
+                //mobile show all options
+                document.getElementById('downloadMessage').style.display = 'none';
+                document.getElementById('spinner').style.display = 'none';
+                document.getElementById('manualMessage').style.display = 'block';
+                document.getElementById('downloadButton').style.display = 'none';
+                document.getElementById('mobileButtons').style.display = 'block';
+            }
+        </script>
 
 
         <div class="other-downloads">
