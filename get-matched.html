@@ -1038,7 +1038,7 @@
                     <div class="radio-group" id="mainDriverGroup">
                         <div class="radio-option">
                             <input type="radio" name="main_driver" id="driver_young" value="young_driver">
-                            <label for="driver_young" class="radio-label">The 17-19 year old</label>
+                            <label for="driver_young" class="radio-label">The young driver</label>
                             <span class="radio-description">Insurance groups 1-10 only</span>
                         </div>
 
@@ -1051,7 +1051,7 @@
                         <div class="radio-option">
                             <input type="radio" name="main_driver" id="driver_unsure" value="not_sure">
                             <label for="driver_unsure" class="radio-label">Not sure yet</label>
-                            <span class="radio-description">We'll recommend both options</span>
+                            <span class="radio-description">We'll find a car in both categories</span>
                         </div>
                     </div>
 
@@ -1913,14 +1913,14 @@
                     initializeStep2();
                     goToStep(2);
                 } else {
-                    goToStep(3);
+                    goToStep('2b');
                 }
             });
 
             // Step 2 Next button
             document.getElementById('next2').addEventListener('click', (e) => {
                 e.stopPropagation();
-                goToStep('2b'); // Or renumber to Step 3
+                goToStep('2b');
             });
 
             // Step 2B Next button
