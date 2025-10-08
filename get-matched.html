@@ -380,7 +380,7 @@
             background: #d97706;
         }
 
-        /* Radio buttons */
+        /* Radio buttons - DEFAULT (for Step 5) */
         .radio-group {
             display: flex;
             flex-direction: column;
@@ -410,6 +410,8 @@
             min-height: 54px;
             display: flex;
             align-items: center;
+            text-align: center;
+            justify-content: center;
         }
 
         .radio-option input[type="radio"]:checked+.radio-label {
@@ -422,29 +424,50 @@
             border-color: #0EA5E9;
         }
 
-        /* Radio option with description layout */
-        .radio-option {
-            position: relative;
+        /* Step 2B specific - Insurance question with descriptions */
+        #mainDriverGroup {
             display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 30px;
         }
 
-        .radio-option .radio-label {
-            flex: 0 0 auto;
-            min-width: 200px;
-            max-width: 300px;
+        #mainDriverGroup .radio-option {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 20px;
+            align-items: center;
+            justify-items: start;
         }
 
-        .radio-description {
-            flex: 1;
+        #mainDriverGroup .radio-label {
+            width: 220px;
+        }
+
+        #mainDriverGroup .radio-description {
             font-size: 0.9em;
             color: #64748B;
             line-height: 1.4;
+            text-align: left;
         }
 
         /* Mobile responsive */
+        @media (max-width: 768px) {
+            #mainDriverGroup .radio-option {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            #mainDriverGroup .radio-label {
+                width: 100%;
+            }
+
+            #mainDriverGroup .radio-description {
+                text-align: center;
+            }
+        }
+
         /* Footer responsive */
         @media (max-width: 768px) {
             footer .container>div {
@@ -452,24 +475,6 @@
                 align-items: center !important;
                 text-align: center;
                 gap: 15px !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .radio-option {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .radio-option .radio-label {
-                width: 100%;
-                max-width: none;
-            }
-
-            .radio-description {
-                padding-left: 50px;
-                margin-top: -10px;
-                margin-bottom: 10px;
             }
         }
 
@@ -1045,24 +1050,8 @@
                     <h2 class="step-heading">Who will be the main driver on the insurance policy?</h2>
                     <p class="step-subtitle">This changes what car we recommend</p>
 
-                    <div class="radio-group" id="mainDriverGroup">
-                        <div class="radio-option">
-                            <input type="radio" name="main_driver" id="driver_young" value="young_driver">
-                            <label for="driver_young" class="radio-label">The young driver</label>
-                            <span class="radio-description">Insurance groups 1-10 only</span>
-                        </div>
-
-                        <div class="radio-option">
-                            <input type="radio" name="main_driver" id="driver_older" value="older_driver">
-                            <label for="driver_older" class="radio-label">Someone older</label>
-                            <span class="radio-description">Insurance groups 1-16 available</span>
-                        </div>
-
-                        <div class="radio-option">
-                            <input type="radio" name="main_driver" id="driver_unsure" value="not_sure">
-                            <label for="driver_unsure" class="radio-label">Not sure yet</label>
-                            <span class="radio-description">We'll find a car in both categories</span>
-                        </div>
+                    <div class="button-grid" id="mainDriverGrid">
+                        <!-- Buttons will be created by JavaScript -->
                     </div>
 
                     <div class="error-message" id="error2b"></div>
@@ -1436,17 +1425,54 @@
         }
 
         function initializeStep2b() {
-            const radios = document.querySelectorAll('input[name="main_driver"]');
+            const grid = document.getElementById('mainDriverGrid');
+            grid.innerHTML = '';
 
-            radios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    formData.main_driver_type = radio.value;
+            // Temporarily change grid to allow for descriptions
+            grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(200px, 1fr))';
+
+            const options = [
+                { value: 'young_driver', label: 'The young driver', description: 'Insurance groups 1-10 only' },
+                { value: 'older_driver', label: 'Someone older', description: 'Insurance groups 1-16 available' },
+                { value: 'not_sure', label: 'Not sure yet', description: "We'll find a car in both categories" }
+            ];
+
+            options.forEach(option => {
+                // Create wrapper div that will be the grid item
+                const wrapper = document.createElement('div');
+                wrapper.style.display = 'flex';
+                wrapper.style.flexDirection = 'column';
+                wrapper.style.gap = '8px';
+
+                // Create button using the standard function
+                const button = createOptionButton(option.label);
+
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Deselect all others
+                    grid.querySelectorAll('.option-button').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    // Select this one
+                    button.classList.add('selected');
+                    formData.main_driver_type = option.value;
                     saveToLocalStorage();
                     document.getElementById('next2b').disabled = false;
                 });
+
+                // Create description text
+                const description = document.createElement('div');
+                description.style.fontSize = '0.9em';
+                description.style.color = '#64748B';
+                description.style.textAlign = 'center';
+                description.style.lineHeight = '1.4';
+                description.textContent = option.description;
+
+                wrapper.appendChild(button);
+                wrapper.appendChild(description);
+                grid.appendChild(wrapper);
             });
         }
-
         function validateStep2b() {
             const nextBtn = document.getElementById('next2b');
             nextBtn.disabled = !formData.main_driver_type;
@@ -2222,9 +2248,13 @@
 
             //Step 2b: Restore main driver values
             if (formData.main_driver_type) {
-                const radio = document.querySelector(`input[name="main_driver"][value="${formData.main_driver_type}"]`);
-                if (radio) {
-                    radio.checked = true;
+                initializeStep2b();
+                const buttons = document.querySelectorAll('#mainDriverGrid .option-button');
+                const buttonTexts = ['The young driver', 'Someone older', 'Not sure yet'];
+                const values = ['young_driver', 'older_driver', 'not_sure'];
+                const index = values.indexOf(formData.main_driver_type);
+                if (index !== -1 && buttons[index]) {
+                    buttons[index].classList.add('selected');
                     document.getElementById('next2b').disabled = false;
                 }
             }
