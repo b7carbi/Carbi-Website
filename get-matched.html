@@ -989,6 +989,47 @@
                     <button type="button" class="primary-button" id="next2" disabled>Next</button>
                 </div>
 
+                <!-- Step 2B: Main Driver -->
+                <div class="step" id="step2b">
+                    <h2 class="step-heading">Who's going to be the main driver on the insurance?</h2>
+                    <p class="step-subtitle">This changes which cars we can recommend</p>
+
+                    <div class="radio-group" id="mainDriverGroup">
+                        <div class="radio-option">
+                            <input type="radio" name="main_driver" id="driver_young" value="young_driver">
+                            <label for="driver_young" class="radio-label">
+                                The 17-19 year old
+                                <span style="display: block; font-size: 0.9em; color: #64748B; margin-top: 5px;">
+                                    Insurance groups 1-10 only
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" name="main_driver" id="driver_older" value="older_driver">
+                            <label for="driver_older" class="radio-label">
+                                Someone older (parent/guardian)
+                                <span style="display: block; font-size: 0.9em; color: #64748B; margin-top: 5px;">
+                                    Insurance groups 1-16 available
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" name="main_driver" id="driver_unsure" value="not_sure">
+                            <label for="driver_unsure" class="radio-label">
+                                Not sure yet
+                                <span style="display: block; font-size: 0.9em; color: #64748B; margin-top: 5px;">
+                                    We'll recommend both options
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="error-message" id="error2b"></div>
+                    <button type="button" class="primary-button" id="next2b" disabled>Next</button>
+                </div>
+
                 <!-- Step 3: Budget -->
                 <div class="step" id="step3">
                     <h2 class="step-heading">What's your budget?</h2>
@@ -1193,6 +1234,7 @@
         const formData = {
             important_features: [],
             dealbreakers: [],
+            main_driver_type: null,
             budget_min: 6000,
             budget_max: 8000,
             brand_preference: null,
@@ -1242,6 +1284,7 @@
             loadFromLocalStorage();
 
             initializeStep1();
+            initializeStep2b();
             initializeStep3();
             initializeStep4();
             initializeStep7();
@@ -1351,6 +1394,24 @@
             const nextBtn = document.getElementById('next2');
             nextBtn.disabled = formData.dealbreakers.length === 0;
         }
+
+        function initializeStep2b() {
+            const radios = document.querySelectorAll('input[name="main_driver"]');
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    formData.main_driver_type = radio.value;
+                    saveToLocalStorage();
+                    document.getElementById('next2b').disabled = false;
+                });
+            });
+        }
+
+        function validateStep2b() {
+            const nextBtn = document.getElementById('next2b');
+            nextBtn.disabled = !formData.main_driver_type;
+        }
+
 
         // Step 3: Budget with Dual Handle Slider
         function initializeStep3() {
@@ -1830,6 +1891,12 @@
             // Step 2 Next button
             document.getElementById('next2').addEventListener('click', (e) => {
                 e.stopPropagation();
+                goToStep('2b'); // Or renumber to Step 3
+            });
+
+            // Step 2B Next button
+            document.getElementById('next2b').addEventListener('click', (e) => {
+                e.stopPropagation();
                 goToStep(3);
             });
 
@@ -2089,6 +2156,15 @@
                     if (button) button.classList.add('selected');
                 });
                 validateStep2();
+            }
+
+            //Step 2b: Restore main driver values
+            if (formData.main_driver_type) {
+                const radio = document.querySelector(`input[name="main_driver"][value="${formData.main_driver_type}"]`);
+                if (radio) {
+                    radio.checked = true;
+                    document.getElementById('next2b').disabled = false;
+                }
             }
 
             // Step 3: Restore budget values

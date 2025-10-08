@@ -89,6 +89,14 @@ export default async function handler(req, res) {
       });
     }
 
+    // Main driver validation
+    if (!body.main_driver_type || !['young_driver', 'older_driver', 'not_sure'].includes(body.main_driver_type)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid or missing main driver type'
+      });
+    }
+
     // Prepare data for database insertion
     const matchRequest = {
       // Personal details
