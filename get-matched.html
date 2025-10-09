@@ -1338,6 +1338,7 @@
                 firstInput.addEventListener('click', function () {
                     if (!formStarted) {
                         formStarted = true;
+                        formStartTime = Date.now();
                         gtag('event', 'form_start', {
                             'form_name': 'car_matching'
                         });
