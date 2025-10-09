@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>First Car Viewing Checklist - Carbi</title>
     <style>
         @media print {
-            body { margin: 0; font-size: 11pt; }
-            .no-print { display: none; }
-            .page-break { page-break-before: always; }
+            body {
+                margin: 0;
+                font-size: 11pt;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.4;
@@ -26,45 +36,45 @@
             margin: 0 auto;
             padding: 20px;
         }
-        
+
         .header {
             background: white;
             color: #1E40AF;
             padding: 30px 20px;
-            border: 3px solid #1E40AF;
+            border: 2px solid #E2E8F0;
             border-radius: 15px;
             text-align: center;
             margin-bottom: 30px;
         }
-        
+
         .logo {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
-        
+
         .logo svg {
             margin-right: 15px;
         }
-        
+
         .logo-text {
             font-size: 2.5em;
             font-weight: 700;
             color: #1E40AF;
         }
-        
+
         .header h1 {
-            font-size: 2.2em;
+            font-size: 1.8em;
             font-weight: 700;
             margin-bottom: 10px;
         }
-        
+
         .header .subtitle {
-            font-size: 1.2em;
+            font-size: 1em;
             opacity: 0.9;
         }
-        
+
         .section {
             background: white;
             border-radius: 10px;
@@ -73,7 +83,7 @@
             border-left: 5px solid #1E40AF;
             border: 1px solid #E2E8F0;
         }
-        
+
         .section h2 {
             color: #1E40AF;
             font-size: 1.4em;
@@ -82,36 +92,36 @@
             display: flex;
             align-items: center;
         }
-        
+
         .section h2 .icon {
             font-size: 1.2em;
             margin-right: 10px;
         }
-        
+
         .section h3 {
             color: #0F172A;
             font-size: 1.1em;
             font-weight: 600;
             margin: 20px 0 10px 0;
         }
-        
+
         .checklist {
             list-style: none;
             margin: 15px 0;
         }
-        
+
         .checklist li {
             margin: 8px 0;
             display: flex;
             align-items: flex-start;
         }
-        
+
         .checklist input[type="checkbox"] {
             margin-right: 10px;
             margin-top: 2px;
             transform: scale(1.2);
         }
-        
+
         .red-flag {
             background: white;
             border: 2px solid #EF4444;
@@ -119,30 +129,30 @@
             padding: 10px 15px;
             border-radius: 5px;
         }
-        
+
         .red-flag h3 {
             color: #DC2626;
             font-size: 1em;
             margin-bottom: 10px;
         }
-        
+
         .red-flag ul {
             list-style: none;
         }
-        
+
         .red-flag li {
             color: #DC2626;
             margin: 5px 0;
             display: flex;
             align-items: flex-start;
         }
-        
+
         .red-flag li::before {
             content: "❌";
             margin-right: 8px;
             flex-shrink: 0;
         }
-        
+
         .notes-section {
             background: white;
             border: 2px dashed #CBD5E1;
@@ -150,24 +160,24 @@
             border-radius: 10px;
             margin: 20px 0;
         }
-        
+
         .notes-section h3 {
             color: #1E40AF;
             margin-bottom: 15px;
         }
-        
+
         .form-row {
             display: flex;
             gap: 20px;
             margin-bottom: 15px;
             align-items: center;
         }
-        
+
         .form-row label {
             font-weight: 500;
             min-width: 120px;
         }
-        
+
         .form-row input {
             border: none;
             border-bottom: 1px solid #CBD5E1;
@@ -175,19 +185,19 @@
             flex: 1;
             background: transparent;
         }
-        
+
         .rating {
             display: flex;
             gap: 5px;
             align-items: center;
         }
-        
+
         .rating span {
             font-size: 1.5em;
             color: #D1D5DB;
             cursor: pointer;
         }
-        
+
         .cta-section {
             background: white;
             color: #1E40AF;
@@ -197,19 +207,19 @@
             text-align: center;
             margin: 30px 0;
         }
-        
+
         .cta-section h2 {
             color: #1E40AF;
             font-size: 1.8em;
             margin-bottom: 15px;
         }
-        
+
         .cta-section p {
             font-size: 1.1em;
             margin-bottom: 20px;
             opacity: 0.9;
         }
-        
+
         .cta-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -217,17 +227,17 @@
             margin: 20px 0;
             text-align: left;
         }
-        
+
         .cta-features div {
             display: flex;
             align-items: center;
         }
-        
+
         .cta-features div::before {
             content: "✅";
             margin-right: 10px;
         }
-        
+
         .website {
             background: #1E40AF;
             color: white;
@@ -238,16 +248,23 @@
             display: inline-block;
             margin-top: 15px;
         }
-        
+
         .safety-reminder {
             background: white;
             border: 2px solid #F59E0B;
         }
-        
+
         .safety-reminder h2 {
             color: #92400E;
         }
-        
+
+        /* Toolkit link hover effects */
+        .cta-section a[href^="/downloads"]:hover {
+            border-color: #0EA5E9 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+        }
+
         .footer {
             text-align: center;
             color: #64748B;
@@ -256,42 +273,51 @@
             padding-top: 20px;
             border-top: 1px solid #E2E8F0;
         }
-        
+
         @media (max-width: 600px) {
             .form-row {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            
+
             .form-row label {
                 min-width: auto;
                 margin-bottom: 5px;
             }
-            
+
             .cta-features {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="header">
         <div class="logo">
-            <svg width="60" height="60" viewBox="0 0 60 60">
-                <circle cx="30" cy="30" r="8" fill="#1E40AF"/>
-                <path d="M 40 30 L 55 30" stroke="#1E40AF" stroke-width="4"/>
-                <path d="M 48 22 L 58 30 L 48 38" fill="none" stroke="#1E40AF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="110" height="40" viewBox="0 0 110 40">
+                <circle cx="20" cy="20" r="6" fill="#0EA5E9" />
+                <path d="M 28 20 L 43 20" stroke="url(#grad-header)" stroke-width="3" />
+                <path d="M 38 14 L 45 20 L 38 26" fill="none" stroke="#1E40AF" stroke-width="3" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <defs>
+                    <linearGradient id="grad-header" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <text x="50" y="27" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="24"
+                    font-weight="600" fill="#0F172A" text-anchor="start">carbi</text>
             </svg>
-            <span class="logo-text">carbi</span>
         </div>
-        <h1>🚗 First Car Viewing Checklist</h1>
+        <h1>First Car Viewing Checklist</h1>
         <p class="subtitle">🍋 Lemon Avoidance 🍋</p>
     </div>
 
     <div class="section">
         <h2><span class="icon">📋</span>Before You Go</h2>
         <p><strong>Print this checklist or save it to your phone.</strong></p>
-        
+
         <h3>What to Bring:</h3>
         <ul class="checklist">
             <li><input type="checkbox"> This checklist</li>
@@ -313,10 +339,11 @@
 
     <div class="section">
         <h2><span class="icon">✅</span>Paperwork Check</h2>
-        
+
         <h3>Essential Documents (Don't buy without these!):</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>V5C (Log Book)</strong> - check when the car was last bought or sold</li>
+            <li><input type="checkbox"> <strong>V5C (Log Book)</strong> - check when the car was last bought or sold
+            </li>
             <li><input type="checkbox"> <strong>MOT Certificate</strong> - and check the MOT history online</li>
             <li><input type="checkbox"> <strong>Service History</strong> - stamped book and/or receipts</li>
         </ul>
@@ -334,12 +361,13 @@
 
     <div class="section">
         <h2><span class="icon">🔍</span>Exterior Inspection</h2>
-        
+
         <h3>Body & Paint:</h3>
         <ul class="checklist">
             <li><input type="checkbox"> <strong>Rust spots</strong> - check wheel arches, door frames, bumpers</li>
             <li><input type="checkbox"> <strong>Dents & scratches</strong> - note location and severity</li>
-            <li><input type="checkbox"> <strong>Paint match</strong> - mismatched colors or overspary suggests accident damage</li>
+            <li><input type="checkbox"> <strong>Paint match</strong> - mismatched colors or overspary suggests accident
+                damage</li>
             <li><input type="checkbox"> <strong>Panel alignment</strong> - gaps should be even</li>
             <li><input type="checkbox"> <strong>Stone chips</strong> - normal on front bumper/bonnet</li>
         </ul>
@@ -349,13 +377,15 @@
             <li><input type="checkbox"> <strong>Tread depth</strong> - check wear indicators have some depth</li>
             <li><input type="checkbox"> <strong>Even wear</strong> - uneven wear suggests alignment issues</li>
             <li><input type="checkbox"> <strong>Correct pressure</strong> - should feel firm when pressed</li>
-            <li><input type="checkbox"> <strong>Same brand</strong> - mixed and/or unknown brand tyres suggest poor maintenance</li>
+            <li><input type="checkbox"> <strong>Same brand</strong> - mixed and/or unknown brand tyres suggest poor
+                maintenance</li>
             <li><input type="checkbox"> <strong>Spare tyre</strong> - check condition and pressure</li>
         </ul>
 
         <h3>Lights & Glass:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>All lights work</strong> - headlights, brake lights, indicators, hazards</li>
+            <li><input type="checkbox"> <strong>All lights work</strong> - headlights, brake lights, indicators, hazards
+            </li>
             <li><input type="checkbox"> <strong>Windscreen chips</strong> - small ones OK, cracks fail MOT</li>
             <li><input type="checkbox"> <strong>Mirror condition</strong> - cracked mirrors are dangerous</li>
             <li><input type="checkbox"> <strong>Number plates</strong> - should be secure and normal looking font</li>
@@ -375,7 +405,7 @@
 
     <div class="section">
         <h2><span class="icon">🪑</span>Interior Check</h2>
-        
+
         <h3>Seats & Comfort:</h3>
         <ul class="checklist">
             <li><input type="checkbox"> <strong>Driver's seat</strong> - not too worn, adjusts properly</li>
@@ -412,7 +442,7 @@
 
     <div class="section">
         <h2><span class="icon">🔧</span>Engine & Mechanical</h2>
-        
+
         <h3>Under the Bonnet:</h3>
         <ul class="checklist">
             <li><input type="checkbox"> <strong>Oil level</strong> - should be between min/max on dipstick</li>
@@ -443,7 +473,7 @@
 
     <div class="section">
         <h2><span class="icon">🛣️</span>Test Drive</h2>
-        
+
         <h3>Pre-Drive Checks:</h3>
         <ul class="checklist">
             <li><input type="checkbox"> <strong>Fuel range</strong> - enough for test drive</li>
@@ -485,19 +515,21 @@
 
     <div class="section">
         <h2><span class="icon">💰</span>Negotiation & Buying</h2>
-        
+
         <h3>Price Research:</h3>
         <ul class="checklist">
             <li><input type="checkbox"> <strong>Market value</strong> - checked AutoTrader/Parkers guide price</li>
             <li><input type="checkbox"> <strong>Similar cars</strong> - compared with others for sale locally</li>
             <li><input type="checkbox"> <strong>Condition adjustment</strong> - factor in any issues found</li>
-            <li><input type="checkbox"> <strong>Negotiation room</strong> - some sellers expect haggling (check comparable cars first)</li>
+            <li><input type="checkbox"> <strong>Negotiation room</strong> - some sellers expect haggling (check
+                comparable cars first)</li>
         </ul>
 
         <h3>Final Checks:</h3>
         <ul class="checklist">
             <li><input type="checkbox"> <strong>Outstanding finance</strong> - use HPI check or ask directly</li>
-            <li><input type="checkbox"> <strong>Write everything down</strong> - faults, agreements, contact details</li>
+            <li><input type="checkbox"> <strong>Write everything down</strong> - faults, agreements, contact details
+            </li>
             <li><input type="checkbox"> <strong>Get receipt</strong> - with seller details and what's included</li>
             <li><input type="checkbox"> <strong>Arrange insurance</strong> - before you drive it home</li>
         </ul>
@@ -522,36 +554,37 @@
 
     <div class="notes-section">
         <h3>📝 Your Notes Section</h3>
-        
+
         <div class="form-row">
             <label>Make/Model:</label>
             <input type="text" placeholder="e.g. VW Golf GTI">
         </div>
-        
+
         <div class="form-row">
             <label>Year:</label>
             <input type="text" style="flex: 0.3;">
             <label>Mileage:</label>
             <input type="text" style="flex: 0.7;">
         </div>
-        
+
         <div class="form-row">
             <label>Price:</label>
             <input type="text" style="flex: 0.4;">
             <label>Insurance Group:</label>
             <input type="text" style="flex: 0.6;">
         </div>
-        
+
         <h3 style="margin-top: 20px;">Issues Found:</h3>
-        <textarea style="width: 100%; height: 80px; border: 1px solid #CBD5E1; border-radius: 5px; padding: 10px; resize: vertical;"></textarea>
-        
+        <textarea
+            style="width: 100%; height: 80px; border: 1px solid #CBD5E1; border-radius: 5px; padding: 10px; resize: vertical;"></textarea>
+
         <div class="form-row" style="margin-top: 15px;">
             <label>Overall Rating:</label>
             <div class="rating">
                 <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
             </div>
         </div>
-        
+
         <div class="form-row">
             <label>Decision:</label>
             <label><input type="radio" name="decision" style="margin: 0 5px 0 20px;"> Buy</label>
@@ -561,19 +594,43 @@
     </div>
 
     <div class="cta-section">
-        <h2>🎯 Ready to Find Your Perfect First Car?</h2>
-            <p>Let <strong>Carbi</strong> do the hard work for you. We're building a system to match young drivers with:</p>
-        
-        <div class="cta-features">
-            <div>Low insurance group cars (Groups 1-10 only)</div>
-            <div>Trusted local dealers with excellent reputations</div>
-            <div>Cars that suit young driver needs and budgets</div>
-        </div>
-        
-        <a href="https://www.carbi.co" class="website" target="_blank">carbi.co</a>
-        <p style="margin-top: 10px;">Stop wasting time on cars you can't afford to insure!</p>
-    </div>
+        <h2>🛠️ Complete Car Buying Toolkit</h2>
+        <p>You've got the viewing checklist. Now grab the other essential tools:</p>
 
+        <div style="display: grid; gap: 15px; margin: 25px 0; text-align: left;">
+            <!-- Budget Calculator -->
+            <a href="/downloads/budget-calculator/download.html" target="_blank" rel="noopener noreferrer"
+                style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
+                <img src="/images/calculator-icon.png" alt="" style="width: 48px; height: 48px; flex-shrink: 0;">
+                <div style="flex: 1;">
+                    <div style="color: #0F172A; font-weight: 600; font-size: 1.1em;">First Car Budget Calculator</div>
+                    <div style="color: #64748B; font-size: 0.95em;">Work out your realistic first year costs</div>
+                </div>
+            </a>
+
+            <!-- Insurance Comparison -->
+            <a href="/downloads/quote-comparison/download.html" target="_blank" rel="noopener noreferrer"
+                style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
+                <img src="/images/Insurance-comparison-icon.png" alt=""
+                    style="width: 48px; height: 48px; flex-shrink: 0;">
+                <div style="flex: 1;">
+                    <div style="color: #0F172A; font-weight: 600; font-size: 1.1em;">Insurance Quote Comparison</div>
+                    <div style="color: #64748B; font-size: 0.95em;">Compare quotes side-by-side properly</div>
+                </div>
+            </a>
+
+            <!-- This Checklist -->
+            <div
+                style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: #f0f9ff; border: 2px solid #0EA5E9; border-radius: 10px;">
+                <img src="/images/viewing-checklist-icon.png" alt="" style="width: 48px; height: 48px; flex-shrink: 0;">
+                <div style="flex: 1;">
+                    <div style="color: #0F172A; font-weight: 600; font-size: 1.1em;">Car Viewing Checklist</div>
+                    <div style="color: #64748B; font-size: 0.95em;">You're here! Print or save this page</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <div class="section safety-reminder">
         <h2><span class="icon">⚠️</span>Final Safety Reminders</h2>
         <ul class="checklist">
@@ -582,20 +639,22 @@
             <li><input type="checkbox"> <strong>Don't rush</strong> - there are always other cars</li>
             <li><input type="checkbox"> <strong>Budget for repairs</strong> - even good cars need maintenance</li>
         </ul>
-        
+
         <p style="text-align: center; margin-top: 20px; font-weight: 600; color: #92400E;">
             <strong>Remember: It's better to keep looking than buy the wrong car!</strong>
         </p>
     </div>
 
-    <div class="footer"><p>© 2025 Carbi. Find out more at <strong><a href="https://www.carbi.co" target="_blank" style="color: #1E40AF; text-decoration: none;">carbi.co</a></strong></p>
+    <div class="footer">
+        <p>© 2025 Carbi <strong><a href="https://www.carbi.co" target="_blank"
+                    style="color: #1E40AF; text-decoration: none;">carbi.co</a></strong></p>
     </div>
 
     <script>
         // Make checkboxes interactive for digital use
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                if(this.checked) {
+            checkbox.addEventListener('change', function () {
+                if (this.checked) {
                     this.parentElement.style.opacity = '0.7';
                     this.parentElement.style.textDecoration = 'line-through';
                 } else {
@@ -607,7 +666,7 @@
 
         // Interactive star rating
         document.querySelectorAll('.rating span').forEach((star, index) => {
-            star.addEventListener('click', function() {
+            star.addEventListener('click', function () {
                 const rating = index + 1;
                 const allStars = this.parentElement.querySelectorAll('span');
                 allStars.forEach((s, i) => {
@@ -622,4 +681,5 @@
         }
     </script>
 </body>
+
 </html>
