@@ -1308,6 +1308,7 @@
 
         let currentStep = 1;
         const totalSteps = 10;
+        let formStarted = false;
 
         // Initialize form
         document.addEventListener('DOMContentLoaded', function () {
@@ -1331,6 +1332,28 @@
                     debugBtn.style.display = 'block';
                 }
             }
+            // Track form start
+            const firstInput = document.querySelector('.option-button, input, textarea');
+            if (firstInput) {
+                firstInput.addEventListener('click', function () {
+                    if (!formStarted) {
+                        formStarted = true;
+                        gtag('event', 'form_start', {
+                            'form_name': 'car_matching'
+                        });
+                    }
+                }, { once: true });
+            }
+
+            // Track abandonment
+            window.addEventListener('beforeunload', function () {
+                if (formStarted && currentStep < 10) {
+                    gtag('event', 'form_abandon', {
+                        'form_name': 'car_matching',
+                        'abandoned_at_step': currentStep
+                    });
+                }
+            });
         });
 
 
@@ -1354,6 +1377,17 @@
         function parseCurrency(str) {
             const num = parseInt(str.replace(/[^\d]/g, ''));
             return isNaN(num) ? 0 : num;
+        }
+
+        // Analytics form tracking
+        function trackFormStep(stepNumber, stepName) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'form_step_view', {
+                    'step_number': stepNumber,
+                    'step_name': stepName,
+                    'form_name': 'car_matching'
+                });
+            }
         }
 
         // Step 1: Important Features
@@ -2088,9 +2122,17 @@
                 if (typeof fbq !== 'undefined') {
                     fbq('track', 'Lead');
                 }
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'conversion', { 'send_to': 'AW-882133742/XXXXX' });
-                }
+
+                // Tracking form completion in analytics
+                gtag('event', 'form_submit', {
+                    'form_name': 'car_matching',
+                    'time_to_complete': Date.now() - formStartTime
+                });
+
+                //Removed - not using google ads currently
+                //                if (typeof gtag !== 'undefined') {
+                //                  gtag('event', 'conversion', { 'send_to': 'AW-882133742/XXXXX' });
+                //            }
 
                 // Log for debugging
                 console.log('Match request submitted:', result.id);
@@ -2126,6 +2168,23 @@
             // Define step order including 2b
             const stepOrder = [1, 2, '2b', 3, 4, 5, 6, 7, 8, 9, 10];
             const targetIndex = stepOrder.indexOf(stepNumber);
+
+            // Analytics tracking for each step
+            const stepNames = {
+                1: 'important_features',
+                2: 'dealbreakers',
+                '2b': 'main_driver',
+                3: 'budget',
+                4: 'brand_preference',
+                5: 'favourite_brand',
+                6: 'colour',
+                7: 'mileage',
+                8: 'location',
+                9: 'notes',
+                10: 'contact_details'
+            };
+
+            trackFormStep(stepNumber, stepNames[stepNumber]);
 
             if (targetIndex === -1) {
                 console.error('Invalid step:', stepNumber);
