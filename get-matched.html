@@ -1215,7 +1215,9 @@
                         Here's a checklist and a couple of spreadsheets to help with your car buying process.
                     </p>
 
-                    <a href="/downloads/car-viewing-checklist/checklist.html" target="_blank" rel="noopener noreferrer"
+                    <a href="/downloads/car-viewing-checklist/checklist.html"
+                        onclick="gtag('event', 'tool_download', {'tool_name': 'viewing_checklist'})" target="_blank"
+                        rel="noopener noreferrer"
                         style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
                         <img src="/images/viewing-checklist-icon.png" alt=""
                             style="width: 48px; height: 48px; flex-shrink: 0;">
@@ -1226,7 +1228,9 @@
                     </a>
 
 
-                    <a href="/downloads/budget-calculator/download.html" target="_blank" rel="noopener noreferrer"
+                    <a href="/downloads/budget-calculator/download.html"
+                        onclick="gtag('event', 'tool_download', {'tool_name': 'budget_calculator'})" target="_blank"
+                        rel="noopener noreferrer"
                         style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
                         <img src="/images/calculator-icon.png" alt=""
                             style="width: 48px; height: 48px; flex-shrink: 0;">
@@ -1238,7 +1242,9 @@
                     </a>
 
 
-                    <a href="/downloads/quote-comparison/download.html" target="_blank" rel="noopener noreferrer"
+                    <a href="/downloads/quote-comparison/download.html"
+                        onclick="gtag('event', 'tool_download', {'tool_name': 'quote_comparison'})" target="_blank"
+                        rel="noopener noreferrer"
                         style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
                         <img src="/images/Insurance-comparison-icon.png" alt=""
                             style="width: 48px; height: 48px; flex-shrink: 0;">
@@ -1310,6 +1316,7 @@
         const totalSteps = 10;
         let formStarted = false;
         let formStartTime = null;
+        let stepStartTimes = {};
 
         // Initialize form
         document.addEventListener('DOMContentLoaded', function () {
@@ -1391,6 +1398,17 @@
                 });
             }
         }
+        // Track time spent on previous step
+        if (stepStartTimes[currentStep]) {
+            const timeSpent = Math.round((Date.now() - stepStartTimes[currentStep]) / 1000);
+            gtag('event', 'step_time', {
+                'step_number': currentStep,
+                'seconds': timeSpent
+            });
+        }
+
+        // Start timing this step
+        stepStartTimes[stepNumber] = Date.now();
 
         // Step 1: Important Features
         function initializeStep1() {
