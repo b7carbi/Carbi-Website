@@ -1397,19 +1397,19 @@
                     'form_name': 'car_matching'
                 });
             }
-        }
-        // Track time spent on previous step
-        if (stepStartTimes[currentStep]) {
-            const timeSpent = Math.round((Date.now() - stepStartTimes[currentStep]) / 1000);
-            gtag('event', 'step_time', {
-                'step_number': currentStep,
-                'seconds': timeSpent
-            });
-        }
 
-        // Start timing this step
-        stepStartTimes[stepNumber] = Date.now();
+            // Track time spent on previous step
+            if (stepStartTimes[currentStep]) {
+                const timeSpent = Math.round((Date.now() - stepStartTimes[currentStep]) / 1000);
+                gtag('event', 'step_time', {
+                    'step_number': currentStep,
+                    'seconds': timeSpent
+                });
+            }
 
+            // Start timing this step
+            stepStartTimes[stepNumber] = Date.now();
+        }
         // Step 1: Important Features
         function initializeStep1() {
             const grid = document.getElementById('featuresGrid');
