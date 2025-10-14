@@ -1219,28 +1219,44 @@
                 <div class="step" id="step10">
                     <h2 class="step-heading">How can we reach you?</h2>
                     <p class="step-subtitle">We'll send your matches within 24 hours</p>
-                    <input type="text" id="firstName" class="text-input" placeholder="First Name" required>
-                    <input type="text" id="lastName" class="text-input" placeholder="Last Name" required>
-                    <input type="email" id="email" class="text-input" placeholder="Email Address">
-                    <input type="tel" id="phone" class="text-input" placeholder="Phone Number" required>
 
-                    <p class="input-label" style="margin-bottom: 15px;">How would you like to be contacted? <span
-                            style="color: #ef4444;">*</span></p>
-                    <div class="checkbox-group" id="contactPreferences">
-                        <div class="checkbox-option">
-                            <input type="checkbox" id="prefEmail" value="Email">
-                            <label for="prefEmail" class="checkbox-label">Email</label>
+                    <label for="firstName" class="input-label">First Name *</label>
+                    <input type="text" id="firstName" name="given-name" class="text-input" placeholder="First Name"
+                        autocomplete="given-name" required aria-required="true" aria-describedby="error10">
+
+                    <label for="lastName" class="input-label">Last Name *</label>
+                    <input type="text" id="lastName" name="family-name" class="text-input" placeholder="Last Name"
+                        autocomplete="family-name" required aria-required="true" aria-describedby="error10">
+
+                    <label for="email" class="input-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="text-input" placeholder="Email Address"
+                        autocomplete="email" aria-describedby="error10">
+
+                    <label for="phone" class="input-label">Phone Number *</label>
+                    <input type="tel" id="phone" name="tel" class="text-input" placeholder="Phone Number"
+                        autocomplete="tel" required aria-required="true" aria-describedby="error10">
+
+                    <fieldset>
+                        <legend class="input-label">
+                            How would you like to be contacted? <span style="color: #ef4444;">*</span>
+                        </legend>
+                        <div class="checkbox-group" id="contactPreferences" role="group" aria-required="true">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="prefEmail" value="Email" aria-describedby="error10">
+                                <label for="prefEmail" class="checkbox-label">Email</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="prefText" value="Text" aria-describedby="error10">
+                                <label for="prefText" class="checkbox-label">Text</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="prefPhone" value="Phone Call" aria-describedby="error10">
+                                <label for="prefPhone" class="checkbox-label">Phone Call</label>
+                            </div>
                         </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" id="prefText" value="Text">
-                            <label for="prefText" class="checkbox-label">Text</label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" id="prefPhone" value="Phone Call">
-                            <label for="prefPhone" class="checkbox-label">Phone Call</label>
-                        </div>
-                    </div>
-                    <div class="error-message" id="error10"></div>
+                    </fieldset>
+
+                    <div class="error-message" id="error10" role="alert" aria-live="polite"></div>
                     <button type="submit" class="primary-button" id="submitBtn" disabled>Find My Car</button>
                 </div>
             </form>
