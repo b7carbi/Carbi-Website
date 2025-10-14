@@ -69,6 +69,8 @@
     </script>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -138,8 +140,6 @@
         .logo a:hover {
             opacity: 0.8;
         }
-
-        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap');
 
         .beta-badge {
             background: #FEF3C7;
@@ -212,6 +212,32 @@
 
         .form-wrapper.hidden {
             display: none;
+        }
+
+        /* Remove default fieldset styling while keeping semantic HTML */
+        fieldset {
+            border: none;
+            padding: 0;
+            margin: 0;
+            min-width: 0;
+            /* Fix for some browsers */
+        }
+
+        fieldset legend {
+            padding: 0;
+        }
+
+        /* for visually hidden lables */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         /* Steps */
@@ -1031,8 +1057,9 @@
                 <div class="step active" id="step1">
                     <h2 class="step-heading">What's important to you?</h2>
                     <p class="step-subtitle">Select all that apply</p>
-                    <div class="button-grid" id="featuresGrid"></div>
-                    <div class="error-message" id="error1"></div>
+                    <div class="button-grid" id="featuresGrid" role="group"
+                        aria-label="Select important features for your first car"></div>
+                    <div class="error-message" id="error1" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next1" disabled>Next</button>
                 </div>
 
@@ -1040,8 +1067,9 @@
                 <div class="step" id="step2">
                     <h2 class="step-heading">What are your dealbreakers?</h2>
                     <p class="step-subtitle">Pick the features you absolutely need</p>
-                    <div class="button-grid" id="dealbreakersGrid"></div>
-                    <div class="error-message" id="error2"></div>
+                    <div class="button-grid" id="dealbreakersGrid" role="group" aria-label="Select must-have features">
+                    </div>
+                    <div class="error-message" id="error2" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next2" disabled>Next</button>
                 </div>
 
@@ -1050,11 +1078,10 @@
                     <h2 class="step-heading">Who will be the main driver on the insurance policy?</h2>
                     <p class="step-subtitle">This changes what car we recommend</p>
 
-                    <div class="button-grid" id="mainDriverGrid">
-                        <!-- Buttons will be created by JavaScript -->
-                    </div>
+                    <div class="button-grid" id="mainDriverGrid" role="radiogroup" aria-label="Select main driver type"
+                        aria-required="true"></div>
 
-                    <div class="error-message" id="error2b"></div>
+                    <div class="error-message" id="error2b" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next2b" disabled>Next</button>
                 </div>
 
@@ -1062,29 +1089,34 @@
                 <div class="step" id="step3">
                     <h2 class="step-heading">What's your budget?</h2>
                     <p class="step-subtitle">Set your price range</p>
-                    <div class="budget-display" id="budgetDisplay">£6,000 - £8,000</div>
+                    <div class="budget-display" id="budgetDisplay" aria-live="polite" aria-atomic="true">£6,000 - £8,000
+                    </div>
 
                     <!-- Dual Handle Range Slider -->
                     <div class="range-slider-container">
                         <div class="range-slider-track"></div>
                         <div class="range-slider-range" id="rangeHighlight"></div>
                         <input type="range" id="budgetMinSlider" class="range-slider" min="1000" max="20000"
-                            value="6000" step="100">
+                            value="6000" step="100" aria-label="Minimum budget slider" aria-valuemin="1000"
+                            aria-valuemax="20000" aria-valuenow="6000" aria-valuetext="£6,000">
                         <input type="range" id="budgetMaxSlider" class="range-slider" min="1000" max="20000"
-                            value="8000" step="100">
+                            value="8000" step="100" aria-label="Maximum budget slider" aria-valuemin="1000"
+                            aria-valuemax="20000" aria-valuenow="8000" aria-valuetext="£8,000">
                     </div>
 
                     <div class="budget-inputs">
                         <div class="input-group">
                             <label class="input-label" for="budgetMin">Minimum</label>
-                            <input type="tel" id="budgetMin" class="budget-input" value="£6,000">
+                            <input type="tel" id="budgetMin" class="budget-input" value="£6,000"
+                                aria-describedby="budgetDisplay">
                         </div>
                         <div class="input-group">
                             <label class="input-label" for="budgetMax">Maximum</label>
-                            <input type="tel" id="budgetMax" class="budget-input" value="£8,000">
+                            <input type="tel" id="budgetMax" class="budget-input" value="£8,000"
+                                aria-describedby="budgetDisplay">
                         </div>
                     </div>
-                    <div class="error-message" id="error3"></div>
+                    <div class="error-message" id="error3" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next3">Next</button>
                 </div>
 
@@ -1092,11 +1124,13 @@
                 <div class="step" id="step4">
                     <h2 class="step-heading">Any brand preferences?</h2>
                     <p class="step-subtitle">Choose your preferred brands or skip to find the best car</p>
-                    <button type="button" class="standalone-button" id="dontMindBrand">Don't mind - find the best car
-                        regardless of brand</button>
+                    <button type="button" class="standalone-button" id="dontMindBrand"
+                        aria-label="Skip brand selection and find the best car regardless of brand">
+                        Don't mind - find the best car regardless of brand
+                    </button>
                     <div class="separator">Or choose specific brands</div>
-                    <div id="brandsContainer"></div>
-                    <div class="error-message" id="error4"></div>
+                    <div id="brandsContainer" role="group" aria-label="Select preferred car brands"></div>
+                    <div class="error-message" id="error4" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next4" disabled>Next</button>
                 </div>
 
@@ -1104,8 +1138,9 @@
                 <div class="step" id="step5">
                     <h2 class="step-heading">Do you have a favourite?</h2>
                     <p class="step-subtitle">Pick your top choice</p>
-                    <div class="button-grid" id="favouriteGroup"></div>
-                    <div class="error-message" id="error5"></div>
+                    <div class="button-grid" id="favouriteGroup" role="radiogroup"
+                        aria-label="Select your favourite brand" aria-required="true"></div>
+                    <div class="error-message" id="error5" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next5" disabled>Next</button>
                 </div>
 
@@ -1113,13 +1148,14 @@
                 <div class="step" id="step6">
                     <h2 class="step-heading">What colour car?</h2>
                     <p class="step-subtitle">Select your preferred colours</p>
-                    <div class="button-grid" id="coloursGrid"></div>
+                    <div class="button-grid" id="coloursGrid" role="group" aria-label="Select preferred car colours">
+                    </div>
                     <div id="customColourContainer" style="display: none; margin-top: 20px;">
                         <label class="input-label" for="customColour">What colour?</label>
                         <input type="text" id="customColour" class="text-input"
-                            placeholder="e.g., Burgundy, Teal, Bronze">
+                            placeholder="e.g., Burgundy, Teal, Bronze" aria-label="Enter custom colour preference">
                     </div>
-                    <div class="error-message" id="error6"></div>
+                    <div class="error-message" id="error6" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next6" disabled>Next</button>
                 </div>
 
@@ -1128,28 +1164,38 @@
                     <h2 class="step-heading">Maximum mileage?</h2>
                     <p class="step-subtitle">Set your mileage limit</p>
                     <div class="slider-container">
-                        <div class="slider-display" id="mileageDisplay">50,000 miles</div>
+                        <div class="slider-display" id="mileageDisplay" aria-live="polite" aria-atomic="true">50,000
+                            miles</div>
                         <input type="range" id="mileageSlider" class="slider" min="10000" max="150000" value="50000"
-                            step="5000">
+                            step="5000" aria-label="Maximum mileage slider" aria-valuemin="10000" aria-valuemax="150000"
+                            aria-valuenow="50000" aria-valuetext="50,000 miles">
                     </div>
                     <button type="button" class="primary-button" id="next7">Next</button>
                 </div>
+
 
                 <!-- Step 8: Location and Radius -->
                 <div class="step" id="step8">
                     <h2 class="step-heading">How far will you travel?</h2>
                     <p class="step-subtitle">Enter your location and search radius</p>
 
-                    <button type="button" class="location-button" id="useLocationBtn">
-                        <span>📍</span> Use my current location
+                    <button type="button" class="location-button" id="useLocationBtn"
+                        aria-label="Use my current location to set postcode">
+                        <span aria-hidden="true">📍</span> Use my current location
                     </button>
 
-                    <input type="text" id="postcode" class="text-input" placeholder="Postcode or town">
+                    <label for="postcode" class="visually-hidden">Postcode or town</label>
+                    <input type="text" id="postcode" class="text-input" placeholder="Postcode or town"
+                        aria-required="true" aria-describedby="error8 locationDisplay">
+
                     <div class="slider-container">
-                        <div class="location-display" id="locationDisplay">Up to 30 miles</div>
-                        <input type="range" id="radiusSlider" class="slider" min="10" max="400" value="30" step="5">
+                        <div class="location-display" id="locationDisplay" aria-live="polite" aria-atomic="true">Up to
+                            30 miles</div>
+                        <input type="range" id="radiusSlider" class="slider" min="10" max="400" value="30" step="5"
+                            aria-label="Search radius in miles" aria-valuemin="10" aria-valuemax="400"
+                            aria-valuenow="30" aria-valuetext="30 miles">
                     </div>
-                    <div class="error-message" id="error8"></div>
+                    <div class="error-message" id="error8" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next8" disabled>Next</button>
                 </div>
 
@@ -1157,12 +1203,17 @@
                 <div class="step" id="step9">
                     <h2 class="step-heading">Anything else we should know?</h2>
                     <p class="step-subtitle">Optional - help us understand your needs better</p>
+                    <label for="additionalNotes" class="visually-hidden">Additional notes about your
+                        requirements</label>
                     <textarea id="additionalNotes" class="text-input"
                         placeholder="E.g., must have enough space for sports equipment, needs to be easy to park, prefer automatic..."
-                        maxlength="200"></textarea>
-                    <div class="char-count"><span id="charCount">0</span>/200</div>
+                        maxlength="200" aria-describedby="charCountContainer"></textarea>
+                    <div class="char-count" id="charCountContainer">
+                        <span id="charCount" aria-live="polite">0</span>/200 characters
+                    </div>
                     <button type="button" class="primary-button" id="next9">Next</button>
                 </div>
+
 
                 <!-- Step 10: Contact Details -->
                 <div class="step" id="step10">
@@ -1312,6 +1363,8 @@
             'Yellow', 'Orange', 'Brown', 'Purple', 'Gold', 'Other'
         ];
 
+
+
         let currentStep = 1;
         const totalSteps = 10;
         let formStarted = false;
@@ -1367,7 +1420,11 @@
 
 
 
-
+        // Helper: Update slider ARIA attributes when values change
+        function updateSliderAria(slider, valueText) {
+            slider.setAttribute('aria-valuenow', slider.value);
+            slider.setAttribute('aria-valuetext', valueText);
+        }
 
         // Helper: Format number with commas
         function formatNumber(num) {
@@ -1392,7 +1449,7 @@
         function trackFormStep(stepNumber, stepName) {
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'form_step_view', {
-                    'step_number': stepNumber,
+                    'step_number': String(stepNumber), //forcing to string for Analytics due to 2b
                     'step_name': stepName,
                     'form_name': 'car_matching'
                 });
@@ -1402,7 +1459,7 @@
             if (stepStartTimes[currentStep]) {
                 const timeSpent = Math.round((Date.now() - stepStartTimes[currentStep]) / 1000);
                 gtag('event', 'step_time', {
-                    'step_number': currentStep,
+                    'step_number': String(currentStep), // forcing to string due to 2b
                     'seconds': timeSpent
                 });
             }
@@ -1431,12 +1488,20 @@
             button.className = 'option-button';
             button.textContent = text;
             button.setAttribute('data-value', text);
+            button.setAttribute('role', 'button');
+            button.setAttribute('aria-pressed', 'false');
             return button;
         }
 
         function updateFeaturesList() {
             const selected = document.querySelectorAll('#featuresGrid .option-button.selected');
             formData.important_features = Array.from(selected).map(btn => btn.dataset.value);
+
+            // Update aria-pressed for all buttons
+            document.querySelectorAll('#featuresGrid .option-button').forEach(btn => {
+                btn.setAttribute('aria-pressed', btn.classList.contains('selected') ? 'true' : 'false');
+            });
+
             saveToLocalStorage();
         }
 
@@ -1472,6 +1537,12 @@
         function updateDealbreakers() {
             const selected = document.querySelectorAll('#dealbreakersGrid .option-button.selected');
             formData.dealbreakers = Array.from(selected).map(btn => btn.dataset.value);
+
+            // Update aria-pressed for all buttons
+            document.querySelectorAll('#dealbreakersGrid .option-button').forEach(btn => {
+                btn.setAttribute('aria-pressed', btn.classList.contains('selected') ? 'true' : 'false');
+            });
+
             saveToLocalStorage();
         }
 
@@ -1483,8 +1554,6 @@
         function initializeStep2b() {
             const grid = document.getElementById('mainDriverGrid');
             grid.innerHTML = '';
-
-            // Temporarily change grid to allow for descriptions
             grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(200px, 1fr))';
 
             const options = [
@@ -1493,36 +1562,41 @@
                 { value: 'not_sure', label: 'Not sure yet', description: "We'll find a car in both categories" }
             ];
 
-            options.forEach(option => {
-                // Create wrapper div that will be the grid item
+            options.forEach((option, index) => {
                 const wrapper = document.createElement('div');
                 wrapper.style.display = 'flex';
                 wrapper.style.flexDirection = 'column';
                 wrapper.style.gap = '8px';
 
-                // Create button using the standard function
                 const button = createOptionButton(option.label);
+                button.setAttribute('role', 'radio');
+                button.setAttribute('aria-checked', 'false');
+                button.setAttribute('data-value', option.value);
+                button.removeAttribute('aria-pressed'); // Radio buttons use aria-checked instead
 
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
                     // Deselect all others
                     grid.querySelectorAll('.option-button').forEach(btn => {
                         btn.classList.remove('selected');
+                        btn.setAttribute('aria-checked', 'false');
                     });
                     // Select this one
                     button.classList.add('selected');
+                    button.setAttribute('aria-checked', 'true');
                     formData.main_driver_type = option.value;
                     saveToLocalStorage();
                     document.getElementById('next2b').disabled = false;
                 });
 
-                // Create description text
                 const description = document.createElement('div');
                 description.style.fontSize = '0.9em';
                 description.style.color = '#64748B';
                 description.style.textAlign = 'center';
                 description.style.lineHeight = '1.4';
                 description.textContent = option.description;
+                description.id = `main-driver-desc-${index}`;
+                button.setAttribute('aria-describedby', description.id);
 
                 wrapper.appendChild(button);
                 wrapper.appendChild(description);
@@ -1575,6 +1649,7 @@
 
                 formData.budget_min = min;
                 updateBudgetDisplay();
+                updateSliderAria(minSlider, formatCurrency(min));
                 saveToLocalStorage();
             });
 
@@ -1589,6 +1664,7 @@
 
                 formData.budget_max = max;
                 updateBudgetDisplay();
+                updateSliderAria(maxSlider, formatCurrency(max));
                 saveToLocalStorage();
             });
 
@@ -1632,10 +1708,13 @@
                 const heading = document.createElement('div');
                 heading.className = 'category-heading';
                 heading.textContent = category;
+                heading.id = `brand-category-${category.toLowerCase()}`;
                 container.appendChild(heading);
 
                 const grid = document.createElement('div');
                 grid.className = 'button-grid';
+                grid.setAttribute('role', 'group');
+                grid.setAttribute('aria-labelledby', `brand-category-${category.toLowerCase()}`);
 
                 brands[category].forEach(brand => {
                     const button = createOptionButton(brand);
@@ -1646,6 +1725,7 @@
                         formData.brand_preference = 'specific';
 
                         button.classList.toggle('selected');
+                        button.setAttribute('aria-pressed', button.classList.contains('selected') ? 'true' : 'false');
                         updateBrands();
                         validateStep4();
                     });
@@ -1655,6 +1735,7 @@
                 container.appendChild(grid);
             });
         }
+
 
         function updateBrands() {
             const selected = document.querySelectorAll('#brandsContainer .option-button.selected');
@@ -1671,20 +1752,24 @@
         function initializeStep5() {
             const group = document.getElementById('favouriteGroup');
             group.innerHTML = '';
-
-            // Change from radio-group to button-grid
             group.className = 'button-grid';
 
             formData.selected_brands.forEach(brand => {
                 const button = createOptionButton(brand);
+                button.setAttribute('role', 'radio');
+                button.setAttribute('aria-checked', 'false');
+                button.removeAttribute('aria-pressed'); // Use aria-checked for radio buttons
+
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
                     // Deselect all others
                     group.querySelectorAll('.option-button').forEach(btn => {
                         btn.classList.remove('selected');
+                        btn.setAttribute('aria-checked', 'false');
                     });
                     // Select this one
                     button.classList.add('selected');
+                    button.setAttribute('aria-checked', 'true');
                     formData.favourite_brand = brand;
                     saveToLocalStorage();
                     document.getElementById('next5').disabled = false;
@@ -1694,14 +1779,20 @@
 
             // Add "no favourite" option
             const noFavButton = createOptionButton("I don't have a favourite");
+            noFavButton.setAttribute('role', 'radio');
+            noFavButton.setAttribute('aria-checked', 'false');
+            noFavButton.removeAttribute('aria-pressed');
+
             noFavButton.addEventListener('click', (e) => {
                 e.stopPropagation();
                 // Deselect all others
                 group.querySelectorAll('.option-button').forEach(btn => {
                     btn.classList.remove('selected');
+                    btn.setAttribute('aria-checked', 'false');
                 });
                 // Select this one
                 noFavButton.classList.add('selected');
+                noFavButton.setAttribute('aria-checked', 'true');
                 formData.favourite_brand = null;
                 saveToLocalStorage();
                 document.getElementById('next5').disabled = false;
@@ -1710,7 +1801,6 @@
         }
         // Step 6: Colour
         function initializeStep6() {
-
             const grid = document.getElementById('coloursGrid');
             const customColourContainer = document.getElementById('customColourContainer');
             const customColourInput = document.getElementById('customColour');
@@ -1720,18 +1810,31 @@
                 const button = createOptionButton(colour);
                 button.classList.add('color-button');
                 button.setAttribute('data-color', colour);
+
+                // Add descriptive aria-label for colour buttons
+                if (colour === 'Other') {
+                    button.setAttribute('aria-label', 'Select other colour not listed');
+                } else {
+                    button.setAttribute('aria-label', `Select ${colour} colour`);
+                }
+
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
                     button.classList.toggle('selected');
+                    button.setAttribute('aria-pressed', button.classList.contains('selected') ? 'true' : 'false');
 
                     // Show/hide custom colour input if "Other" is selected
                     if (colour === 'Other') {
                         if (button.classList.contains('selected')) {
                             customColourContainer.style.display = 'block';
                             customColourInput.required = true;
+                            customColourInput.setAttribute('aria-required', 'true');
+                            // Set focus to the input
+                            setTimeout(() => customColourInput.focus(), 100);
                         } else {
                             customColourContainer.style.display = 'none';
                             customColourInput.required = false;
+                            customColourInput.removeAttribute('aria-required');
                             customColourInput.value = '';
                             formData.custom_colour = '';
                         }
@@ -1774,13 +1877,15 @@
 
         // Step 7: Maximum Mileage
         function initializeStep7() {
-            const slider = document.getElementById('mileageSlider');
-            const display = document.getElementById('mileageDisplay');
+            const mileageSlider = document.getElementById('mileageSlider');
+            const mileageDisplay = document.getElementById('mileageDisplay');
 
-            slider.addEventListener('input', () => {
-                const value = parseInt(slider.value);
-                display.textContent = `${formatNumber(value)} miles`;
+            mileageSlider.addEventListener('input', () => {
+                const value = parseInt(mileageSlider.value);
+                const displayText = `${formatNumber(value)} miles`;
+                mileageDisplay.textContent = displayText;
                 formData.max_mileage = value;
+                updateSliderAria(mileageSlider, displayText);
                 saveToLocalStorage();
             });
         }
@@ -1788,13 +1893,13 @@
         // Step 8: Location and Radius
         function initializeStep8() {
             const postcodeInput = document.getElementById('postcode');
-            const slider = document.getElementById('radiusSlider');
+            const radiusSlider = document.getElementById('radiusSlider');
             const display = document.getElementById('locationDisplay');
             const useLocationBtn = document.getElementById('useLocationBtn');
 
             function updateLocationDisplay() {
                 const postcode = postcodeInput.value.trim();
-                const radius = slider.value;
+                const radius = radiusSlider.value;
 
                 if (postcode) {
                     display.textContent = `Up to ${radius} miles from ${postcode}`;
@@ -1810,8 +1915,10 @@
                 validateStep8();
             });
 
-            slider.addEventListener('input', () => {
-                formData.search_radius = parseInt(slider.value);
+            radiusSlider.addEventListener('input', () => {
+                formData.search_radius = parseInt(radiusSlider.value);
+                const radiusText = `${radiusSlider.value} miles`;
+                updateSliderAria(radiusSlider, radiusText);
                 saveToLocalStorage();
                 updateLocationDisplay();
             });
@@ -1905,21 +2012,33 @@
 
         // Step 9: Additional Notes
         function initializeStep9() {
-            const textarea = document.getElementById('additionalNotes');
+            const notesTextarea = document.getElementById('additionalNotes');
             const charCount = document.getElementById('charCount');
 
-            textarea.addEventListener('input', () => {
-                const length = textarea.value.length;
+            notesTextarea.addEventListener('input', () => {
+                const length = notesTextarea.value.length;
                 charCount.textContent = length;
-                formData.additional_notes = textarea.value.trim() || null;
+                formData.additional_notes = notesTextarea.value.trim() || null;
                 saveToLocalStorage();
+                // The aria-live region will announce changes automatically
             });
         }
 
         // Step 10: Contact Details - Validation
         function initializeStep10Validation() {
             ['firstName', 'lastName', 'email', 'phone'].forEach(id => {
-                document.getElementById(id).addEventListener('input', validateStep10);
+                const input = document.getElementById(id);
+                input.addEventListener('input', validateStep10);
+                // Add aria-invalid on blur if field is invalid
+                input.addEventListener('blur', function () {
+                    if (this.value.trim() === '' && this.hasAttribute('aria-required')) {
+                        this.setAttribute('aria-invalid', 'true');
+                    } else {
+                        this.removeAttribute('aria-invalid');
+                    }
+                });
+
+
             });
 
             // Only validate email on blur (when they leave the field)
@@ -1950,13 +2069,15 @@
             if (emailSelected && !email) {
                 errorMsg.textContent = 'Email address needed (you selected it as contact preference)';
                 submitBtn.disabled = true;
+                submitBtn.setAttribute('aria-describedby', 'error10');
                 return false;
             }
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
+            if (email && !emailRegex.test(email)) {
                 errorMsg.textContent = 'Please enter a valid email address';
                 submitBtn.disabled = true;
+                submitBtn.setAttribute('aria-describedby', 'error10');
                 return false;
             }
 
@@ -1964,13 +2085,16 @@
             if (!phoneRegex.test(phone)) {
                 errorMsg.textContent = 'Please enter a valid phone number';
                 submitBtn.disabled = true;
+                submitBtn.setAttribute('aria-describedby', 'error10');
                 return false;
             }
 
 
 
+
             errorMsg.textContent = '';
             submitBtn.disabled = false;
+            submitBtn.removeAttribute('aria-describedby');
             return true;
         }
 
@@ -2098,12 +2222,15 @@
         document.getElementById('matchForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            const errorMsg = document.getElementById('error10');
+
             // Check contact preferences before submission
             const checkboxes = document.querySelectorAll('#contactPreferences input[type="checkbox"]:checked');
             if (checkboxes.length === 0) {
-                const errorMsg = document.getElementById('error10');
                 errorMsg.textContent = 'Please select at least one contact preference';
-                return;
+                submitBtn.disabled = true;
+                submitBtn.setAttribute('aria-describedby', 'error10');
+                return false;
             }
 
             formData.first_name = document.getElementById('firstName').value.trim();
