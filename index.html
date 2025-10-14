@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Add meta description for SEO/accessibility -->
+    <meta name="description"
+        content="Find your perfect first car in 24 hours. We match young drivers with low insurance group cars from trusted dealers. No endless scrolling, no pushy sales.">
+
     <!-- Cookie Consent -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
@@ -18,7 +22,7 @@
                 theme: "classic",
                 position: "bottom",
                 content: {
-                    message: "Cookies help us improve your experience and learn what’s working in our marketing.",
+                    message: "Cookies help us improve your experience and learn what's working in our marketing.",
                     dismiss: "Got it",
                     link: "Privacy Policy",
                     href: "/privacy.html"
@@ -85,6 +89,22 @@
             padding: 0 20px;
         }
 
+        /* Skip to main content link for keyboard users */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #0EA5E9;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 1000;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
         /* Header */
         header {
             padding: 20px 0;
@@ -101,9 +121,16 @@
             align-items: center;
         }
 
-        .logo {
+        .logo a {
             display: flex;
             align-items: center;
+            text-decoration: none;
+        }
+
+        .logo a:focus {
+            outline: 3px solid #0EA5E9;
+            outline-offset: 4px;
+            border-radius: 4px;
         }
 
         /* Subtle wink animation */
@@ -120,6 +147,12 @@
             }
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            .logo svg circle:first-child {
+                animation: none;
+            }
+        }
+
         .logo svg circle:first-child {
             transform-origin: center;
             animation: wink 15s ease-in-out 3s infinite;
@@ -133,11 +166,9 @@
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 1em;
-            /* Changed from 0.9em */
             font-weight: 600;
             border: 2px dashed #F59E0B;
             font-family: 'Rubik', sans-serif;
-            /* Changed from Caveat */
             transform: rotate(2deg);
         }
 
@@ -181,24 +212,31 @@
             box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
         }
 
+        .cta-button:focus {
+            outline: 3px solid #0F172A;
+            outline-offset: 4px;
+        }
+
         .trust-signals {
             display: flex;
             justify-content: center;
             gap: 30px;
             margin-top: 40px;
             flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
         }
 
         .trust-signal {
             color: #64748B;
             font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .trust-signal::before {
-            content: "✓";
-            color: #10B981;
-            font-weight: bold;
-            font-size: 1.2em;
+        .trust-signal svg {
+            flex-shrink: 0;
         }
 
         /* How It Works Section */
@@ -229,11 +267,6 @@
             border-radius: 16px;
             text-align: center;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-
-        .step:hover {
-            transform: none;
         }
 
         .step-icon {
@@ -252,7 +285,6 @@
             object-fit: contain;
         }
 
-        /* Make step 1 car bigger since it's wider/shorter */
         .step:first-child .step-icon img {
             width: 130px;
             height: 130px;
@@ -271,29 +303,6 @@
             line-height: 1.6;
             font-size: 1.05em;
             margin-bottom: 8px;
-        }
-
-        .step ul {
-            list-style: none;
-            padding: 0;
-            margin: 15px 0 0 0;
-            text-align: left;
-        }
-
-        .step li {
-            color: #475569;
-            font-size: 0.95em;
-            margin: 8px 0;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .step li::before {
-            content: "•";
-            color: #0EA5E9;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
         }
 
         .step-time {
@@ -347,6 +356,10 @@
         }
 
         .faq-question {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
             font-size: 1.2em;
             font-weight: 600;
             color: #0F172A;
@@ -354,6 +367,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0;
+            font-family: inherit;
+        }
+
+        .faq-question:hover {
+            color: #0EA5E9;
+        }
+
+        .faq-question:focus {
+            outline: none;
+        }
+
+        .faq-question:focus-visible {
+            outline: 3px solid #0EA5E9;
+            outline-offset: 4px;
         }
 
         .faq-question::after {
@@ -361,6 +389,8 @@
             font-size: 1.5em;
             color: #0EA5E9;
             transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-left: 16px;
         }
 
         .faq-item.active .faq-question::after {
@@ -384,8 +414,13 @@
             font-size: 1.05em;
         }
 
+        /* Focus visible for all interactive elements */
+        *:focus-visible {
+            outline: 3px solid #0EA5E9;
+            outline-offset: 2px;
+        }
+
         /* Mobile Responsive */
-        /* Footer responsive */
         @media (max-width: 768px) {
             footer .container>div {
                 flex-direction: column !important;
@@ -393,9 +428,7 @@
                 text-align: center;
                 gap: 15px !important;
             }
-        }
 
-        @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2em;
             }
@@ -412,6 +445,7 @@
             .trust-signals {
                 flex-direction: column;
                 gap: 10px;
+                align-items: center;
             }
 
             .how-it-works h2,
@@ -433,258 +467,365 @@
 </head>
 
 <body>
+    <!-- Skip to main content for keyboard users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Header -->
-    <header>
+    <header role="banner">
         <div class="container">
-            <div class="header-content">
+            <nav class="header-content" aria-label="Main navigation">
                 <div class="logo">
-                    <svg width="110" height="40" viewBox="0 0 110 40">
-                        <circle cx="20" cy="20" r="6" fill="#0EA5E9" />
-                        <path d="M 38 14 L 45 20 L 38 26" fill="none" stroke="#1E40AF" stroke-width="3"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                        <text x="58" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto"
-                            font-size="20" font-weight="600" fill="#0F172A">carbi</text>
-                    </svg>
+                    <a href="/" aria-label="Carbi home">
+                        <svg width="110" height="40" viewBox="0 0 110 40" aria-hidden="true" focusable="false">
+                            <circle cx="20" cy="20" r="6" fill="#0EA5E9" />
+                            <path d="M 38 14 L 45 20 L 38 26" fill="none" stroke="#1E40AF" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <text x="58" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto"
+                                font-size="20" font-weight="600" fill="#0F172A">carbi</text>
+                        </svg>
+                    </a>
                 </div>
-                <div class="beta-badge">
+                <div class="beta-badge" role="status" aria-live="polite">
                     TESTING! NOT LIVE YET :)
                 </div>
-            </div>
+            </nav>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>The New Way To Find A First Car</h1>
-            <p class="subtitle">
-                Fast and Easy
-            </p>
+    <main id="main-content">
+        <section class="hero" aria-labelledby="hero-heading">
+            <div class="container">
+                <h1 id="hero-heading">The New Way To Find A First Car</h1>
+                <p class="subtitle">
+                    Fast and Easy
+                </p>
 
-            <a href="get-matched.html" class="cta-button">Find My Car</a>
+                <a href="get-matched.html" class="cta-button">Find My Car</a>
 
-            <div class="trust-signals">
-                <div class="trust-signal">24-hour matches</div>
-                <div class="trust-signal">Low insurance groups</div>
-                <div class="trust-signal">4.6★+ dealers only</div>
+                <ul class="trust-signals" role="list" aria-label="Key benefits">
+                    <li class="trust-signal">
+                        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                            <path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="#10B981" />
+                        </svg>
+                        <span>24-hour matches</span>
+                    </li>
+                    <li class="trust-signal">
+                        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                            <path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="#10B981" />
+                        </svg>
+                        <span>Low insurance groups</span>
+                    </li>
+                    <li class="trust-signal">
+                        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                            <path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="#10B981" />
+                        </svg>
+                        <span>4.6★+ dealers only</span>
+                    </li>
+                </ul>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- How It Works Section -->
-    <section class="how-it-works">
-        <div class="container">
-            <h2>How It Works</h2>
+        <!-- How It Works Section -->
+        <section class="how-it-works" aria-labelledby="how-it-works-heading">
+            <div class="container">
+                <h2 id="how-it-works-heading">How It Works</h2>
 
-            <div class="steps">
-                <!-- Step 1: What You Want -->
-                <div class="step">
-                    <div class="step-icon">
-                        <img src="images/step1-car.png" alt="Your ideal first car">
+                <ol class="steps" role="list">
+                    <li class="step">
+                        <div class="step-icon">
+                            <img src="images/step1-car.png" alt="" role="presentation">
+                        </div>
+                        <h3>1. Tell Us What's Important</h3>
+                        <p>Quick form</p>
+                        <span class="step-time">Takes 2 minutes</span>
+                    </li>
+
+                    <li class="step">
+                        <div class="step-icon">
+                            <img src="images/step2-search.png" alt="" role="presentation">
+                        </div>
+                        <h3>2. We Do The Legwork</h3>
+                        <p>Checking trusted dealers with low insurance group cars</p>
+                    </li>
+
+                    <li class="step">
+                        <div class="step-icon">
+                            <img src="images/step3-handshake.png" alt="" role="presentation">
+                        </div>
+                        <h3>3. Get Your Match</h3>
+                        <p>24-hour match (no pushy sales)</p>
+                    </li>
+                </ol>
+
+                <!-- Trust Badge Below Steps -->
+                <div class="trust-badge">
+                    <div class="trust-badge-stars">
+                        <svg role="img" aria-label="4.6 out of 5 stars rating" width="150" height="30"
+                            viewBox="0 0 150 30" fill="none">
+                            <title>4.6 star rating</title>
+                            <path d="M 5 5 L 7 11 L 13 11 L 8 15 L 10 21 L 5 17 L 0 21 L 2 15 L -3 11 L 3 11 Z"
+                                fill="#F59E0B" />
+                            <path d="M 35 5 L 37 11 L 43 11 L 38 15 L 40 21 L 35 17 L 30 21 L 32 15 L 27 11 L 33 11 Z"
+                                fill="#F59E0B" />
+                            <path d="M 65 5 L 67 11 L 73 11 L 68 15 L 70 21 L 65 17 L 60 21 L 62 15 L 57 11 L 63 11 Z"
+                                fill="#F59E0B" />
+                            <path d="M 95 5 L 97 11 L 103 11 L 98 15 L 100 21 L 95 17 L 90 21 L 92 15 L 87 11 L 93 11 Z"
+                                fill="#F59E0B" />
+                            <defs>
+                                <linearGradient id="partialStarFill" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="60%" style="stop-color:#F59E0B;stop-opacity:1" />
+                                    <stop offset="60%" style="stop-color:#E2E8F0;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path
+                                d="M 125 5 L 127 11 L 133 11 L 128 15 L 130 21 L 125 17 L 120 21 L 122 15 L 117 11 L 123 11 Z"
+                                fill="url(#partialStarFill)" />
+                        </svg>
                     </div>
-                    <h3>1. Tell Us What's Important</h3>
-                    <p>Quick form</p>
-                    <span class="step-time">Takes 2 minutes</span>
-                </div>
-
-                <!-- Step 2: We Search For It -->
-                <div class="step">
-                    <div class="step-icon">
-                        <img src="images/step2-search.png" alt="We search for your car">
-                    </div>
-                    <h3>2. We Do The Legwork</h3>
-                    <p>Checking trusted dealers with low insurance group cars</p>
-                </div>
-
-                <!-- Step 3: You Get The Car -->
-                <div class="step">
-                    <div class="step-icon">
-                        <img src="images/step3-handshake.png" alt="Deal done with trusted dealer">
-                    </div>
-                    <h3>3. Get Your Match</h3>
-                    <p>24-hour match (no pushy sales)</p>
-                </div>
-            </div>
-
-            <!-- Trust Badge Below Steps -->
-            <div class="trust-badge">
-                <div class="trust-badge-stars">
-                    <svg width="150" height="30" viewBox="0 0 150 30" fill="none">
-                        <!-- 4 full stars + 1 at 60% -->
-                        <path d="M 5 5 L 7 11 L 13 11 L 8 15 L 10 21 L 5 17 L 0 21 L 2 15 L -3 11 L 3 11 Z"
-                            fill="#F59E0B" />
-                        <path d="M 35 5 L 37 11 L 43 11 L 38 15 L 40 21 L 35 17 L 30 21 L 32 15 L 27 11 L 33 11 Z"
-                            fill="#F59E0B" />
-                        <path d="M 65 5 L 67 11 L 73 11 L 68 15 L 70 21 L 65 17 L 60 21 L 62 15 L 57 11 L 63 11 Z"
-                            fill="#F59E0B" />
-                        <path d="M 95 5 L 97 11 L 103 11 L 98 15 L 100 21 L 95 17 L 90 21 L 92 15 L 87 11 L 93 11 Z"
-                            fill="#F59E0B" />
-                        <defs>
-                            <linearGradient id="partialStarFill" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="60%" style="stop-color:#F59E0B;stop-opacity:1" />
-                                <stop offset="60%" style="stop-color:#E2E8F0;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <path
-                            d="M 125 5 L 127 11 L 133 11 L 128 15 L 130 21 L 125 17 L 120 21 L 122 15 L 117 11 L 123 11 Z"
-                            fill="url(#partialStarFill)" />
-                    </svg>
-                </div>
-                <p>We only work with trusted dealers rated 4.6+ stars</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mid-page CTA -->
-    <section style="padding: 60px 0; background: white; text-align: center;">
-        <div class="container">
-            <h2 style="font-size: 2em; color: #0F172A; margin-bottom: 15px; font-weight: 700;">Join Our First 100 Beta
-                Testers</h2>
-            <p style="font-size: 1.1em; color: #64748B; margin-bottom: 30px;">Limited spots available.</p>
-            <a href="get-matched.html" class="cta-button">Get Started</a>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <div class="container">
-            <h2>Frequently Asked Questions</h2>
-
-            <div class="faq-list">
-                <div class="faq-item">
-                    <div class="faq-question">What is Carbi?</div>
-                    <div class="faq-answer">
-                        <p>Carbi matches young drivers with their first car from trusted local dealers. Fill in
-                            a quick form, we check hundreds of dealers for low insurance cars and you get matched
-                            within 24 hours. No endless scrolling or no pushy sales guys.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Do I have to pay to use Carbi?</div>
-                    <div class="faq-answer">
-                        <p>Not while we're in BETA phase and learning. In the future, car buyers or dealers
-                            might pay a small fee. For now, you pay the dealer for the car that's it.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">How quickly will I hear from a dealer?</div>
-                    <div class="faq-answer">
-                        <p>We'll start looking for your car as soon as you submit the form. If we find a match, we'll be
-                            in touch within
-                            24 hours and the trusted dealer will reach out so you can arrange a viewing.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">What if I don't like the car you find?</div>
-                    <div class="faq-answer">
-                        <p>Just let us know and we'll keep searching. There's no obligation to buy and we won't stop
-                            until you find the right car. That said, we put a lot of effort into matching based on your
-                            specific requirements, so we're hopeful that your first match will be a good one.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Do you only work with trusted dealers?</div>
-                    <div class="faq-answer">
-                        <p>Yes. Every dealer must have at least 4.6 stars in online ratings. If any customer has a bad
-                            experience with a dealer we recommended, they'll be removed from our list.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Why should I trust Carbi?</div>
-                    <div class="faq-answer">
-                        <p>We're unbiased and want the same as you - to find the best car for your needs.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Do you make money from the dealers?</div>
-                    <div class="faq-answer">
-                        <p>Not while we're in the testing phase. In the future we might charge dealers a small fee for
-                            finding them a customer.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Will I get pressured to buy?</div>
-                    <div class="faq-answer">
-                        <p>No. If a dealer pressures you to buy, let us know and we'll stop recommending them.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">How does Carbi choose which cars to recommend?</div>
-                    <div class="faq-answer">
-                        <p>We start with a list of available, low insurance group cars at trusted dealers within your
-                            search
-                            radius. Then we look at your individual requirements and find the best match.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Why not use Autotrader?</div>
-                    <div class="faq-answer">
-                        <p>AutoTrader is good if you already know exactly what you want. But it can be complicated and
-                            it shows you thousands of cars. We
-                            pre-filter for young driver friendly, low insurance group cars and quickliy find a single
-                            closest match instead of weeks of
-                            searching. Plus, not all dealers list all their cars on AutoTrader because it's expensive.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Why not go to a local dealer?</div>
-                    <div class="faq-answer">
-                        <p>We'll connect you with a trusted local dealer who has the best match for what you're looking
-                            for, once we've done the legwork. Or you can do that legwork yourself and take a bit longer.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">Should I buy privately?</div>
-                    <div class="faq-answer">
-                        <p>If you know exactly what you're looking for, you can save a bit of money buying privately. It
-                            comes with more risk though - no warranties and you can't take it back.</p>
-                    </div>
+                    <p>We only work with trusted dealers rated 4.6+ stars</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Mid-page CTA -->
+        <section style="padding: 60px 0; background: white; text-align: center;" aria-labelledby="cta-heading">
+            <div class="container">
+                <h2 id="cta-heading" style="font-size: 2em; color: #0F172A; margin-bottom: 15px; font-weight: 700;">Join
+                    Our First 100 Beta Testers</h2>
+                <p style="font-size: 1.1em; color: #64748B; margin-bottom: 30px;">Limited spots available.</p>
+                <a href="get-matched.html" class="cta-button">Get Started</a>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" aria-labelledby="faq-heading">
+            <div class="container">
+                <h2 id="faq-heading">Frequently Asked Questions</h2>
+
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-1">
+                                What is Carbi?
+                            </button>
+                        </h3>
+                        <div id="faq-1" class="faq-answer" role="region" aria-labelledby="faq-question-1">
+                            <p>Carbi matches young drivers with their first car from trusted local dealers. Fill in
+                                a quick form, we check hundreds of dealers for low insurance cars and you get matched
+                                within 24 hours. No endless scrolling or no pushy sales guys.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-2">
+                                Do I have to pay to use Carbi?
+                            </button>
+                        </h3>
+                        <div id="faq-2" class="faq-answer" role="region">
+                            <p>Not while we're in BETA phase and learning. In the future, car buyers or dealers
+                                might pay a small fee. For now, you pay the dealer for the car that's it.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-3">
+                                How quickly will I hear from a dealer?
+                            </button>
+                        </h3>
+                        <div id="faq-3" class="faq-answer" role="region">
+                            <p>We'll start looking for your car as soon as you submit the form. If we find a match,
+                                we'll be
+                                in touch within 24 hours and the trusted dealer will reach out so you can arrange a
+                                viewing.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-4">
+                                What if I don't like the car you find?
+                            </button>
+                        </h3>
+                        <div id="faq-4" class="faq-answer" role="region">
+                            <p>Just let us know and we'll keep searching. There's no obligation to buy and we won't stop
+                                until you find the right car. That said, we put a lot of effort into matching based on
+                                your
+                                specific requirements, so we're hopeful that your first match will be a good one.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-5">
+                                Do you only work with trusted dealers?
+                            </button>
+                        </h3>
+                        <div id="faq-5" class="faq-answer" role="region">
+                            <p>Yes. Every dealer must have at least 4.6 stars in online ratings. If any customer has a
+                                bad
+                                experience with a dealer we recommended, they'll be removed from our list.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-6">
+                                Why should I trust Carbi?
+                            </button>
+                        </h3>
+                        <div id="faq-6" class="faq-answer" role="region">
+                            <p>We're unbiased and want the same as you - to find the best car for your needs.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-7">
+                                Do you make money from the dealers?
+                            </button>
+                        </h3>
+                        <div id="faq-7" class="faq-answer" role="region">
+                            <p>Not while we're in the testing phase. In the future we might charge dealers a small fee
+                                for
+                                finding them a customer.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-8">
+                                Will I get pressured to buy?
+                            </button>
+                        </h3>
+                        <div id="faq-8" class="faq-answer" role="region">
+                            <p>No. If a dealer pressures you to buy, let us know and we'll stop recommending them.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-9">
+                                How does Carbi choose which cars to recommend?
+                            </button>
+                        </h3>
+                        <div id="faq-9" class="faq-answer" role="region">
+                            <p>We start with a list of available, low insurance group cars at trusted dealers within
+                                your
+                                search radius. Then we look at your individual requirements and find the best match.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-10">
+                                Why not use Autotrader?
+                            </button>
+                        </h3>
+                        <div id="faq-10" class="faq-answer" role="region">
+                            <p>AutoTrader is good if you already know exactly what you want. But it can be complicated
+                                and
+                                it shows you thousands of cars. We pre-filter for young driver friendly, low insurance
+                                group
+                                cars and quickly find a single closest match instead of weeks of searching. Plus, not
+                                all
+                                dealers list all their cars on AutoTrader because it's expensive.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-11">
+
+                                Why not go to a local dealer?
+                            </button>
+                        </h3>
+                        <div id="faq-11" class="faq-answer" role="region">
+                            <p>We'll connect you with a trusted local dealer who has the best match for what you're
+                                looking
+                                for, once we've done the legwork. Or you can do that legwork yourself and take a bit
+                                longer.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>
+                            <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-12">
+                                Should I buy privately?
+                            </button>
+                        </h3>
+                        <div id="faq-12" class="faq-answer" role="region">
+                            <p>If you know exactly what you're looking for, you can save a bit of money buying
+                                privately. It
+                                comes with more risk though - no warranties and you can't take it back.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script>
-        // FAQ Accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                const wasActive = faqItem.classList.contains('active');
+        // FAQ Accordion with proper ARIA management
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.closest('.faq-item');
+                const wasExpanded = button.getAttribute('aria-expanded') === 'true';
 
                 // Close all FAQ items
                 document.querySelectorAll('.faq-item').forEach(item => {
                     item.classList.remove('active');
+                    const btn = item.querySelector('.faq-question');
+                    btn.setAttribute('aria-expanded', 'false');
                 });
 
-                // Open clicked item if it wasn't active
-                if (!wasActive) {
+                // Open clicked item if it wasn't expanded
+                if (!wasExpanded) {
                     faqItem.classList.add('active');
+                    button.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+
+        // Keyboard navigation for FAQ
+        document.querySelectorAll('.faq-question').forEach((button, index, buttons) => {
+            button.addEventListener('keydown', (e) => {
+                let nextIndex;
+
+                switch (e.key) {
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        nextIndex = (index + 1) % buttons.length;
+                        buttons[nextIndex].focus();
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        nextIndex = (index - 1 + buttons.length) % buttons.length;
+                        buttons[nextIndex].focus();
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        buttons[0].focus();
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        buttons[buttons.length - 1].focus();
+                        break;
                 }
             });
         });
     </script>
 
     <!-- Footer -->
-    <footer style="background: #0F172A; padding: 40px 0; margin-top: 80px;">
+    <footer role="contentinfo" style="background: #0F172A; padding: 40px 0; margin-top: 80px;">
         <div class="container">
             <div
                 style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
                 <!-- Logo -->
                 <div>
-                    <svg width="100" height="40" viewBox="0 0 110 40">
+                    <svg width="100" height="40" viewBox="0 0 110 40" aria-hidden="true" focusable="false">
                         <circle cx="20" cy="20" r="6" fill="#0EA5E9" />
                         <path d="M 38 14 L 45 20 L 38 26" fill="none" stroke="#0EA5E9" stroke-width="3"
                             stroke-linecap="round" stroke-linejoin="round" />
@@ -706,8 +847,6 @@
                             style="color: #0EA5E9; text-decoration: none;">hello@carbi.co</a>
                     </p>
                 </div>
-
-
             </div>
         </div>
     </footer>
@@ -725,7 +864,7 @@
         document.querySelectorAll('a[href="get-matched.html"]').forEach(button => {
             button.addEventListener('click', function () {
                 gtag('event', 'cta_click', {
-                    'button_location': this.closest('section')?.id || 'unknown',
+                    'button_location': this.closest('section')?.getAttribute('aria-labelledby') || 'unknown',
                     'button_text': this.textContent.trim()
                 });
             });
