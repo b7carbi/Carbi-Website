@@ -127,6 +127,12 @@ export default async function handler(req, res) {
       // Mileage
       max_mileage: formData.max_mileage || null,
 
+      // NEW FIELDS - Technical specifications
+      transmission_type: formData.transmission_type || null,
+      engine_size_min: formData.engine_size_min || null,
+      engine_size_max: formData.engine_size_max || null,
+      number_of_doors: formData.number_of_doors || [],
+
       // Location
       postcode: formData.postcode,
       search_radius: formData.search_radius,
@@ -136,7 +142,6 @@ export default async function handler(req, res) {
       additional_notes: formData.additional_notes || null,
 
       // Metadata
-
       status: 'new'
     };
 

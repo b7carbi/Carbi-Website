@@ -1172,7 +1172,40 @@
                     </div>
                     <button type="button" class="primary-button" id="next7">Next</button>
                 </div>
-
+                <!-- Conditional transmission step-->
+                <div class="step" id="step7a">
+                    <h2 class="step-heading">Manual or automatic?</h2>
+                    <p class="step-subtitle">What's your preference?</p>
+                    <div class="button-grid" id="transmissionGrid"></div>
+                    <div class="error-message" id="error7a"></div>
+                    <button type="button" class="primary-button" id="next7a" disabled>Next</button>
+                </div>
+                <!-- Conditional engine size step-->
+                <div class="step" id="step7b">
+                    <h2 class="step-heading">What engine size?</h2>
+                    <p class="step-subtitle">Set your preferred range</p>
+                    <div class="slider-container">
+                        <div class="slider-display" id="engineDisplay">1.0L - 1.6L</div>
+                        <div class="dual-slider-container">
+                            <div class="slider-track">
+                                <div class="range-highlight" id="engineRangeHighlight"></div>
+                            </div>
+                            <input type="range" id="engineMinSlider" class="slider" min="0.6" max="2.0" value="1.0"
+                                step="0.1">
+                            <input type="range" id="engineMaxSlider" class="slider" min="0.6" max="2.0" value="1.6"
+                                step="0.1">
+                        </div>
+                    </div>
+                    <button type="button" class="primary-button" id="next7b">Next</button>
+                </div>
+                <!-- Conditional number of doors step-->
+                <div class="step" id="step7c">
+                    <h2 class="step-heading">How many doors?</h2>
+                    <p class="step-subtitle">Select all acceptable options</p>
+                    <div class="button-grid" id="doorsGrid"></div>
+                    <div class="error-message" id="error7c"></div>
+                    <button type="button" class="primary-button" id="next7c" disabled>Next</button>
+                </div>
 
                 <!-- Step 8: Location and Radius -->
                 <div class="step" id="step8">
@@ -1354,7 +1387,11 @@
             last_name: '',
             email: '',
             phone: '',
-            contact_preferences: []
+            contact_preferences: [],
+            transmission_type: null,
+            engine_size_min: 1.0,
+            engine_size_max: 1.6,
+            number_of_doors: []
         };
 
         // Feature options
@@ -1362,7 +1399,7 @@
             'Safety', 'Size', 'Colour', 'Cost', 'Performance', 'Engine Size',
             'Fuel Efficiency', 'Insurance Cost', 'Make and Model', 'Location',
             'Interior Features', 'Bluetooth', 'Heated Seats', 'Leather Seats',
-            'Low Mileage', 'Reliability', 'Ambient Lighting', 'Practicality',
+            'Low Mileage', 'Reliability', 'Ambient Lighting', 'Manual / Automatic',
             'Full Service History', 'Low Emission Zone Friendly', 'Number of Doors'
         ];
 
@@ -1386,6 +1423,44 @@
         let formStarted = false;
         let formStartTime = null;
         let stepStartTimes = {};
+
+        // Step configuration - defines initialization requirements for each step
+        const STEP_CONFIG = {
+            2: { init: 'initializeStep2' },
+            '2b': { init: 'initializeStep2b' },
+            3: { init: 'initializeStep3' },
+            4: { init: 'initializeStep4' },
+            5: { init: 'initializeStep5' },
+            6: { init: 'initializeStep6' },
+            7: { init: 'initializeStep7' },
+            '7a': { init: 'initializeStep7a' },
+            '7b': { init: 'initializeStep7b' },
+            '7c': { init: 'initializeStep7c' },
+            8: { init: 'initializeStep8' },
+            9: { init: 'initializeStep9' },
+            10: { init: 'initializeStep10Validation' }
+        };
+
+        // Step order - single source of truth for form flow
+        const STEP_ORDER = [1, 2, '2b', 3, 4, 5, 6, 7, '7a', '7b', '7c', 8, 9, 10];
+
+        // Analytics step names mapping
+        const STEP_NAMES = {
+            1: 'important_features',
+            2: 'dealbreakers',
+            '2b': 'main_driver',
+            3: 'budget',
+            4: 'brand_preference',
+            5: 'favourite_brand',
+            6: 'colour',
+            7: 'mileage',
+            '7a': 'transmission',
+            '7b': 'engine_size',
+            '7c': 'number_of_doors',
+            8: 'location',
+            9: 'notes',
+            10: 'contact_details'
+        };
 
         // Initialize form
         document.addEventListener('DOMContentLoaded', function () {
@@ -1906,6 +1981,93 @@
             });
         }
 
+        // Step 7a: Transmission Type
+        function initializeStep7a() {
+            const grid = document.getElementById('transmissionGrid');
+            grid.innerHTML = '';
+            const options = ['Manual', 'Automatic'];
+
+            options.forEach(option => {
+                const button = createOptionButton(option);
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Deselect all others
+                    grid.querySelectorAll('.option-button').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    button.classList.add('selected');
+                    formData.transmission_type = option.toLowerCase();
+                    saveToLocalStorage();
+                    document.getElementById('next7a').disabled = false;
+                });
+                grid.appendChild(button);
+            });
+        }
+
+        // Step 7b: Engine Size (dual slider like budget)
+        function initializeStep7b() {
+            const minSlider = document.getElementById('engineMinSlider');
+            const maxSlider = document.getElementById('engineMaxSlider');
+            const display = document.getElementById('engineDisplay');
+            const rangeHighlight = document.getElementById('engineRangeHighlight');
+
+            function updateDisplay() {
+                const min = parseFloat(minSlider.value);
+                const max = parseFloat(maxSlider.value);
+
+                if (min > max) {
+                    minSlider.value = max;
+                    formData.engine_size_min = max;
+                } else {
+                    formData.engine_size_min = min;
+                }
+                formData.engine_size_max = parseFloat(maxSlider.value);
+
+                display.textContent = `${formData.engine_size_min.toFixed(1)}L - ${formData.engine_size_max.toFixed(1)}L`;
+
+                // Update range highlight
+                const totalRange = 2.0 - 0.6;
+                const minPercent = ((formData.engine_size_min - 0.6) / totalRange) * 100;
+                const maxPercent = ((formData.engine_size_max - 0.6) / totalRange) * 100;
+                rangeHighlight.style.left = minPercent + '%';
+                rangeHighlight.style.width = (maxPercent - minPercent) + '%';
+
+                saveToLocalStorage();
+            }
+
+            minSlider.addEventListener('input', updateDisplay);
+            maxSlider.addEventListener('input', updateDisplay);
+            updateDisplay();
+        }
+
+        // Step 7c: Number of Doors
+        function initializeStep7c() {
+            const grid = document.getElementById('doorsGrid');
+            grid.innerHTML = '';
+            const doorOptions = ['2 doors', '3 doors', '4 doors', '5 doors'];
+
+            doorOptions.forEach(option => {
+                const button = createOptionButton(option);
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    button.classList.toggle('selected');
+                    updateDoors();
+                    validateStep7c();
+                });
+                grid.appendChild(button);
+            });
+        }
+        function updateDoors() {
+            const selected = document.querySelectorAll('#doorsGrid .option-button.selected');
+            formData.number_of_doors = Array.from(selected).map(btn => btn.dataset.value.replace(' doors', ''));
+            saveToLocalStorage();
+        }
+
+        function validateStep7c() {
+            const nextBtn = document.getElementById('next7c');
+            nextBtn.disabled = formData.number_of_doors.length === 0;
+        }
+
         // Step 8: Location and Radius
         function initializeStep8() {
             const postcodeInput = document.getElementById('postcode');
@@ -2114,124 +2276,99 @@
             return true;
         }
 
-        // Setup all Next button click handlers
-        function setupNextButtonHandlers() {
-            // Step 1 Next button
-            document.getElementById('next1').addEventListener('click', (e) => {
-                e.stopPropagation();
+
+        /**
+                 * Generic handler for "Next" button clicks
+                 * Handles special cases, then uses getNextVisibleStep for everything else
+                 */
+        function handleNextButton(currentStepNumber) {
+            // Special case: Step 1 needs to check if Step 2 should be shown
+            if (currentStepNumber === 1) {
                 if (formData.important_features.length >= 2) {
-                    initializeStep2();
-                    goToStep(2);
+                    goToStep(2); // Will auto-initialize via goToStep
                 } else {
                     goToStep('2b');
                 }
-            });
+                return;
+            }
 
-            // Step 2 Next button
-            document.getElementById('next2').addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToStep('2b');
-            });
-
-            // Step 2B Next button
-            document.getElementById('next2b').addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToStep(3);
-            });
-
-            // Step 3 Next button
-            document.getElementById('next3').addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToStep(4);
-            });
-
-            // Step 4 Next button
-            document.getElementById('next4').addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (formData.selected_brands.length < 2) {
-                    // Skip Step 5, go straight to next appropriate step
-                    if (formData.important_features.includes('Colour')) {
-                        goToStep(6);
-                    } else if (formData.important_features.includes('Low Mileage')) {
-                        goToStep(7);
-                    } else {
-                        goToStep(8);
-                    }
+            // Special case: Step 4 needs to check if Step 5 should be shown
+            if (currentStepNumber === 4) {
+                if (formData.selected_brands.length >= 2) {
+                    goToStep(5); // Will auto-initialize via goToStep
                 } else {
-                    initializeStep5();
-                    goToStep(5);
+                    const nextStep = getNextVisibleStep(5); // Skip step 5
+                    if (nextStep) goToStep(nextStep);
+                }
+                return;
+            }
+
+            // All other steps: use the standard flow
+            const nextStep = getNextVisibleStep(currentStepNumber);
+            if (nextStep) {
+                goToStep(nextStep);
+            }
+        }
+
+        /**
+         * Setup all Next button click handlers
+         * Now dramatically simplified using handleNextButton
+         */
+        function setupNextButtonHandlers() {
+            // Standard next buttons for all steps
+            const nextButtons = [
+                { id: 'next1', step: 1 },
+                { id: 'next2', step: 2 },
+                { id: 'next2b', step: '2b' },
+                { id: 'next3', step: 3 },
+                { id: 'next4', step: 4 },
+                { id: 'next5', step: 5 },
+                { id: 'next6', step: 6 },
+                { id: 'next7', step: 7 },
+                { id: 'next7a', step: '7a' },
+                { id: 'next7b', step: '7b' },
+                { id: 'next7c', step: '7c' },
+                { id: 'next8', step: 8 },
+                { id: 'next9', step: 9 }
+            ];
+
+            // Attach handlers to all next buttons
+            nextButtons.forEach(({ id, step }) => {
+                const button = document.getElementById(id);
+                if (button) {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        handleNextButton(step);
+                    });
                 }
             });
 
-            // Step 4 "Don't mind" button
-            document.getElementById('dontMindBrand').addEventListener('click', (e) => {
-                e.stopPropagation();
-                formData.brand_preference = 'dont_mind';
-                formData.selected_brands = [];
-                saveToLocalStorage();
+            // Special handler: Step 4 "Don't mind" button
+            const dontMindBtn = document.getElementById('dontMindBrand');
+            if (dontMindBtn) {
+                dontMindBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    formData.brand_preference = 'dont_mind';
+                    formData.selected_brands = [];
+                    saveToLocalStorage();
 
-                // Follow same logic as next4 button
-                if (formData.important_features.includes('Colour')) {
-                    goToStep(6);
-                } else if (formData.important_features.includes('Low Mileage')) {
-                    goToStep(7);
-                } else {
-                    goToStep(8);
-                }
-            });
-
-            // Step 5 Next button
-            document.getElementById('next5').addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (formData.important_features.includes('Colour')) {
-                    goToStep(6);
-                } else if (formData.important_features.includes('Low Mileage')) {
-                    goToStep(7);
-                } else {
-                    goToStep(8);
-                }
-            });
-
-
-            // Step 6 Next button
-            document.getElementById('next6').addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (formData.important_features.includes('Low Mileage')) {
-                    goToStep(7);
-                } else {
-                    goToStep(8);
-                }
-            });
-
-            // Step 7 Next button
-            document.getElementById('next7').addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToStep(8);
-            });
-
-            // Step 8 Next button
-            document.getElementById('next8').addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToStep(9);
-            });
-
-            // Step 9 Next button
-            document.getElementById('next9').addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToStep(10);
-            });
+                    // Skip step 5 and go to next visible step
+                    const nextStep = getNextVisibleStep(5);
+                    if (nextStep) goToStep(nextStep);
+                });
+            }
 
             // Allow clicking on completed steps to go back
-            for (let i = 1; i <= totalSteps; i++) {
-                const stepEl = document.getElementById(`step${i}`);
+            STEP_ORDER.forEach(stepNum => {
+                const stepEl = document.getElementById(`step${stepNum}`);
                 if (stepEl) {
                     stepEl.addEventListener('click', function () {
                         if (this.classList.contains('completed')) {
-                            goToStep(i);
+                            goToStep(stepNum);
                         }
                     });
                 }
-            }
+            });
         }
 
         // Form submission
@@ -2326,51 +2463,74 @@
             }
         });
 
-        // Navigation - go to specific step
+
+        /**
+         * Determines if a step should be visible based on form state
+         */
+        function shouldShowStep(stepNum) {
+            if (stepNum === 1) return true;
+            if (stepNum === 2) return formData.important_features.length >= 2;
+            if (stepNum === '2b') return true; // Always show main driver question
+            if (stepNum === 3) return true;
+            if (stepNum === 4) return true;
+            if (stepNum === 5) return formData.selected_brands.length >= 2;
+            if (stepNum === 6) return formData.important_features.includes('Colour');
+            if (stepNum === 7) return formData.important_features.includes('Low Mileage');
+            if (stepNum === '7a') return formData.important_features.includes('Manual / Automatic');
+            if (stepNum === '7b') return formData.important_features.includes('Engine Size');
+            if (stepNum === '7c') return formData.important_features.includes('Number of Doors');
+            if (stepNum >= 8) return true;
+            return false;
+        }
+
+        /**
+         * Finds the next visible step after the current one
+         * @param {number|string} fromStep - Current step number
+         * @returns {number|string|null} - Next visible step or null if none
+         */
+        function getNextVisibleStep(fromStep) {
+            const currentIndex = STEP_ORDER.indexOf(fromStep);
+
+            if (currentIndex === -1) {
+                console.error('Invalid step:', fromStep);
+                return null;
+            }
+
+            // Find next visible step
+            for (let i = currentIndex + 1; i < STEP_ORDER.length; i++) {
+                const candidateStep = STEP_ORDER[i];
+                if (shouldShowStep(candidateStep)) {
+                    return candidateStep;
+                }
+            }
+
+            return null; // No more steps
+        }
+
+        /**
+         * Navigate to a specific step with proper initialization
+         * @param {number|string} stepNumber - Target step to navigate to
+         */
         function goToStep(stepNumber) {
-            // Define step order including 2b
-            const stepOrder = [1, 2, '2b', 3, 4, 5, 6, 7, 8, 9, 10];
-            const targetIndex = stepOrder.indexOf(stepNumber);
+            const targetIndex = STEP_ORDER.indexOf(stepNumber);
 
-            // Analytics tracking for each step
-            const stepNames = {
-                1: 'important_features',
-                2: 'dealbreakers',
-                '2b': 'main_driver',
-                3: 'budget',
-                4: 'brand_preference',
-                5: 'favourite_brand',
-                6: 'colour',
-                7: 'mileage',
-                8: 'location',
-                9: 'notes',
-                10: 'contact_details'
-            };
-
-            trackFormStep(stepNumber, stepNames[stepNumber]);
+            // Track analytics
+            trackFormStep(stepNumber, STEP_NAMES[stepNumber]);
 
             if (targetIndex === -1) {
                 console.error('Invalid step:', stepNumber);
                 return;
             }
 
-            // Helper function to check if a step should be visible
-            function shouldShowStep(stepNum) {
-                if (stepNum === 1) return true;
-                if (stepNum === 2) return formData.important_features.length >= 2;
-                if (stepNum === '2b') return true; // Always show main driver question
-                if (stepNum === 3) return true;
-                if (stepNum === 4) return true;
-                if (stepNum === 5) return formData.selected_brands.length >= 2;
-                if (stepNum === 6) return formData.important_features.includes('Colour');
-                if (stepNum === 7) return formData.important_features.includes('Low Mileage');
-                if (stepNum >= 8) return true;
-                return false;
+            // Initialize the step if needed
+            const stepConfig = STEP_CONFIG[stepNumber];
+            if (stepConfig && stepConfig.init && typeof window[stepConfig.init] === 'function') {
+                window[stepConfig.init]();
             }
 
             // Mark all steps before target as completed or hidden
             for (let i = 0; i < targetIndex; i++) {
-                const stepId = stepOrder[i];
+                const stepId = STEP_ORDER[i];
                 const stepEl = document.getElementById(`step${stepId}`);
                 if (stepEl) {
                     if (shouldShowStep(stepId)) {
@@ -2385,8 +2545,8 @@
             }
 
             // Hide all steps after target
-            for (let i = targetIndex + 1; i < stepOrder.length; i++) {
-                const stepId = stepOrder[i];
+            for (let i = targetIndex + 1; i < STEP_ORDER.length; i++) {
+                const stepId = STEP_ORDER[i];
                 const stepEl = document.getElementById(`step${stepId}`);
                 if (stepEl) {
                     stepEl.classList.remove('completed', 'active');
@@ -2418,6 +2578,7 @@
                 }, 100);
             }
         }
+
         // Local Storage
         function saveToLocalStorage() {
             localStorage.setItem('carbi_match_form', JSON.stringify(formData));
@@ -2524,6 +2685,31 @@
                 const display = document.getElementById('mileageDisplay');
                 slider.value = formData.max_mileage;
                 display.textContent = `${formatNumber(formData.max_mileage)} miles`;
+            }
+
+            // Step 7a: Restore transmission type
+            if (formData.transmission_type) {
+                initializeStep7a();
+                const button = document.querySelector(`#transmissionGrid .option-button[data-value="${formData.transmission_type}"]`);
+                if (button) {
+                    button.classList.add('selected');
+                    document.getElementById('next7a').disabled = false;
+                }
+            }
+            // Step 7b: Restore engine size
+            if (formData.engine_size_min || formData.engine_size_max) {
+                initializeStep7b();
+                // Sliders will restore via their default values
+            }
+
+            // Step 7c: Restore number of doors
+            if (formData.number_of_doors.length > 0) {
+                initializeStep7c();
+                formData.number_of_doors.forEach(doors => {
+                    const button = document.querySelector(`#doorsGrid .option-button[data-value="${doors} doors"]`);
+                    if (button) button.classList.add('selected');
+                });
+                validateStep7c();
             }
 
             // Step 8: Restore postcode and radius
