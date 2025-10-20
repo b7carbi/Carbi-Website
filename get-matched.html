@@ -1184,18 +1184,22 @@
                 <div class="step" id="step7b">
                     <h2 class="step-heading">What engine size?</h2>
                     <p class="step-subtitle">Set your preferred range</p>
-                    <div class="slider-container">
-                        <div class="slider-display" id="engineDisplay">1.0L - 1.6L</div>
-                        <div class="dual-slider-container">
-                            <div class="slider-track">
-                                <div class="range-highlight" id="engineRangeHighlight"></div>
-                            </div>
-                            <input type="range" id="engineMinSlider" class="slider" min="0.6" max="2.0" value="1.0"
-                                step="0.1">
-                            <input type="range" id="engineMaxSlider" class="slider" min="0.6" max="2.0" value="1.6"
-                                step="0.1">
-                        </div>
+
+                    <div class="budget-display" id="engineDisplay" aria-live="polite" aria-atomic="true">
+                        1.0L - 1.6L
                     </div>
+
+                    <div class="range-slider-container">
+                        <div class="range-slider-track"></div>
+                        <div class="range-slider-range" id="engineRangeHighlight"></div>
+                        <input type="range" id="engineMinSlider" class="range-slider" min="0.6" max="2.0" value="1.0"
+                            step="0.1" aria-label="Minimum engine size slider" aria-valuemin="0.6" aria-valuemax="2.0"
+                            aria-valuenow="1.0" aria-valuetext="1.0 litres">
+                        <input type="range" id="engineMaxSlider" class="range-slider" min="0.6" max="2.0" value="1.6"
+                            step="0.1" aria-label="Maximum engine size slider" aria-valuemin="0.6" aria-valuemax="2.0"
+                            aria-valuenow="1.6" aria-valuetext="1.6 litres">
+                    </div>
+
                     <button type="button" class="primary-button" id="next7b">Next</button>
                 </div>
                 <!-- Conditional number of doors step-->
@@ -2004,26 +2008,35 @@
             });
         }
 
-        // Step 7b: Engine Size (dual slider like budget)
+        // Step 7b: Engine Size (styled like budget)
         function initializeStep7b() {
             const minSlider = document.getElementById('engineMinSlider');
             const maxSlider = document.getElementById('engineMaxSlider');
             const display = document.getElementById('engineDisplay');
             const rangeHighlight = document.getElementById('engineRangeHighlight');
 
-            function updateDisplay() {
+            function updateEngineDisplay() {
                 const min = parseFloat(minSlider.value);
                 const max = parseFloat(maxSlider.value);
 
+                // Prevent min from exceeding max
                 if (min > max) {
                     minSlider.value = max;
-                    formData.engine_size_min = max;
-                } else {
-                    formData.engine_size_min = min;
                 }
+                // Prevent max from being less than min
+                if (max < min) {
+                    maxSlider.value = min;
+                }
+
+                formData.engine_size_min = parseFloat(minSlider.value);
                 formData.engine_size_max = parseFloat(maxSlider.value);
 
+                // Update display
                 display.textContent = `${formData.engine_size_min.toFixed(1)}L - ${formData.engine_size_max.toFixed(1)}L`;
+
+                // Update ARIA for accessibility
+                updateSliderAria(minSlider, `${formData.engine_size_min.toFixed(1)} litres`);
+                updateSliderAria(maxSlider, `${formData.engine_size_max.toFixed(1)} litres`);
 
                 // Update range highlight
                 const totalRange = 2.0 - 0.6;
@@ -2035,11 +2048,10 @@
                 saveToLocalStorage();
             }
 
-            minSlider.addEventListener('input', updateDisplay);
-            maxSlider.addEventListener('input', updateDisplay);
-            updateDisplay();
+            minSlider.addEventListener('input', updateEngineDisplay);
+            maxSlider.addEventListener('input', updateEngineDisplay);
+            updateEngineDisplay();
         }
-
         // Step 7c: Number of Doors
         function initializeStep7c() {
             const grid = document.getElementById('doorsGrid');
