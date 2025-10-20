@@ -50,7 +50,6 @@ export default async function handler(req, res) {
       'postcode',
       'first_name',
       'last_name',
-      'phone',
       'contact_preferences'
     ];
 
@@ -69,16 +68,62 @@ export default async function handler(req, res) {
       });
     }
 
-    // Validate email if provided or if selected as contact preference
+    // Validate contact method fields based on preferences
     const emailSelected = formData.contact_preferences.includes('Email');
-    if ((emailSelected || formData.email) && formData.email) {
+    const textSelected = formData.contact_preferences.includes('Text');
+    const phoneSelected = formData.contact_preferences.includes('Phone Call');
+
+    // Email validation - required if Email is selected
+    if (emailSelected) {
+      if (!formData.email || formData.email.trim() === '') {
+        return res.status(400).json({
+          success: false,
+          error: 'Email address is required (you selected Email as contact preference)'
+        });
+      }
+
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         return res.status(400).json({
           success: false,
-          error: 'Invalid email address'
+          error: 'Invalid email address format'
         });
       }
+    }
+
+    // Phone validation - required if Text or Phone Call is selected
+    if (textSelected || phoneSelected) {
+      if (!formData.phone || formData.phone.trim() === '') {
+        return res.status(400).json({
+          success: false,
+          error: 'Phone number is required (you selected Text or Phone Call as contact preference)'
+        });
+      }
+
+      const phoneRegex = /^[\d\s\+\-\(\)]{10,}$/;
+      if (!phoneRegex.test(formData.phone)) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid phone number format (minimum 10 digits)'
+        });
+      }
+    }
+
+    // Ensure at least one contact method is provided
+    if (!emailSelected && !textSelected && !phoneSelected) {
+      return res.status(400).json({
+        success: false,
+        error: 'At least one contact preference must be selected'
+      });
+    }
+
+    // Ensure we have the necessary contact details for selected preferences
+    if ((emailSelected && !formData.email) ||
+      ((textSelected || phoneSelected) && !formData.phone)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing contact details for selected preferences'
+      });
     }
 
     // Validate budget range

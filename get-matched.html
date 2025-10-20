@@ -1257,41 +1257,51 @@
                     <h2 class="step-heading">How can we reach you?</h2>
                     <p class="step-subtitle">We'll send your matches within 24 hours</p>
 
-                    <label for="firstName" class="input-label">First Name *</label>
-                    <input type="text" id="firstName" name="given-name" class="text-input" placeholder="First Name"
-                        autocomplete="given-name" required aria-required="true" aria-describedby="error10">
-
-                    <label for="lastName" class="input-label">Last Name *</label>
-                    <input type="text" id="lastName" name="family-name" class="text-input" placeholder="Last Name"
-                        autocomplete="family-name" required aria-required="true" aria-describedby="error10">
-
-                    <label for="email" class="input-label">Email Address</label>
-                    <input type="email" id="email" name="email" class="text-input" placeholder="Email Address"
-                        autocomplete="email" aria-describedby="error10">
-
-                    <label for="phone" class="input-label">Phone Number *</label>
-                    <input type="tel" id="phone" name="tel" class="text-input" placeholder="Phone Number"
-                        autocomplete="tel" required aria-required="true" aria-describedby="error10">
-
-                    <fieldset>
+                    <!-- Part 1: Contact preferences FIRST -->
+                    <fieldset style="margin-bottom: 30px;">
                         <legend class="input-label">
                             How would you like to be contacted? <span style="color: #ef4444;">*</span>
                         </legend>
                         <div class="checkbox-group" id="contactPreferences" role="group" aria-required="true">
                             <div class="checkbox-option">
                                 <input type="checkbox" id="prefEmail" value="Email" aria-describedby="error10">
-                                <label for="prefEmail" class="checkbox-label">Email</label>
+                                <label for="prefEmail" class="checkbox-label">📧 Email</label>
                             </div>
                             <div class="checkbox-option">
                                 <input type="checkbox" id="prefText" value="Text" aria-describedby="error10">
-                                <label for="prefText" class="checkbox-label">Text</label>
+                                <label for="prefText" class="checkbox-label">💬 Text Message</label>
                             </div>
                             <div class="checkbox-option">
                                 <input type="checkbox" id="prefPhone" value="Phone Call" aria-describedby="error10">
-                                <label for="prefPhone" class="checkbox-label">Phone Call</label>
+                                <label for="prefPhone" class="checkbox-label">📞 Phone Call</label>
                             </div>
                         </div>
                     </fieldset>
+
+                    <!-- Part 2: Name fields (always shown) -->
+                    <label for="firstName" class="input-label">First Name <span style="color: #ef4444;">*</span></label>
+                    <input type="text" id="firstName" name="given-name" class="text-input" placeholder="First Name"
+                        autocomplete="given-name" required aria-required="true" aria-describedby="error10">
+
+                    <label for="lastName" class="input-label">Last Name <span style="color: #ef4444;">*</span></label>
+                    <input type="text" id="lastName" name="family-name" class="text-input" placeholder="Last Name"
+                        autocomplete="family-name" required aria-required="true" aria-describedby="error10">
+
+                    <!-- Part 3: Email field (conditional - shown only if Email selected) -->
+                    <div id="emailContainer" style="display: none;">
+                        <label for="email" class="input-label">Email Address <span
+                                style="color: #ef4444;">*</span></label>
+                        <input type="email" id="email" name="email" class="text-input"
+                            placeholder="your.email@example.com" autocomplete="email" aria-describedby="error10">
+                    </div>
+
+                    <!-- Part 4: Phone field (conditional - shown only if Text or Phone selected) -->
+                    <div id="phoneContainer" style="display: none;">
+                        <label for="phone" class="input-label">Phone Number <span
+                                style="color: #ef4444;">*</span></label>
+                        <input type="tel" id="phone" name="tel" class="text-input" placeholder="07123 456789"
+                            autocomplete="tel" aria-describedby="error10">
+                    </div>
 
                     <div class="error-message" id="error10" role="alert" aria-live="polite"></div>
                     <button type="submit" class="primary-button" id="submitBtn" disabled>Find My Car</button>
@@ -1798,7 +1808,8 @@
         // Step 4: Brand Preferences
         function initializeStep4() {
             const container = document.getElementById('brandsContainer');
-
+            // CLEAR existing content before re-initializing
+            container.innerHTML = '';
             Object.keys(brands).forEach(category => {
                 const heading = document.createElement('div');
                 heading.className = 'category-heading';
@@ -2214,29 +2225,55 @@
             });
         }
 
-        // Step 10: Contact Details - Validation
         function initializeStep10Validation() {
+            // Listen to contact preference changes to show/hide fields
+            ['prefEmail', 'prefText', 'prefPhone'].forEach(id => {
+                document.getElementById(id).addEventListener('change', function () {
+                    updateContactFieldsVisibility();
+                    validateStep10();
+                });
+            });
+
+            // Listen to input changes for validation
             ['firstName', 'lastName', 'email', 'phone'].forEach(id => {
                 const input = document.getElementById(id);
                 input.addEventListener('input', validateStep10);
-                // Add aria-invalid on blur if field is invalid
                 input.addEventListener('blur', function () {
-                    if (this.value.trim() === '' && this.hasAttribute('aria-required')) {
-                        this.setAttribute('aria-invalid', 'true');
-                    } else {
-                        this.removeAttribute('aria-invalid');
-                    }
+                    validateStep10();
                 });
-
-
             });
+        }
 
-            // Only validate email on blur (when they leave the field)
-            document.getElementById('email').addEventListener('blur', validateStep10);
+        // New function to show/hide email and phone fields
+        function updateContactFieldsVisibility() {
+            const emailSelected = document.getElementById('prefEmail').checked;
+            const textSelected = document.getElementById('prefText').checked;
+            const phoneSelected = document.getElementById('prefPhone').checked;
 
-            ['prefEmail', 'prefText', 'prefPhone'].forEach(id => {
-                document.getElementById(id).addEventListener('change', validateStep10);
-            });
+            const emailContainer = document.getElementById('emailContainer');
+            const phoneContainer = document.getElementById('phoneContainer');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+
+            // Show/hide email field
+            if (emailSelected) {
+                emailContainer.style.display = 'block';
+                emailInput.setAttribute('aria-required', 'true');
+            } else {
+                emailContainer.style.display = 'none';
+                emailInput.removeAttribute('aria-required');
+                emailInput.value = ''; // Clear value if hidden
+            }
+
+            // Show/hide phone field
+            if (textSelected || phoneSelected) {
+                phoneContainer.style.display = 'block';
+                phoneInput.setAttribute('aria-required', 'true');
+            } else {
+                phoneContainer.style.display = 'none';
+                phoneInput.removeAttribute('aria-required');
+                phoneInput.value = ''; // Clear value if hidden
+            }
         }
 
         function validateStep10() {
@@ -2244,50 +2281,70 @@
             const lastName = document.getElementById('lastName').value.trim();
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
-            const checkboxes = document.querySelectorAll('#contactPreferences input[type="checkbox"]:checked');
             const submitBtn = document.getElementById('submitBtn');
             const errorMsg = document.getElementById('error10');
 
-            // Phone is always required, email only required if selected as preference
+            // Check which contact methods are selected
             const emailSelected = document.getElementById('prefEmail').checked;
+            const textSelected = document.getElementById('prefText').checked;
+            const phoneSelected = document.getElementById('prefPhone').checked;
+            const anyContactSelected = emailSelected || textSelected || phoneSelected;
 
-            if (!firstName || !lastName || !phone) {
+            // Clear previous errors
+            errorMsg.textContent = '';
+
+            // Check at least one contact preference selected
+            if (!anyContactSelected) {
+                errorMsg.textContent = 'Please select at least one contact method';
                 submitBtn.disabled = true;
                 return false;
             }
 
-            if (emailSelected && !email) {
-                errorMsg.textContent = 'Email address needed (you selected it as contact preference)';
+            // Name fields always required
+            if (!firstName || !lastName) {
                 submitBtn.disabled = true;
-                submitBtn.setAttribute('aria-describedby', 'error10');
                 return false;
             }
 
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (email && !emailRegex.test(email)) {
-                errorMsg.textContent = 'Please enter a valid email address';
-                submitBtn.disabled = true;
-                submitBtn.setAttribute('aria-describedby', 'error10');
-                return false;
+            // Email required if Email selected
+            if (emailSelected) {
+                if (!email) {
+                    errorMsg.textContent = 'Email address required (you selected Email contact)';
+                    submitBtn.disabled = true;
+                    return false;
+                }
+
+                // Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    errorMsg.textContent = 'Please enter a valid email address';
+                    submitBtn.disabled = true;
+                    return false;
+                }
             }
 
-            const phoneRegex = /^[\d\s\+\-\(\)]{10,}$/;
-            if (!phoneRegex.test(phone)) {
-                errorMsg.textContent = 'Please enter a valid phone number';
-                submitBtn.disabled = true;
-                submitBtn.setAttribute('aria-describedby', 'error10');
-                return false;
+            // Phone required if Text or Phone Call selected
+            if (textSelected || phoneSelected) {
+                if (!phone) {
+                    errorMsg.textContent = 'Phone number required (you selected Text/Phone contact)';
+                    submitBtn.disabled = true;
+                    return false;
+                }
+
+                // Validate phone format
+                const phoneRegex = /^[\d\s\+\-\(\)]{10,}$/;
+                if (!phoneRegex.test(phone)) {
+                    errorMsg.textContent = 'Please enter a valid phone number (at least 10 digits)';
+                    submitBtn.disabled = true;
+                    return false;
+                }
             }
 
-
-
-
+            // All validations passed
             errorMsg.textContent = '';
             submitBtn.disabled = false;
-            submitBtn.removeAttribute('aria-describedby');
             return true;
         }
-
 
         /**
                  * Generic handler for "Next" button clicks
@@ -2400,8 +2457,14 @@
 
             formData.first_name = document.getElementById('firstName').value.trim();
             formData.last_name = document.getElementById('lastName').value.trim();
-            formData.email = document.getElementById('email').value.trim();
-            formData.phone = document.getElementById('phone').value.trim();
+            // Only include email if Email contact preference selected
+            const emailSelected = document.getElementById('prefEmail').checked;
+            formData.email = emailSelected ? document.getElementById('email').value.trim() : '';
+
+            // Only include phone if Text or Phone Call preference selected
+            const textSelected = document.getElementById('prefText').checked;
+            const phoneSelected = document.getElementById('prefPhone').checked;
+            formData.phone = (textSelected || phoneSelected) ? document.getElementById('phone').value.trim() : '';
 
             const selectedPrefs = document.querySelectorAll('#contactPreferences input[type="checkbox"]:checked');
             formData.contact_preferences = Array.from(selectedPrefs).map(cb => cb.value);
@@ -2759,6 +2822,8 @@
                 if (pref === 'Text') document.getElementById('prefText').checked = true;
                 if (pref === 'Phone Call') document.getElementById('prefPhone').checked = true;
             });
+
+            updateContactFieldsVisibility();
             validateStep10();
         }
     </script>
