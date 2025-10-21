@@ -33,8 +33,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
     <script>
+        // Replace the cookie consent initialization script on BOTH index.html AND get-matched.html
+        // with this updated version
+
         window.addEventListener("load", function () {
             window.cookieconsent.initialise({
+                cookie: {
+                    name: 'carbi_cookie_consent',
+                    domain: window.location.hostname, // Uses current domain (works for localhost and carbi.co)
+                    path: '/',
+                    expiryDays: 365
+                },
                 palette: {
                     popup: { background: "#0F172A" },
                     button: { background: "#0EA5E9", text: "#ffffff" }
@@ -889,6 +898,55 @@
                     'button_text': this.textContent.trim()
                 });
             });
+        });
+
+        // Updating step 1 to be clickable
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the first step element
+            const step1 = document.querySelector('.steps .step:first-child');
+
+            if (step1) {
+                // Make it visually interactive
+                step1.style.cursor = 'pointer';
+
+                // Add click event listener
+                step1.addEventListener('click', function () {
+                    // Find the CTA section (not just the button)
+                    const ctaSection = document.querySelector('section[aria-labelledby="cta-heading"]');
+
+                    if (ctaSection) {
+                        // Smooth scroll to the section with offset to show the heading
+                        const sectionPosition = ctaSection.getBoundingClientRect().top + window.pageYOffset;
+                        const offset = 80; // Space above the section to show the heading nicely
+
+                        window.scrollTo({
+                            top: sectionPosition - offset,
+                            behavior: 'smooth'
+                        });
+
+                        // Track the click in Google Analytics if available
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'step1_click', {
+                                'event_category': 'engagement',
+                                'event_label': 'How It Works Step 1 Click'
+                            });
+                        }
+                    }
+                });
+
+                // Accessibility: Make it keyboard accessible
+                step1.setAttribute('tabindex', '0');
+                step1.setAttribute('role', 'button');
+                step1.setAttribute('aria-label', 'Click to get started with your car match');
+
+                // Handle keyboard activation (Enter and Space)
+                step1.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            }
         });
     </script>
 

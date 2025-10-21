@@ -11,8 +11,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
     <script>
+        // Replace the cookie consent initialization script on BOTH index.html AND get-matched.html
+        // with this updated version
+
         window.addEventListener("load", function () {
             window.cookieconsent.initialise({
+                cookie: {
+                    name: 'carbi_cookie_consent',
+                    domain: window.location.hostname, // Uses current domain (works for localhost and carbi.co)
+                    path: '/',
+                    expiryDays: 365
+                },
                 palette: {
                     popup: { background: "#0F172A" },
                     button: { background: "#0EA5E9", text: "#ffffff" }
@@ -20,7 +29,7 @@
                 theme: "classic",
                 position: "bottom",
                 content: {
-                    message: "Cookies help us improve your experience and learn what’s working in our marketing.",
+                    message: "Cookies help us improve your experience and learn what's working in our marketing.",
                     dismiss: "Got it",
                     link: "Privacy Policy",
                     href: "/privacy.html"
@@ -1255,7 +1264,7 @@
                 <!-- Step 10: Contact Details -->
                 <div class="step" id="step10">
                     <h2 class="step-heading">How can we reach you?</h2>
-                    <p class="step-subtitle">We'll send your matches within 24 hours</p>
+                    <p class="step-subtitle">We'll be in touch within 24 hours</p>
 
                     <!-- Part 1: Contact preferences FIRST -->
                     <fieldset style="margin-bottom: 30px;">
