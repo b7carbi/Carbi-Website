@@ -260,44 +260,6 @@
             display: none;
         }
 
-        .intro-heading {
-            font-size: 3em;
-            color: #0F172A;
-            margin-bottom: 20px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .intro-subtext {
-            font-size: 1.3em;
-            color: #64748B;
-            margin-bottom: 40px;
-            line-height: 1.6;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .get-started-btn {
-            display: inline-block;
-            padding: 20px 60px;
-            background: #0EA5E9;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.3em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(14, 165, 233, 0.3);
-        }
-
-        .get-started-btn:hover {
-            background: #1E40AF;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.4);
-        }
-
         /* Form Container */
         .form-wrapper {
             padding: 40px 0 80px;
@@ -1067,9 +1029,6 @@
                 padding: 30px 20px;
             }
 
-            .intro-heading {
-                font-size: 2em;
-            }
 
             .intro-subtext {
                 font-size: 1.1em;
@@ -1669,6 +1628,15 @@
         // Step 1: Important Features
         function initializeStep1() {
             const grid = document.getElementById('featuresGrid');
+
+            // Track form start when user interacts with first step
+            if (!sessionStorage.getItem('form_start_time')) {
+                trackEvent('form_started', {
+                    referrer: document.referrer,
+                    entry_point: 'form_page'
+                });
+                sessionStorage.setItem('form_start_time', Date.now());
+            }
             features.forEach(feature => {
                 const button = createOptionButton(feature);
                 button.addEventListener('click', (e) => {
@@ -1678,15 +1646,7 @@
                     validateStep1();
                 });
                 grid.appendChild(button);
-                //tracking form start
-                document.querySelector('.get-started-btn').addEventListener('click', function () {
-                    trackEvent('form_started', {
-                        referrer: document.referrer,
-                        entry_point: 'intro_screen'
-                    });
-                    // Store form start time for duration calculation
-                    sessionStorage.setItem('form_start_time', Date.now());
-                });
+
             });
         }
 
