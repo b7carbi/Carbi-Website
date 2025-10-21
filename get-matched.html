@@ -115,13 +115,17 @@
         // Tracking cookie consent metrics
         async function trackConsentDecision(consented) {
             try {
-                await fetch('/api/track-consent', {
+                await fetch('/api/track-event', {  // ← USE EXISTING ENDPOINT
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        consented: consented,
-                        timestamp: new Date().toISOString(),
-                        page: window.location.pathname
+                        event_type: 'cookie_consent',  // ← ADD THIS
+                        page_path: window.location.pathname,
+                        session_id: getSessionId(),
+                        metadata: {
+                            consented: consented,
+                            timestamp: new Date().toISOString()
+                        }
                     })
                 });
             } catch (error) {
@@ -2575,15 +2579,12 @@
                 });
 
                 // Tracking form completion in analytics
-                gtag('event', 'form_submit', {
-                    'form_name': 'car_matching',
-                    'time_to_complete': Date.now() - formStartTime
-                });
-
-                //Removed - not using google ads currently
-                //                if (typeof gtag !== 'undefined') {
-                //                  gtag('event', 'conversion', { 'send_to': 'AW-882133742/XXXXX' });
-                //            }
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'form_submit', {
+                        'form_name': 'car_matching',
+                        'time_to_complete': Date.now() - formStartTime
+                    });
+                }
 
                 // Log for debugging
                 console.log('Match request submitted:', result.id);
