@@ -49,7 +49,14 @@
 
                 // Also handle initial page load if user previously consented
                 onInitialise: function (status) {
-                    const consent = this.hasConsented();
+                    console.log('Status:', status);
+
+                    // Check both localStorage AND cookies
+                    const consent = this.hasConsented() ||
+                        document.cookie.includes('cookieconsent_status=allow');
+
+                    console.log('Cookie consent initialized:', consent);
+
                     if (consent) {
                         loadTrackingScripts();
                     }
