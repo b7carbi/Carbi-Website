@@ -1616,10 +1616,12 @@
             // Track time spent on previous step
             if (stepStartTimes[currentStep]) {
                 const timeSpent = Math.round((Date.now() - stepStartTimes[currentStep]) / 1000);
-                gtag('event', 'step_time', {
-                    'step_number': String(currentStep), // forcing to string due to 2b
-                    'seconds': timeSpent
-                });
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'step_time', {
+                        'step_number': String(currentStep), // forcing to string due to 2b
+                        'seconds': timeSpent
+                    });
+                }
             }
 
             // Start timing this step
