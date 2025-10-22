@@ -2297,7 +2297,15 @@
                 'BMW': 'images/brands/BMW-logo.png',
                 'Mercedes': 'images/brands/mercedes-logo.png',
                 'MINI': 'images/brands/MINI-logo.png',
-                'Volvo': 'images/brands/volvo-logo.png'
+                'Volvo': 'images/brands/volvo-logo.png',
+                'Skoda': 'images/brands/skoda-logo.png',
+                'Ford': 'images/brands/ford-logo.png',
+                'Mazda': 'images/brands/mazda-logo.png',
+                'Honda': 'images/brands/honda-logo.png',
+                'SEAT': 'images/brands/seat-logo.png',
+                'Toyota': 'images/brands/toyoga-logo.png',
+                'Smart': 'images/brands/smart-logo.png',
+                'Volkswagen': 'images/brands/vw-logo.png'
             };
 
             Object.keys(brands).forEach(category => {
@@ -2313,8 +2321,8 @@
                 grid.setAttribute('aria-labelledby', `brand-category-${category.toLowerCase()}`);
 
                 brands[category].forEach(brand => {
-                    // Use brand button with logo for Premium brands, regular button for others
-                    const button = (category === 'Premium' && brandLogos[brand])
+
+                    const button = brandLogos[brand]
                         ? createBrandButton(brand, brandLogos[brand])
                         : createOptionButton(brand);
 
