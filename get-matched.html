@@ -394,10 +394,12 @@
 
         /* Brand button with logo */
         .option-button.brand-button {
-            display: flex;
+            display: grid;
+            grid-template-columns: 32px 1fr;
             align-items: center;
-            justify-content: center;
             gap: 12px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .brand-logo {
@@ -406,6 +408,12 @@
             flex-shrink: 0;
             opacity: 0.7;
             transition: opacity 0.3s ease;
+        }
+
+        .option-button.brand-button span {
+            text-align: center;
+            margin-right: 32px;
+            /* Offset for the logo width to truly center text */
         }
 
         .option-button.brand-button:hover .brand-logo {
