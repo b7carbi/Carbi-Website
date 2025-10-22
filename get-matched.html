@@ -387,9 +387,34 @@
         }
 
         .option-button.selected {
-            background: #0EA5E9;
-            color: white;
+            background: #E0F2FE;
+            color: #0369A1;
             border-color: #0EA5E9;
+        }
+
+        /* Brand button with logo */
+        .option-button.brand-button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            padding-left: 15px;
+        }
+
+        .brand-logo {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            filter: grayscale(100%) brightness(0.5) opacity(0.7);
+            transition: filter 0.3s ease;
+        }
+
+        .option-button.brand-button:hover .brand-logo {
+            filter: grayscale(100%) brightness(0.4) opacity(0.9);
+        }
+
+        .option-button.brand-button.selected .brand-logo {
+            filter: grayscale(0%) brightness(1) invert(1);
         }
 
         /* Category headings for brands */
@@ -507,8 +532,8 @@
         }
 
         .radio-option input[type="radio"]:checked+.radio-label {
-            background: #0EA5E9;
-            color: white;
+            background: #E0F2FE;
+            color: #0369A1;
             border-color: #0EA5E9;
         }
 
@@ -2258,6 +2283,16 @@
             const container = document.getElementById('brandsContainer');
             // CLEAR existing content before re-initializing
             container.innerHTML = '';
+
+            // Brand logo mapping (only for Premium brands in this test)
+            const brandLogos = {
+                'Audi': 'images/brands/audi-logo.svg',
+                'BMW': 'images/brands/bmw-logo.png',
+                'Mercedes': 'images/brands/mercedes-logo.png',
+                'MINI': 'images/brands/mini-logo.svg',
+                'Volvo': 'images/brands/volvo-logo.svg'
+            };
+
             Object.keys(brands).forEach(category => {
                 const heading = document.createElement('div');
                 heading.className = 'category-heading';
@@ -2271,7 +2306,11 @@
                 grid.setAttribute('aria-labelledby', `brand-category-${category.toLowerCase()}`);
 
                 brands[category].forEach(brand => {
-                    const button = createOptionButton(brand);
+                    // Use brand button with logo for Premium brands, regular button for others
+                    const button = (category === 'Premium' && brandLogos[brand])
+                        ? createBrandButton(brand, brandLogos[brand])
+                        : createOptionButton(brand);
+
                     button.addEventListener('click', (e) => {
                         e.stopPropagation();
                         document.getElementById('dontMindBrand').style.background = 'white';
@@ -2289,7 +2328,6 @@
                 container.appendChild(grid);
             });
         }
-
 
         function updateBrands() {
             const selected = document.querySelectorAll('#brandsContainer .option-button.selected');
@@ -3303,6 +3341,30 @@
                 }
             }
         });
+        // Create brand button with logo
+        function createBrandButton(brand, logoPath) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'option-button brand-button';
+            button.setAttribute('data-value', brand);
+            button.setAttribute('role', 'button');
+            button.setAttribute('aria-pressed', 'false');
+
+            if (logoPath) {
+                const logo = document.createElement('img');
+                logo.src = logoPath;
+                logo.alt = brand + ' logo';
+                logo.className = 'brand-logo';
+                button.appendChild(logo);
+            }
+
+            const text = document.createElement('span');
+            text.textContent = brand;
+            button.appendChild(text);
+
+            return button;
+        }
+
     </script>
 
     <!-- Footer -->
