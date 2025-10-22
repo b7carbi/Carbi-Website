@@ -1077,6 +1077,303 @@
                 font-size: 1em;
             }
         }
+
+        /* ============ Insurance Help Modal Styles ============ */
+
+        /* Help Link */
+        .subtitle-with-help {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .subtitle-with-help .step-subtitle {
+            margin-bottom: 0;
+        }
+
+        .help-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #0EA5E9;
+            text-decoration: none;
+            font-size: 0.95em;
+            font-weight: 500;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .help-link:hover {
+            background: #f0f9ff;
+            color: #0284c7;
+        }
+
+        .help-link::before {
+            content: '?';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: #0EA5E9;
+            color: white;
+            border-radius: 50%;
+            font-size: 0.85em;
+            font-weight: 700;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.7);
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 20px;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modal Header */
+        .modal-header {
+            padding: 24px 24px 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5em;
+            color: #0F172A;
+            margin-bottom: 4px;
+            font-weight: 700;
+            padding-right: 40px;
+        }
+
+        .modal-header p {
+            color: #64748B;
+            font-size: 0.9em;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 1.5em;
+            color: #64748B;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: #f1f5f9;
+            color: #0F172A;
+        }
+
+        /* Modal Body */
+        .modal-body {
+            padding: 24px;
+        }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .comparison-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .comparison-card h4 {
+            color: #0F172A;
+            font-size: 1.1em;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .comparison-card .insurance-group {
+            color: #0EA5E9;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .comparison-section {
+            margin-bottom: 20px;
+        }
+
+        .comparison-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .comparison-section h5 {
+            font-size: 0.85em;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .comparison-section ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .comparison-section li {
+            padding: 6px 0 6px 20px;
+            position: relative;
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #475569;
+        }
+
+        .comparison-section .pros-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: 700;
+        }
+
+        .comparison-section .cons-list li::before {
+            content: '✗';
+            position: absolute;
+            left: 0;
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        /* Example Cars */
+        .example-cars {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            color: #64748B;
+        }
+
+        .example-cars span {
+            display: block;
+            padding: 4px 0;
+        }
+
+
+
+        .modal-button {
+            width: 100%;
+            padding: 14px 24px;
+            background: #0EA5E9;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-button:hover {
+            background: #0284c7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 0;
+                max-height: 100vh;
+                border-radius: 0;
+                max-width: 100%;
+            }
+
+            .modal-header {
+                border-radius: 0;
+            }
+
+            .subtitle-with-help {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 24px;
+            }
+
+            .help-link {
+                padding-left: 0;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
     </style>
 </head>
 
@@ -1139,8 +1436,94 @@
                 <!-- Step 2B: Main Driver -->
                 <div class="step" id="step2b">
                     <h2 class="step-heading">Who will be the main driver on the insurance policy?</h2>
-                    <p class="step-subtitle">This changes what car we recommend</p>
+                    <div class="subtitle-with-help">
+                        <p class="step-subtitle">This changes what car we recommend</p>
+                        <a href="#" class="help-link" id="helpLinkStatic"
+                            onclick="event.preventDefault(); openInsuranceHelpModal();">Help me choose</a>
+                    </div>
+                    <!-- Insurance Help Modal -->
+                    <div class="modal-overlay" id="insuranceHelpModal"
+                        onclick="closeInsuranceHelpModalOnBackdrop(event)">
+                        <div class="modal-content" onclick="event.stopPropagation()">
+                            <div class="modal-header">
+                                <h3>Who will be the main driver?</h3>
+                                <p>These are the pros and cons</p>
+                                <button class="modal-close" onclick="closeInsuranceHelpModal()"
+                                    aria-label="Close">&times;</button>
+                            </div>
 
+                            <div class="modal-body">
+                                <div class="comparison-grid">
+                                    <!-- Young Driver Option -->
+                                    <div class="comparison-card">
+                                        <h4>The young driver</h4>
+                                        <span class="insurance-group">Insurance groups 1-10</span>
+
+                                        <div class="comparison-section">
+                                            <h5>Pros</h5>
+                                            <ul class="pros-list">
+                                                <li>Builds no-claims bonus faster</li>
+                                                <li>Full responsiblity for their car</li>
+                                                <li>Best if they're the only driver</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="comparison-section">
+                                            <h5>Cons</h5>
+                                            <ul class="cons-list">
+                                                <li>Insurance is still expensive</li>
+                                                <li>Small cars only</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="comparison-section">
+                                            <h5>Typical Cars</h5>
+                                            <div class="example-cars">
+                                                <span>• Fiat 500</span>
+                                                <span>• Toyota Aygo</span>
+                                                <span>• Volkswagen UP!</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Older Driver Option -->
+                                    <div class="comparison-card">
+                                        <h4>Someone older</h4>
+                                        <span class="insurance-group">Insurance groups 1-16</span>
+
+                                        <div class="comparison-section">
+                                            <h5>Pros</h5>
+                                            <ul class="pros-list">
+                                                <li>Bigger cars available</li>
+                                                <li>Cheaper in the short term</li>
+                                                <li>Best when sharing the car</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="comparison-section">
+                                            <h5>Cons</h5>
+                                            <ul class="cons-list">
+                                                <li>Main driver uses the car more</li>
+                                                <li>Doesn't build no-claims bonus</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="comparison-section">
+                                            <h5>Typical Cars</h5>
+                                            <div class="example-cars">
+                                                <span>• VW Golf (1.0)</span>
+                                                <span>• Ford Focus (1.0)</span>
+                                                <span>• Skoda Octavia (1.6)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="modal-button" onclick="closeInsuranceHelpModal()">Got it</button>
+                            </div>
+
+
+                        </div>
+                    </div>
                     <div class="button-grid" id="mainDriverGrid" role="radiogroup" aria-label="Select main driver type"
                         aria-required="true"></div>
 
@@ -1328,15 +1711,15 @@
                         <div class="checkbox-group" id="contactPreferences" role="group" aria-required="true">
                             <div class="checkbox-option">
                                 <input type="checkbox" id="prefEmail" value="Email" aria-describedby="error10">
-                                <label for="prefEmail" class="checkbox-label">📧 Email</label>
+                                <label for="prefEmail" class="checkbox-label">Email</label>
                             </div>
                             <div class="checkbox-option">
                                 <input type="checkbox" id="prefText" value="Text" aria-describedby="error10">
-                                <label for="prefText" class="checkbox-label">💬 Text Message</label>
+                                <label for="prefText" class="checkbox-label">Text</label>
                             </div>
                             <div class="checkbox-option">
                                 <input type="checkbox" id="prefPhone" value="Phone Call" aria-describedby="error10">
-                                <label for="prefPhone" class="checkbox-label">📞 Phone Call</label>
+                                <label for="prefPhone" class="checkbox-label">Phone call</label>
                             </div>
                         </div>
                     </fieldset>
@@ -1360,7 +1743,7 @@
 
                     <!-- Part 4: Phone field (conditional - shown only if Text or Phone selected) -->
                     <div id="phoneContainer" style="display: none;">
-                        <label for="phone" class="input-label">Phone Number <span
+                        <label for="phone" class="input-label">Phone number <span
                                 style="color: #ef4444;">*</span></label>
                         <input type="tel" id="phone" name="tel" class="text-input" placeholder="07x xxxxxxxx"
                             autocomplete="tel" aria-describedby="error10">
@@ -1732,7 +2115,9 @@
         }
 
         function initializeStep2b() {
+            const step = document.getElementById('step2b');
             const grid = document.getElementById('mainDriverGrid');
+
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(200px, 1fr))';
 
@@ -1752,16 +2137,14 @@
                 button.setAttribute('role', 'radio');
                 button.setAttribute('aria-checked', 'false');
                 button.setAttribute('data-value', option.value);
-                button.removeAttribute('aria-pressed'); // Radio buttons use aria-checked instead
+                button.removeAttribute('aria-pressed');
 
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    // Deselect all others
                     grid.querySelectorAll('.option-button').forEach(btn => {
                         btn.classList.remove('selected');
                         btn.setAttribute('aria-checked', 'false');
                     });
-                    // Select this one
                     button.classList.add('selected');
                     button.setAttribute('aria-checked', 'true');
                     formData.main_driver_type = option.value;
@@ -1769,17 +2152,7 @@
                     document.getElementById('next2b').disabled = false;
                 });
 
-                const description = document.createElement('div');
-                description.style.fontSize = '0.9em';
-                description.style.color = '#64748B';
-                description.style.textAlign = 'center';
-                description.style.lineHeight = '1.4';
-                description.textContent = option.description;
-                description.id = `main-driver-desc-${index}`;
-                button.setAttribute('aria-describedby', description.id);
-
                 wrapper.appendChild(button);
-                wrapper.appendChild(description);
                 grid.appendChild(wrapper);
             });
         }
@@ -2401,7 +2774,7 @@
             // Phone required if Text or Phone Call selected
             if (textSelected || phoneSelected) {
                 if (!phone) {
-                    errorMsg.textContent = 'Phone number required (you selected Text/Phone contact)';
+                    errorMsg.textContent = 'Phone number needed (you picked Text/Phone contact)';
                     submitBtn.disabled = true;
                     return false;
                 }
@@ -2904,6 +3277,32 @@
             updateContactFieldsVisibility();
             validateStep10();
         }
+        // ============ Insurance Help Modal Functions ============
+        function openInsuranceHelpModal() {
+            document.getElementById('insuranceHelpModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeInsuranceHelpModal() {
+            document.getElementById('insuranceHelpModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeInsuranceHelpModalOnBackdrop(event) {
+            if (event.target === event.currentTarget) {
+                closeInsuranceHelpModal();
+            }
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('insuranceHelpModal');
+                if (modal && modal.classList.contains('active')) {
+                    closeInsuranceHelpModal();
+                }
+            }
+        });
     </script>
 
     <!-- Footer -->
