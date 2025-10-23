@@ -947,22 +947,19 @@
             width: 100%;
             padding: 20px;
             background: white;
-            border: 3px solid #0EA5E9;
+            border: 2px solid #cbd5e1;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: 600;
-            color: #0EA5E9;
+            font-weight: 500;
+            color: #475569;
             font-size: 1.1em;
             margin-bottom: 30px;
             min-height: 60px;
         }
 
         .standalone-button:hover {
-            background: #0EA5E9;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+            border-color: #0EA5E9;
         }
 
         .separator {
@@ -2948,6 +2945,18 @@
             if (dontMindBtn) {
                 dontMindBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
+
+                    // Clear all selected brand buttons visually
+                    document.querySelectorAll('#brandsContainer .option-button.selected').forEach(btn => {
+                        btn.classList.remove('selected');
+                        btn.setAttribute('aria-pressed', 'false');
+                    });
+
+                    // Style the "Don't mind" button as selected
+                    dontMindBtn.style.background = '#E0F2FE';
+                    dontMindBtn.style.color = '#0369A1';
+                    dontMindBtn.style.borderColor = '#0EA5E9';
+
                     formData.brand_preference = 'dont_mind';
                     formData.selected_brands = [];
                     saveToLocalStorage();
