@@ -1449,8 +1449,8 @@
                 <div class="step active" id="step1">
                     <h2 class="step-heading">What's important to you?</h2>
                     <p class="step-subtitle">Select all that apply</p>
-                    <div class="button-grid" id="featuresGrid" role="group"
-                        aria-label="Select important features for your first car"></div>
+                    <div id="featuresContainer" role="group" aria-label="Select important features for your first car">
+                    </div>
                     <div class="error-message" id="error1" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next1" disabled>Next</button>
                 </div>
@@ -1887,13 +1887,11 @@
         };
 
         // Feature options
-        const features = [
-            'Safety', 'Size', 'Colour', 'Cost', 'Performance', 'Engine Size',
-            'Fuel Efficiency', 'Insurance Cost', 'Make and Model', 'Location',
-            'Interior Features', 'Bluetooth', 'Heated Seats', 'Leather Seats',
-            'Low Mileage', 'Reliability', 'Ambient Lighting', 'Manual / Automatic',
-            'Full Service History', 'Low Emission Zone Friendly', 'Number of Doors'
-        ];
+        const features = {
+            'Basics': ['Make and Model', 'Size', 'Colour', 'Manual / Automatic', 'Engine Size', 'Number of Doors', 'Safety', 'Performance'],
+            'Budget': ['Cost', 'Insurance Cost', 'Fuel Efficiency', 'Low Mileage', 'Full Service History', 'Low Emission Zone Friendly'],
+            'Features': ['Interior Features', 'Bluetooth', 'Heated Seats', 'Leather Seats', 'Ambient Lighting', 'Reliability', 'Location']
+        };
 
         // Brand options by category
         const brands = {
@@ -2053,8 +2051,11 @@
             stepStartTimes[stepNumber] = Date.now();
         }
         // Step 1: Important Features
+        // Step 1: Important Features
         function initializeStep1() {
-            const grid = document.getElementById('featuresGrid');
+            const container = document.getElementById('featuresContainer');
+            // CLEAR existing content before re-initializing
+            container.innerHTML = '';
 
             // Track form start when user interacts with first step
             if (!sessionStorage.getItem('form_start_time')) {
@@ -2064,16 +2065,32 @@
                 });
                 sessionStorage.setItem('form_start_time', Date.now());
             }
-            features.forEach(feature => {
-                const button = createOptionButton(feature);
-                button.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    button.classList.toggle('selected');
-                    updateFeaturesList();
-                    validateStep1();
-                });
-                grid.appendChild(button);
 
+            Object.keys(features).forEach(category => {
+                const heading = document.createElement('div');
+                heading.className = 'category-heading';
+                heading.textContent = category;
+                heading.id = `feature-category-${category.toLowerCase()}`;
+                container.appendChild(heading);
+
+                const grid = document.createElement('div');
+                grid.className = 'button-grid';
+                grid.setAttribute('role', 'group');
+                grid.setAttribute('aria-labelledby', `feature-category-${category.toLowerCase()}`);
+
+                features[category].forEach(feature => {
+                    const button = createOptionButton(feature);
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        button.classList.toggle('selected');
+                        button.setAttribute('aria-pressed', button.classList.contains('selected') ? 'true' : 'false');
+                        updateFeaturesList();
+                        validateStep1();
+                    });
+                    grid.appendChild(button);
+                });
+
+                container.appendChild(grid);
             });
         }
 
@@ -2089,11 +2106,11 @@
         }
 
         function updateFeaturesList() {
-            const selected = document.querySelectorAll('#featuresGrid .option-button.selected');
+            const selected = document.querySelectorAll('#featuresContainer .option-button.selected');
             formData.important_features = Array.from(selected).map(btn => btn.dataset.value);
 
             // Update aria-pressed for all buttons
-            document.querySelectorAll('#featuresGrid .option-button').forEach(btn => {
+            document.querySelectorAll('#featuresContainer .option-button').forEach(btn => {
                 btn.setAttribute('aria-pressed', btn.classList.contains('selected') ? 'true' : 'false');
             });
 
@@ -3413,7 +3430,7 @@
                 <!-- Copyright -->
                 <div>
                     <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin: 0;">
-                        © 2025 Carbi. Making first cars happen. | <a href="/privacy.html"
+                        © 2025 carbi. Making first cars happen. | <a href="/privacy.html"
                             style="color: rgba(255,255,255,0.7); text-decoration: none;">Privacy Policy</a>
                     </p>
                 </div>
