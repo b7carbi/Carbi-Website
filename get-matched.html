@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Matched - Find Your Perfect First Car | Carbi</title>
+    <title>Carbi | Get Matched - Low Insurance Cars for Young Drivers</title>
     <link rel="shortcut icon" type="image/png" href="favicon.png">
 
     <!-- Cookie Consent -->
@@ -1688,8 +1688,8 @@
 
                 <!-- Step 8: Location and Radius -->
                 <div class="step" id="step8">
-                    <h2 class="step-heading">How far will you travel?</h2>
-                    <p class="step-subtitle">Enter your location and search radius</p>
+                    <h2 class="step-heading">Where are you based?</h2>
+                    <p class="step-subtitle">Enter your location and how far you'd travel to collect a car</p>
 
                     <button type="button" class="location-button" id="useLocationBtn"
                         aria-label="Use my current location to set postcode">
@@ -1895,6 +1895,36 @@
             'Premium': ['Audi', 'BMW', 'Mercedes', 'MINI', 'Volvo'],
             'Established': ['Ford', 'Honda', 'Mazda', 'SEAT', 'Skoda', 'Smart', 'Toyota', 'Volkswagen'],
             'Regular': ['Citroen', 'Dacia', 'DS', 'Fiat', 'Hyundai', 'Kia', 'MG', 'Mitsubishi', 'Nissan', 'Peugeot', 'Renault', 'Suzuki', 'Vauxhall']
+        };
+
+        // Brand logos mapping
+        const brandLogos = {
+            'Audi': 'images/brands/audi-logo.png',
+            'BMW': 'images/brands/BMW-logo.png',
+            'Mercedes': 'images/brands/mercedes-logo.png',
+            'MINI': 'images/brands/MINI-logo.png',
+            'Volvo': 'images/brands/volvo-logo.png',
+            'Skoda': 'images/brands/skoda-logo.png',
+            'Ford': 'images/brands/ford-logo.png',
+            'Mazda': 'images/brands/mazda-logo.png',
+            'Honda': 'images/brands/honda-logo.png',
+            'SEAT': 'images/brands/seat-logo.png',
+            'Toyota': 'images/brands/toyota-logo.png',
+            'Smart': 'images/brands/smart-logo.png',
+            'Volkswagen': 'images/brands/vw-logo.png',
+            'Citroen': 'images/brands/citroen-logo.png',
+            'Dacia': 'images/brands/dacia-logo.png',
+            'DS': 'images/brands/ds-logo.png',
+            'Fiat': 'images/brands/fiat-logo.png',
+            'Hyundai': 'images/brands/hyundai-logo.png',
+            'Kia': 'images/brands/kia-logo.png',
+            'MG': 'images/brands/mg-logo.png',
+            'Mitsubishi': 'images/brands/mitsubishi-logo.png',
+            'Nissan': 'images/brands/nissan-logo.png',
+            'Peugeot': 'images/brands/peugeot-logo.png',
+            'Renault': 'images/brands/renault-logo.png',
+            'Suzuki': 'images/brands/suzuki-logo.png',
+            'Vauxhall': 'images/brands/vauxhall-logo.png'
         };
 
         // Colour options
@@ -2305,36 +2335,6 @@
             // CLEAR existing content before re-initializing
             container.innerHTML = '';
 
-            // Brand logo mapping 
-            const brandLogos = {
-                'Audi': 'images/brands/audi-logo.png',
-                'BMW': 'images/brands/BMW-logo.png',
-                'Mercedes': 'images/brands/mercedes-logo.png',
-                'MINI': 'images/brands/MINI-logo.png',
-                'Volvo': 'images/brands/volvo-logo.png',
-                'Skoda': 'images/brands/skoda-logo.png',
-                'Ford': 'images/brands/ford-logo.png',
-                'Mazda': 'images/brands/mazda-logo.png',
-                'Honda': 'images/brands/honda-logo.png',
-                'SEAT': 'images/brands/seat-logo.png',
-                'Toyota': 'images/brands/toyota-logo.png',
-                'Smart': 'images/brands/smart-logo.png',
-                'Volkswagen': 'images/brands/vw-logo.png',
-                'Citroen': 'images/brands/citroen-logo.png',
-                'Dacia': 'images/brands/dacia-logo.png',
-                'DS': 'images/brands/ds-logo.png',
-                'Fiat': 'images/brands/fiat-logo.png',
-                'Hyundai': 'images/brands/hyundai-logo.png',
-                'Kia': 'images/brands/kia-logo.png',
-                'MG': 'images/brands/mg-logo.png',
-                'Mitsubishi': 'images/brands/mitsubishi-logo.png',
-                'Nissan': 'images/brands/nissan-logo.png',
-                'Peugeot': 'images/brands/peugeot-logo.png',
-                'Renault': 'images/brands/renault-logo.png',
-                'Suzuki': 'images/brands/suzuki-logo.png',
-                'Vauxhall': 'images/brands/vauxhall-logo.png'
-            };
-
             Object.keys(brands).forEach(category => {
                 const heading = document.createElement('div');
                 heading.className = 'category-heading';
@@ -2382,26 +2382,27 @@
             nextBtn.disabled = formData.selected_brands.length === 0;
         }
 
-        // Step 5: Favourite Brand
         function initializeStep5() {
             const group = document.getElementById('favouriteGroup');
             group.innerHTML = '';
             group.className = 'button-grid';
 
             formData.selected_brands.forEach(brand => {
-                const button = createOptionButton(brand);
+                // Use createBrandButton if logo exists, otherwise fall back to createOptionButton
+                const button = brandLogos[brand]
+                    ? createBrandButton(brand, brandLogos[brand])
+                    : createOptionButton(brand);
+
                 button.setAttribute('role', 'radio');
                 button.setAttribute('aria-checked', 'false');
-                button.removeAttribute('aria-pressed'); // Use aria-checked for radio buttons
+                button.removeAttribute('aria-pressed');
 
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    // Deselect all others
                     group.querySelectorAll('.option-button').forEach(btn => {
                         btn.classList.remove('selected');
                         btn.setAttribute('aria-checked', 'false');
                     });
-                    // Select this one
                     button.classList.add('selected');
                     button.setAttribute('aria-checked', 'true');
                     formData.favourite_brand = brand;
@@ -2419,12 +2420,10 @@
 
             noFavButton.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // Deselect all others
                 group.querySelectorAll('.option-button').forEach(btn => {
                     btn.classList.remove('selected');
                     btn.setAttribute('aria-checked', 'false');
                 });
-                // Select this one
                 noFavButton.classList.add('selected');
                 noFavButton.setAttribute('aria-checked', 'true');
                 formData.favourite_brand = null;
@@ -3440,7 +3439,7 @@
                 <div>
                     <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin: 0;">
                         © 2025 carbi. Making first cars happen. | <a href="/privacy.html"
-                            style="color: rgba(255,255,255,0.7); text-decoration: none;">Privacy Policy</a>
+                            style="color: rgba(255,255,255,0.7); text-decoration: none;">Privacy policy</a>
                     </p>
                 </div>
                 <!-- Contact -->
