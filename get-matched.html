@@ -2406,9 +2406,6 @@
             maxSlider.addEventListener('input', updateEngineDisplay);
             updateEngineDisplay();
 
-            // Enable button since user can adjust sliders
-            document.getElementById('next7b').disabled = false;
-
             function updateEngineDisplay() {
                 const min = parseFloat(minSlider.value);
                 const max = parseFloat(maxSlider.value);
@@ -2948,10 +2945,10 @@
             if (stepNum === 4) return true;
             if (stepNum === 5) return formData.selected_brands.length >= 2;
             if (stepNum === 6) return formData.important_features.includes('Colour');
-            if (stepNum === 7) return formData.important_features.includes('Low Mileage');
+            if (stepNum === 7) return formData.important_features.includes('Low mileage');
             if (stepNum === '7a') return formData.important_features.includes('Manual / Automatic');
-            if (stepNum === '7b') return formData.important_features.includes('Engine Size');
-            if (stepNum === '7c') return formData.important_features.includes('Number of Doors');
+            if (stepNum === '7b') return formData.important_features.includes('Engine size');
+            if (stepNum === '7c') return formData.important_features.includes('Number of doors');
             if (stepNum >= 8) return true;
             return false;
         }
