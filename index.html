@@ -1070,50 +1070,45 @@
             });
         });
 
-        // Updating step 1 to be clickable
+
+        // Make step 1 clickable - scroll to CTA
+        function handleStep1Click() {
+            const ctaSection = document.querySelector('section[aria-labelledby="cta-heading"]');
+
+            if (ctaSection) {
+                const sectionPosition = ctaSection.getBoundingClientRect().top + window.pageYOffset;
+                const offset = 80;
+
+                window.scrollTo({
+                    top: sectionPosition - offset,
+                    behavior: 'smooth'
+                });
+
+                // Track the click
+                window.carbiTracking.safeGtag('event', 'step1_click', {
+                    'event_category': 'engagement',
+                    'event_label': 'How It Works Step 1 Click'
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
-            // Get the first step element
             const step1 = document.querySelector('.steps .step:first-child');
 
             if (step1) {
-                // Make it visually interactive
                 step1.style.cursor = 'pointer';
+                step1.addEventListener('click', handleStep1Click);
 
-                // Add click event listener
-                step1.addEventListener('click', function () {
-                    // Find the CTA section (not just the button)
-                    const ctaSection = document.querySelector('section[aria-labelledby="cta-heading"]');
-
-                    if (ctaSection) {
-                        // Smooth scroll to the section with offset to show the heading
-                        const sectionPosition = ctaSection.getBoundingClientRect().top + window.pageYOffset;
-                        const offset = 80; // Space above the section to show the heading nicely
-
-                        window.scrollTo({
-                            top: sectionPosition - offset,
-                            behavior: 'smooth'
-                        });
-
-                        // Track the click in Google Analytics if available
-                        if (typeof gtag !== 'undefined') {
-                            gtag('event', 'step1_click', {
-                                'event_category': 'engagement',
-                                'event_label': 'How It Works Step 1 Click'
-                            });
-                        }
-                    }
-                });
-
-                // Accessibility: Make it keyboard accessible
+                // Accessibility
                 step1.setAttribute('tabindex', '0');
                 step1.setAttribute('role', 'button');
                 step1.setAttribute('aria-label', 'Click to get started with your car match');
 
-                // Handle keyboard activation (Enter and Space)
+                // Keyboard support
                 step1.addEventListener('keydown', function (e) {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        this.click();
+                        handleStep1Click();
                     }
                 });
             }
