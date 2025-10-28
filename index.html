@@ -1054,18 +1054,16 @@
     </footer>
 
     <script>
-        // Track landing page view
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'page_view', {
-                'page_title': 'Landing Page',
-                'page_location': window.location.href
-            });
-        }
+        // Track landing page view using shared tracking utility
+        window.carbiTracking.safeGtag('event', 'page_view', {
+            'page_title': 'Landing Page',
+            'page_location': window.location.href
+        });
 
         // Track CTA button clicks
         document.querySelectorAll('a[href="get-matched.html"]').forEach(button => {
             button.addEventListener('click', function () {
-                gtag('event', 'cta_click', {
+                window.carbiTracking.safeGtag('event', 'cta_click', {
                     'button_location': this.closest('section')?.getAttribute('aria-labelledby') || 'unknown',
                     'button_text': this.textContent.trim()
                 });
