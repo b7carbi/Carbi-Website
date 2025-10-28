@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Details - Carbi Admin</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <nav class="admin-nav">
+        <div class="nav-content">
+            <h1 class="nav-logo">Carbi Admin</h1>
+            <div class="nav-actions">
+                <a href="/admin/dashboard.html" class="btn-secondary">← Back to Dashboard</a>
+                <button onclick="logout()" class="btn-logout">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="admin-main">
+        <div id="loadingState" class="loading-state">
+            <p>Loading request...</p>
+        </div>
+
+        <div id="errorState" class="error-state" style="display: none;">
+            <p id="errorText"></p>
+            <a href="/admin/dashboard.html" class="btn-secondary">Back to Dashboard</a>
+        </div>
+
+        <div id="requestDetails" style="display: none;">
+            <div class="page-header">
+                <h2 id="requestTitle">Request Details</h2>
+                <span id="requestStatus" class="status-badge"></span>
+            </div>
+
+            <!-- Update Status & Notes Section -->
+            <div class="card">
+                <h3>Update Status & Notes</h3>
+                <form id="updateForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status" name="status">
+                                <option value="new">New</option>
+                                <option value="in_progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="admin_notes">Admin Notes</label>
+                        <textarea id="admin_notes" name="admin_notes" rows="6"
+                            placeholder="Add notes about your communication with the customer, dealer contacts, matching progress, etc."></textarea>
+                        <small>Use this to track your progress on this request</small>
+                    </div>
+
+                    <div id="updateError" class="error-message" style="display: none;"></div>
+                    <div id="updateSuccess" class="success-message" style="display: none;">Changes saved successfully!
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="saveBtn">Save Changes</button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="card">
+                <h3>Contact Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Name</label>
+                        <p id="fullName"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Email</label>
+                        <p id="email"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Phone</label>
+                        <p id="phone"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Contact Preferences</label>
+                        <p id="contactPrefs"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Submission Date</label>
+                        <p id="createdAt"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Car Requirements -->
+            <div class="card">
+                <h3>Car Requirements</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Budget Range</label>
+                        <p id="budget"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Location</label>
+                        <p id="location"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Search Radius</label>
+                        <p id="searchRadius"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Main Driver Type</label>
+                        <p id="mainDriver"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Transmission</label>
+                        <p id="transmission"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Engine Size</label>
+                        <p id="engineSize"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Number of Doors</label>
+                        <p id="doors"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Max Mileage</label>
+                        <p id="mileage"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preferences -->
+            <div class="card">
+                <h3>Preferences</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Important Features</label>
+                        <p id="importantFeatures"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Dealbreakers</label>
+                        <p id="dealbreakers"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Brand Preference</label>
+                        <p id="brandPref"></p>
+                    </div>
+                    <div class="info-item">
+                        <label>Preferred Colours</label>
+                        <p id="colours"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="card" id="additionalNotesCard" style="display: none;">
+                <h3>Customer's Additional Notes</h3>
+                <p id="additionalNotes" class="customer-notes"></p>
+            </div>
+        </div>
+    </main>
+
+    <script src="admin.js"></script>
+    <script>
+        // Check authentication
+        if (!isAuthenticated()) {
+            window.location.href = '/admin/login.html';
+        }
+
+        // Get request ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const requestId = urlParams.get('id');
+
+        if (!requestId) {
+            window.location.href = '/admin/dashboard.html';
+        }
+
+        let currentRequest = null;
+
+        // Load request details
+        loadRequest();
+
+        async function loadRequest() {
+            const loadingState = document.getElementById('loadingState');
+            const errorState = document.getElementById('errorState');
+            const requestDetails = document.getElementById('requestDetails');
+
+            try {
+                const data = await apiCall(`/api/admin/request?id=${requestId}`);
+
+                if (!data || !data.request) {
+                    throw new Error('Request not found');
+                }
+
+                currentRequest = data.request;
+                populateRequestDetails(currentRequest);
+
+                loadingState.style.display = 'none';
+                requestDetails.style.display = 'block';
+
+            } catch (error) {
+                console.error('Failed to load request:', error);
+                loadingState.style.display = 'none';
+                errorState.style.display = 'block';
+                document.getElementById('errorText').textContent = error.message;
+            }
+        }
+
+        function populateRequestDetails(request) {
+            // Header
+            document.getElementById('requestTitle').textContent =
+                `${request.first_name} ${request.last_name}`;
+            const statusBadge = document.getElementById('requestStatus');
+            statusBadge.className = `status-badge ${getStatusClass(request.status)}`;
+            statusBadge.textContent = getStatusText(request.status);
+
+            // Form fields
+            document.getElementById('status').value = request.status;
+            document.getElementById('admin_notes').value = request.admin_notes || '';
+
+            // Contact info
+            document.getElementById('fullName').textContent =
+                `${request.first_name} ${request.last_name}`;
+            document.getElementById('email').textContent = request.email || 'Not provided';
+            document.getElementById('phone').textContent = request.phone || 'Not provided';
+            document.getElementById('contactPrefs').textContent =
+                request.contact_preferences.join(', ');
+            document.getElementById('createdAt').textContent = formatDate(request.created_at);
+
+            // Car requirements
+            document.getElementById('budget').textContent =
+                `${formatCurrency(request.budget_min)} - ${formatCurrency(request.budget_max)}`;
+            document.getElementById('location').textContent = request.postcode;
+            document.getElementById('searchRadius').textContent = `${request.search_radius} miles`;
+            document.getElementById('mainDriver').textContent =
+                request.main_driver_type?.replace('_', ' ') || 'Not specified';
+            document.getElementById('transmission').textContent =
+                request.transmission_type || 'No preference';
+
+            const engineMin = request.engine_size_min;
+            const engineMax = request.engine_size_max;
+            document.getElementById('engineSize').textContent =
+                (engineMin || engineMax) ? `${engineMin || 'Any'} - ${engineMax || 'Any'}L` : 'No preference';
+
+            document.getElementById('doors').textContent =
+                request.number_of_doors?.length > 0 ? request.number_of_doors.join(', ') : 'No preference';
+            document.getElementById('mileage').textContent =
+                request.max_mileage ? `${request.max_mileage.toLocaleString()} miles` : 'No limit';
+
+            // Preferences
+            document.getElementById('importantFeatures').textContent =
+                request.important_features?.join(', ') || 'None specified';
+            document.getElementById('dealbreakers').textContent =
+                request.dealbreakers?.length > 0 ? request.dealbreakers.join(', ') : 'None';
+
+            let brandText = 'No preference';
+            if (request.brand_preference === 'specific') {
+                brandText = request.selected_brands?.join(', ') || 'Not specified';
+                if (request.favourite_brand) {
+                    brandText += ` (Favourite: ${request.favourite_brand})`;
+                }
+            }
+            document.getElementById('brandPref').textContent = brandText;
+
+            let colourText = 'No preference';
+            if (request.preferred_colours?.length > 0) {
+                colourText = request.preferred_colours.join(', ');
+                if (request.custom_colour) {
+                    colourText += ` (Custom: ${request.custom_colour})`;
+                }
+            }
+            document.getElementById('colours').textContent = colourText;
+
+            // Additional notes
+            if (request.additional_notes) {
+                document.getElementById('additionalNotesCard').style.display = 'block';
+                document.getElementById('additionalNotes').textContent = request.additional_notes;
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('updateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const saveBtn = document.getElementById('saveBtn');
+            const updateError = document.getElementById('updateError');
+            const updateSuccess = document.getElementById('updateSuccess');
+
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
+            updateError.style.display = 'none';
+            updateSuccess.style.display = 'none';
+
+            try {
+                const status = document.getElementById('status').value;
+                const admin_notes = document.getElementById('admin_notes').value;
+
+                const data = await apiCall(`/api/admin/request?id=${requestId}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ status, admin_notes })
+                });
+
+                if (data && data.success) {
+                    currentRequest = data.request;
+                    updateSuccess.style.display = 'block';
+
+                    // Update the status badge
+                    const statusBadge = document.getElementById('requestStatus');
+                    statusBadge.className = `status-badge ${getStatusClass(status)}`;
+                    statusBadge.textContent = getStatusText(status);
+
+                    // Scroll to top to show success message
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+            } catch (error) {
+                updateError.textContent = error.message;
+                updateError.style.display = 'block';
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save Changes';
+            }
+        });
+    </script>
+</body>
+
+</html>
