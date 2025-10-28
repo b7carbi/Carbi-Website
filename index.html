@@ -29,132 +29,13 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
+
+
     <!-- Cookie Consent -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
-    <script>
-
-        //cookie consent with reject option
-        window.addEventListener("load", function () {
-            window.cookieconsent.initialise({
-                type: 'opt-in', // This enables the accept/reject flow
-                palette: {
-                    popup: { background: "#0F172A" },
-                    button: { background: "#0EA5E9", text: "#ffffff" }
-                },
-                theme: 'classic',
-                position: 'bottom',
-                content: {
-                    message: "Cookies help us improve your experience and learn what marketing works. You can accept or reject.",
-                    dismiss: "Accept",
-                    deny: "Reject",
-                    link: "Learn more",
-                    href: "/privacy.html"
-                },
-
-                // Callback when user accepts
-                onStatusChange: function (status, chosenBefore) {
-                    const consent = this.hasConsented();
-
-                    if (consent) {
-                        // User accepted - load tracking scripts
-                        console.log('User accepted cookies');
-                        loadTrackingScripts();
-                    } else {
-                        // User rejected - don't load tracking
-                        console.log('User rejected cookies');
-                    }
-
-                    // Track the cookie consent decision itself (this goes to Supabase, not GA)
-                    trackConsentDecision(consent);
-                },
-
-                // Also handle initial page load if user previously consented
-                onInitialise: function (status) {
-                    console.log('Status:', status);
-
-                    // Check both localStorage AND cookies
-                    const consent = this.hasConsented() ||
-                        document.cookie.includes('cookieconsent_status=allow');
-
-                    console.log('Cookie consent initialized:', consent);
-
-                    if (consent) {
-                        loadTrackingScripts();
-                    }
-                }
-            });
-        });
-
-        //Conditional Meta Pixel and GA code
-
-        function loadTrackingScripts() {
-            // Only load if not already loaded
-            if (window.gaLoaded) return;
-            window.gaLoaded = true;
-
-            // Load Google Analytics
-            const gaScript = document.createElement('script');
-            gaScript.async = true;
-            gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-1S8XELP34H';
-            document.head.appendChild(gaScript);
-
-            gaScript.onload = function () {
-                window.dataLayer = window.dataLayer || [];
-                function gtag() { dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'G-1S8XELP34H', {
-                    'anonymize_ip': true,
-                    'allow_google_signals': false,
-                    'allow_ad_personalization_signals': false
-                });
-                gtag('config', 'AW-882133742');
-
-                // Track page view
-                gtag('event', 'page_view', {
-                    'page_title': document.title,
-                    'page_location': window.location.href
-                });
-            };
-
-            // Load Meta Pixel
-            !function (f, b, e, v, n, t, s) {
-                if (f.fbq) return;
-                n = f.fbq = function () {
-                    n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-                };
-                if (!f._fbq) f._fbq = n;
-                n.push = n; n.loaded = !0; n.version = '2.0';
-                n.queue = [];
-                t = b.createElement(e);
-                t.async = !0;
-                t.src = v;
-                s = b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t, s)
-            }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-
-            fbq('init', '1455041752448144');
-            fbq('track', 'PageView');
-        }
-        // Tracking cookie consent metrics
-        async function trackConsentDecision(consented) {
-            try {
-                await fetch('/api/track-consent', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        consented: consented,
-                        timestamp: new Date().toISOString(),
-                        page: window.location.pathname
-                    })
-                });
-            } catch (error) {
-                console.error('Failed to track consent:', error);
-            }
-        }
-
-
-    </script>
+    <!-- Shared Tracking Script -->
+    <script src="/js/tracking.js"></script>
 
 
     <title>Carbi | First Car for Young Drivers - Low Insurance Group Cars</title>
