@@ -1653,8 +1653,8 @@
                     </p>
 
                     <a href="/downloads/car-viewing-checklist/checklist.html"
-                        onclick="gtag('event', 'tool_download', {'tool_name': 'viewing_checklist'})" target="_blank"
-                        rel="noopener noreferrer"
+                        onclick="window.carbiTracking.safeGtag('event', 'tool_download', {'tool_name': 'viewing_checklist'})"
+                        target="_blank" rel="noopener noreferrer"
                         style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
                         <img src="/images/viewing-checklist-icon.png" alt=""
                             style="width: 48px; height: 48px; flex-shrink: 0;">
@@ -1666,8 +1666,8 @@
 
 
                     <a href="/downloads/budget-calculator/download.html"
-                        onclick="gtag('event', 'tool_download', {'tool_name': 'budget_calculator'})" target="_blank"
-                        rel="noopener noreferrer"
+                        onclick="window.carbiTracking.safeGtag('event', 'tool_download', {'tool_name': 'budget_calculator'})"
+                        target="_blank" rel="noopener noreferrer"
                         style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
                         <img src="/images/calculator-icon.png" alt=""
                             style="width: 48px; height: 48px; flex-shrink: 0;">
@@ -1680,8 +1680,8 @@
 
 
                     <a href="/downloads/quote-comparison/download.html"
-                        onclick="gtag('event', 'tool_download', {'tool_name': 'quote_comparison'})" target="_blank"
-                        rel="noopener noreferrer"
+                        onclick="window.carbiTracking.safeGtag('event', 'tool_download', {'tool_name': 'quote_comparison'})"
+                        target="_blank" rel="noopener noreferrer"
                         style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
                         <img src="/images/Insurance-comparison-icon.png" alt=""
                             style="width: 48px; height: 48px; flex-shrink: 0;">
@@ -1856,7 +1856,7 @@
                     if (!formStarted) {
                         formStarted = true;
                         formStartTime = Date.now();
-                        gtag('event', 'form_start', {
+                        window.carbiTracking.safeGtag('event', 'form_start', {
                             'form_name': 'car_matching'
                         });
                     }
@@ -1866,7 +1866,7 @@
             // Track abandonment
             window.addEventListener('beforeunload', function () {
                 if (formStarted && currentStep < 10) {
-                    gtag('event', 'form_abandon', {
+                    window.carbiTracking.safeGtag('event', 'form_abandon', {
                         'form_name': 'car_matching',
                         'abandoned_at_step': currentStep
                     });
@@ -1903,23 +1903,23 @@
 
         // Analytics form tracking
         function trackFormStep(stepNumber, stepName) {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'form_step_view', {
-                    'step_number': String(stepNumber), //forcing to string for Analytics due to 2b
-                    'step_name': stepName,
-                    'form_name': 'car_matching'
-                });
-            }
+
+            window.carbiTracking.safeGtag('event', 'form_step_view', {
+                'step_number': String(stepNumber), //forcing to string for Analytics due to 2b
+                'step_name': stepName,
+                'form_name': 'car_matching'
+            });
+
 
             // Track time spent on previous step
             if (stepStartTimes[currentStep]) {
                 const timeSpent = Math.round((Date.now() - stepStartTimes[currentStep]) / 1000);
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'step_time', {
-                        'step_number': String(currentStep), // forcing to string due to 2b
-                        'seconds': timeSpent
-                    });
-                }
+
+                window.carbiTracking.safeGtag('event', 'step_time', {
+                    'step_number': String(currentStep), // forcing to string due to 2b
+                    'seconds': timeSpent
+                });
+
             }
 
             // Start timing this step
@@ -1934,7 +1934,7 @@
 
             // Track form start when user interacts with first step
             if (!sessionStorage.getItem('form_start_time')) {
-                trackEvent('form_started', {
+                window.carbiTracking.trackEvent('form_started', {
                     referrer: document.referrer,
                     entry_point: 'form_page'
                 });
@@ -2887,18 +2887,18 @@
                 }
 
                 // server side tracking
-                trackEvent('form_completed', {
+                window.carbiTracking.trackEvent('form_completed', {
                     form_duration_seconds: Math.round((Date.now() - formStartTime) / 1000),
                     steps_completed: currentStep
                 });
 
                 // Tracking form completion in analytics
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'form_submit', {
-                        'form_name': 'car_matching',
-                        'time_to_complete': Date.now() - formStartTime
-                    });
-                }
+
+                window.carbiTracking.safeGtag('event', 'form_submit', {
+                    'form_name': 'car_matching',
+                    'time_to_complete': Date.now() - formStartTime
+                });
+
 
                 // Log for debugging
                 console.log('Match request submitted:', result.id);
