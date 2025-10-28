@@ -1733,9 +1733,9 @@
 
         // Feature options
         const features = {
-            'Basics': ['Safety', 'Reliability', 'Manual / Automatic', 'Location', 'Make and Model', 'Size', 'Number of Doors', 'Colour', 'Low Emission Zone Friendly'],
-            'Budget': ['Cost', 'Insurance Cost', 'Fuel Efficiency', 'Engine Size', 'Low Mileage', 'Full Service History'],
-            'Features': ['Bluetooth', 'Heated Seats', 'Leather Seats', 'Ambient Lighting', 'Performance']
+            'Basics': ['Safety', 'Reliability', 'Manual / Automatic', 'Location', 'Make and model', 'Size', 'Number of doors', 'Colour', 'Low Emission Zone friendly'],
+            'Budget': ['Cost', 'Insurance cost', 'Fuel efficiency', 'Engine size', 'Low mileage', 'Full service history'],
+            'Features': ['Bluetooth', 'Heated seats', 'Leather seats', 'Ambient lighting', 'Performance']
         };
 
         // Brand options by category
@@ -2702,7 +2702,7 @@
             // Phone required if Text or Phone Call selected
             if (textSelected || phoneSelected) {
                 if (!phone) {
-                    errorMsg.textContent = 'Phone number needed (you picked Text/Phone contact)';
+                    errorMsg.textContent = 'Phone number needed for text and phone)';
                     submitBtn.disabled = true;
                     return false;
                 }
