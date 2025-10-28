@@ -1523,7 +1523,7 @@
                             aria-valuenow="1.6" aria-valuetext="1.6 litres">
                     </div>
 
-                    <button type="button" class="primary-button" id="next7b">Next</button>
+                    <button type="button" class="primary-button" id="next7b" disabled>Next</button>
                 </div>
                 <!-- Conditional number of doors step-->
                 <div class="step" id="step7c">
@@ -2401,6 +2401,13 @@
             const maxSlider = document.getElementById('engineMaxSlider');
             const display = document.getElementById('engineDisplay');
             const rangeHighlight = document.getElementById('engineRangeHighlight');
+
+            minSlider.addEventListener('input', updateEngineDisplay);
+            maxSlider.addEventListener('input', updateEngineDisplay);
+            updateEngineDisplay();
+
+            // Enable button since user can adjust sliders
+            document.getElementById('next7b').disabled = false;
 
             function updateEngineDisplay() {
                 const min = parseFloat(minSlider.value);
