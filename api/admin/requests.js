@@ -60,7 +60,7 @@ export default async function handler(req, res) {
         // Fetch all match requests, ordered by creation date (newest first)
         const { data, error } = await supabase
             .from('match_requests')
-            .select('id, created_at, first_name, last_name, email, phone, postcode, budget_min, budget_max, status, contact_preferences')
+            .select('id, created_at, first_name, last_name, email, phone, postcode, budget_min, budget_max, contact_preferences, status, source')
             .order('created_at', { ascending: false });
 
         if (error) {
