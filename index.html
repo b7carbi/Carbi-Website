@@ -254,11 +254,10 @@
         }
 
         .why-carbi-grid {
-            display: grid;
-            grid-template-columns: 240px 600px;
+            display: flex;
             gap: 40px;
             align-items: center;
-            max-width: 1300px;
+            max-width: 900px;
             margin: 0 auto;
             justify-content: center;
         }
@@ -270,22 +269,25 @@
             align-items: center;
         }
 
-        .video-card {
-            background: white;
-            padding: 40px 25px;
-            border-radius: 16px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 280px;
+        .phone-container {
+            position: relative;
+            width: 150px;
+            height: 278px;
+            background: #000;
+            border-radius: 36px;
+            overflow: hidden;
+            border: 3px solid #334155;
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.08),
+                0 2px 4px rgba(0, 0, 0, 0.06);
 
         }
 
         .scrolling-phone-animation {
             width: 100%;
-            max-width: 180px;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         /* Content Column */
@@ -370,13 +372,11 @@
                 order: 2;
             }
 
-            .video-card {
-                max-width: 240px;
+            .phone-container {
+                width: 175px;
+                height: 324px;
+                border-radius: 32px;
                 margin: 0 auto;
-            }
-
-            .scrolling-phone-animation {
-                max-width: 160px;
             }
         }
 
@@ -406,12 +406,10 @@
                 font-size: 1rem;
             }
 
-            .video-card {
-                padding: 25px 15px;
-            }
-
-            .scrolling-phone-animation {
-                max-width: 140px;
+            .phone-container {
+                width: 156px;
+                height: 289px;
+                border-radius: 28px;
             }
         }
 
@@ -424,8 +422,10 @@
                 font-size: 1.75rem;
             }
 
-            .scrolling-phone-animation {
-                max-width: 120px;
+            .phone-container {
+                width: 136px;
+                height: 252px;
+                border-radius: 24px;
             }
         }
 
@@ -679,7 +679,8 @@
             <div class="container">
                 <h1 id="hero-heading">Making first cars happen</h1>
                 <p class="subtitle">
-                    Answer a few questions and we’ll match you with a car that fits your criteria from a trusted dealer.
+                    Answer a few questions and weâ€™ll match you with a car that fits your criteria from a trusted
+                    dealer.
                     Fast and easy.
                 </p>
 
@@ -702,7 +703,7 @@
                         <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
                             <path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="#10B981" />
                         </svg>
-                        <span>4.6★+ dealers only</span>
+                        <span>4.6â˜…+ dealers only</span>
                     </li>
                 </ul>
             </div>
@@ -715,7 +716,7 @@
                 <div class="why-carbi-grid">
                     <!-- Left: Scrolling Animation -->
                     <div class="animation-column">
-                        <div class="video-card">
+                        <div class="phone-container">
                             <video class="scrolling-phone-animation" autoplay loop muted playsinline
                                 aria-label="Animation showing endless scrolling through car listings">
                                 <source src="videos/car-icon-animation.mp4" type="video/mp4">
