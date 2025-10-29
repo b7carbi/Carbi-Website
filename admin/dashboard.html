@@ -43,6 +43,7 @@
                             <th>Location</th>
                             <th>Budget</th>
                             <th>Contact</th>
+                            <th>Source</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -114,6 +115,11 @@
                             ${request.email ? `<div>${request.email}</div>` : ''}
                             ${request.phone ? `<div>${request.phone}</div>` : ''}
                             <div class="contact-prefs">${request.contact_preferences.join(', ')}</div>
+                        </td>
+                        <td>
+                            <span class="source-badge ${request.source === 'production' ? 'source-prod' : 'source-staging'}">
+                                ${request.source || 'production'}
+                            </span>
                         </td>
                         <td>
                             <span class="status-badge ${getStatusClass(request.status)}">

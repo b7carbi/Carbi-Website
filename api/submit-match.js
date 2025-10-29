@@ -142,6 +142,12 @@ export default async function handler(req, res) {
       });
     }
 
+    // Detect environment from request headers
+    const host = req.headers.host || '';
+    const source = host.includes('vercel.app') || host.includes('localhost')
+      ? 'staging'
+      : 'production';
+
     // Prepare data for database insertion
     const matchRequest = {
       // Personal details
@@ -187,7 +193,8 @@ export default async function handler(req, res) {
       additional_notes: formData.additional_notes || null,
 
       // Metadata
-      status: 'new'
+      status: 'new',
+      source: source
     };
 
     // Insert into Supabase
