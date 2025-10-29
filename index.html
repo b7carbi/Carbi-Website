@@ -381,64 +381,6 @@
         }
 
         /* Responsive - Mobile */
-        @media (max-width: 768px) {
-            .why-carbi {
-                padding: 60px 0;
-            }
-
-            .why-carbi-grid {
-                flex-direction: column;
-                gap: 30px;
-            }
-
-            .animation-column {
-                order: 1;
-            }
-
-            .content-column {
-                order: 2;
-                text-align: center;
-            }
-
-            .phone-container {
-                width: 40px;
-                height: 74px;
-                border-radius: 20px;
-                border: 2px solid #334155;
-                margin: 0 auto;
-            }
-
-            .why-carbi-point {
-                justify-content: center;
-                text-align: left;
-                max-width: 400px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .why-carbi h2 {
-                font-size: var(--text-2xl);
-            }
-
-            .content-column .lead {
-                font-size: 1.125rem;
-                text-align: center;
-            }
-
-            .content-column .solution-intro {
-                font-size: 1.25rem;
-            }
-
-            .content-column p {
-                font-size: 1rem;
-            }
-
-            .phone-container {
-                width: 156px;
-                height: 289px;
-                border-radius: 28px;
-            }
-        }
 
         @media (max-width: 480px) {
             .content-column h2 {
@@ -627,8 +569,11 @@
             outline-offset: 2px;
         }
 
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
+
+            /* Footer */
             footer .container>div {
                 flex-direction: column !important;
                 align-items: center !important;
@@ -636,6 +581,7 @@
                 gap: 15px !important;
             }
 
+            /* Hero Section */
             .hero h1 {
                 font-size: var(--text-3xl);
             }
@@ -655,20 +601,71 @@
                 align-items: center;
             }
 
+            .beta-badge {
+                font-size: 0.75em;
+                padding: 5px 10px;
+            }
+
+            /* Why Carbi Section */
+            .why-carbi {
+                padding: 60px 0;
+            }
+
+            .why-carbi h2 {
+                font-size: var(--text-2xl);
+            }
+
+            .why-carbi-grid {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .animation-column {
+                order: 1;
+            }
+
+            .content-column {
+                order: 2;
+                text-align: center;
+            }
+
+            .content-column .lead {
+                font-size: 1.125rem;
+            }
+
+            .content-column .solution-intro {
+                font-size: 1.25rem;
+            }
+
+            .content-column p {
+                font-size: 1rem;
+            }
+
+            .phone-container {
+                width: 100px;
+                height: 185px;
+                border-radius: 20px;
+                border: 2px solid #334155;
+                margin: 0 auto;
+            }
+
+            .why-carbi-point {
+                justify-content: center;
+                text-align: left;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* How It Works & FAQ */
             .how-it-works h2,
             .faq-section h2 {
                 font-size: var(--text-xl);
-                ;
             }
 
             .steps {
                 grid-template-columns: 1fr;
                 gap: 30px;
-            }
-
-            .beta-badge {
-                font-size: 0.75em;
-                padding: 5px 10px;
             }
         }
     </style>
