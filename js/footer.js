@@ -21,8 +21,8 @@ function renderFooter() {
                 </div>
                 <!-- Copyright -->
                 <div>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin: 0;">
-                        © 2025 carbi. Making first cars happen. | <a href="/privacy.html"
+                   <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin: 0;">
+                        Â© 2025 carbi. Making first cars happen. <span class="footer-separator">|</span> <a href="/privacy.html"
                             style="color: rgba(255,255,255,0.7); text-decoration: none;">Privacy policy</a>
                     </p>
                 </div>
