@@ -1310,6 +1310,8 @@
                     <button type="button" class="primary-button" id="next1" disabled>Next</button>
                 </div>
 
+
+
                 <!-- Step 2: Dealbreakers -->
                 <div class="step" id="step2">
                     <h2 class="step-heading">What are your dealbreakers?</h2>
@@ -1318,6 +1320,28 @@
                     </div>
                     <div class="error-message" id="error2" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next2" disabled>Next</button>
+                </div>
+
+                <!-- Step 2a: Transmission Type -->
+                <div class="step" id="step2a">
+                    <h2 class="step-heading">Manual or automatic?</h2>
+                    <p class="step-subtitle">Choose the transmission type you'd prefer.</p>
+                    <div class="button-grid" id="transmissionGrid" role="group" aria-label="Select transmission type">
+                        <button type="button" class="option-button" data-value="manual" role="button"
+                            aria-pressed="false">
+                            Manual
+                        </button>
+                        <button type="button" class="option-button" data-value="automatic" role="button"
+                            aria-pressed="false">
+                            Automatic
+                        </button>
+                        <button type="button" class="option-button" data-value="dont_mind" role="button"
+                            aria-pressed="false">
+                            Don't mind
+                        </button>
+                    </div>
+                    <div class="error-message" id="error2a" role="alert" aria-live="polite"></div>
+                    <button type="button" class="primary-button" id="next2a" disabled>Next</button>
                 </div>
 
                 <!-- Step 2B: Main Driver -->
@@ -1334,7 +1358,7 @@
                         <div class="modal-content" onclick="event.stopPropagation()">
                             <div class="modal-header">
                                 <h3>Who will be the main driver?</h3>
-                                <p>These are the pros and cons</p>
+                                <p>These are the pros and cons.</p>
                                 <button class="modal-close" onclick="closeInsuranceHelpModal()"
                                     aria-label="Close">&times;</button>
                             </div>
@@ -1505,14 +1529,7 @@
                     </div>
                     <button type="button" class="primary-button" id="next7">Next</button>
                 </div>
-                <!-- Conditional transmission step-->
-                <div class="step" id="step7a">
-                    <h2 class="step-heading">Manual or automatic?</h2>
-                    <p class="step-subtitle">What's your preference?</p>
-                    <div class="button-grid" id="transmissionGrid"></div>
-                    <div class="error-message" id="error7a"></div>
-                    <button type="button" class="primary-button" id="next7a" disabled>Next</button>
-                </div>
+
                 <!-- Conditional engine size step-->
                 <div class="step" id="step7b">
                     <h2 class="step-heading">What engine size?</h2>
@@ -1743,7 +1760,7 @@
 
         // Feature options
         const features = {
-            'Basics': ['Safety', 'Reliability', 'Manual / Automatic', 'Location', 'Make and model', 'Size', 'Number of doors', 'Colour', 'Low Emission Zone friendly'],
+            'Basics': ['Safety', 'Reliability', 'Location', 'Make and model', 'Size', 'Number of doors', 'Colour', 'Low Emission Zone friendly'],
             'Budget': ['Cost', 'Insurance cost', 'Fuel efficiency', 'Engine size', 'Low mileage', 'Full service history'],
             'Features': ['Bluetooth', 'Heated seats', 'Leather seats', 'Ambient lighting', 'Performance']
         };
@@ -1802,13 +1819,13 @@
         // Step configuration - defines initialization requirements for each step
         const STEP_CONFIG = {
             2: { init: 'initializeStep2' },
+            '2a': { init: 'initializeStep2a' },
             '2b': { init: 'initializeStep2b' },
             3: { init: 'initializeStep3' },
             4: { init: 'initializeStep4' },
             5: { init: 'initializeStep5' },
             6: { init: 'initializeStep6' },
             7: { init: 'initializeStep7' },
-            '7a': { init: 'initializeStep7a' },
             '7b': { init: 'initializeStep7b' },
             '7c': { init: 'initializeStep7c' },
             8: { init: 'initializeStep8' },
@@ -1817,19 +1834,19 @@
         };
 
         // Step order - single source of truth for form flow
-        const STEP_ORDER = [1, 2, '2b', 3, 4, 5, 6, 7, '7a', '7b', '7c', 8, 9, 10];
+        const STEP_ORDER = [1, 2, '2a', '2b', 3, 4, 5, 6, 7, '7b', '7c', 8, 9, 10];
 
         // Analytics step names mapping
         const STEP_NAMES = {
             1: 'important_features',
             2: 'dealbreakers',
+            '2a': 'transmission',
             '2b': 'main_driver',
             3: 'budget',
             4: 'brand_preference',
             5: 'favourite_brand',
             6: 'colour',
             7: 'mileage',
-            '7a': 'transmission',
             '7b': 'engine_size',
             '7c': 'number_of_doors',
             8: 'location',
@@ -1842,6 +1859,7 @@
             loadFromLocalStorage();
 
             initializeStep1();
+            initializeStep2a();
             initializeStep2b();
             initializeStep3();
             initializeStep4();
@@ -1935,7 +1953,7 @@
             // Start timing this step
             stepStartTimes[stepNumber] = Date.now();
         }
-        // Step 1: Important Features
+
         // Step 1: Important Features
         function initializeStep1() {
             const container = document.getElementById('featuresContainer');
@@ -2047,7 +2065,35 @@
             const nextBtn = document.getElementById('next2');
             nextBtn.disabled = formData.dealbreakers.length === 0;
         }
+        // Step 2a: Transmission Type
+        function initializeStep2a() {
+            const grid = document.getElementById('transmissionGrid');
+            grid.innerHTML = '';
+            const options = [
+                { value: 'manual', label: 'Manual' },
+                { value: 'automatic', label: 'Automatic' },
+                { value: 'dont_mind', label: "Don't mind" }
+            ];
 
+            options.forEach(option => {
+                const button = createOptionButton(option.label);
+                button.setAttribute('data-value', option.value);
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Deselect all others
+                    grid.querySelectorAll('.option-button').forEach(btn => {
+                        btn.classList.remove('selected');
+                        btn.setAttribute('aria-pressed', 'false');
+                    });
+                    button.classList.add('selected');
+                    button.setAttribute('aria-pressed', 'true');
+                    formData.transmission_type = option.value;
+                    saveToLocalStorage();
+                    document.getElementById('next2a').disabled = false;
+                });
+                grid.appendChild(button);
+            });
+        }
         function initializeStep2b() {
             const step = document.getElementById('step2b');
             const grid = document.getElementById('mainDriverGrid');
@@ -2382,28 +2428,6 @@
             });
         }
 
-        // Step 7a: Transmission Type
-        function initializeStep7a() {
-            const grid = document.getElementById('transmissionGrid');
-            grid.innerHTML = '';
-            const options = ['Manual', 'Automatic'];
-
-            options.forEach(option => {
-                const button = createOptionButton(option);
-                button.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    // Deselect all others
-                    grid.querySelectorAll('.option-button').forEach(btn => {
-                        btn.classList.remove('selected');
-                    });
-                    button.classList.add('selected');
-                    formData.transmission_type = option.toLowerCase();
-                    saveToLocalStorage();
-                    document.getElementById('next7a').disabled = false;
-                });
-                grid.appendChild(button);
-            });
-        }
 
         // Step 7b: Engine Size (styled like budget)
         function initializeStep7b() {
@@ -2950,13 +2974,13 @@
         function shouldShowStep(stepNum) {
             if (stepNum === 1) return true;
             if (stepNum === 2) return formData.important_features.length >= 2;
+            if (stepNum === '2a') return true; // Always show transmission
             if (stepNum === '2b') return true; // Always show main driver question
             if (stepNum === 3) return true;
             if (stepNum === 4) return true;
             if (stepNum === 5) return formData.selected_brands.length >= 2;
             if (stepNum === 6) return formData.important_features.includes('Colour');
             if (stepNum === 7) return formData.important_features.includes('Low mileage');
-            if (stepNum === '7a') return formData.important_features.includes('Manual / Automatic');
             if (stepNum === '7b') return formData.important_features.includes('Engine size');
             if (stepNum === '7c') return formData.important_features.includes('Number of doors');
             if (stepNum >= 8) return true;
@@ -3090,6 +3114,16 @@
                 });
                 validateStep2();
             }
+            // Step 2a: Restore transmission type
+            if (formData.transmission_type) {
+                initializeStep2a();
+                const button = document.querySelector(`#transmissionGrid .option-button[data-value="${formData.transmission_type}"]`);
+                if (button) {
+                    button.classList.add('selected');
+                    button.setAttribute('aria-pressed', 'true');
+                    document.getElementById('next2a').disabled = false;
+                }
+            }
 
             //Step 2b: Restore main driver values
             if (formData.main_driver_type) {
@@ -3167,15 +3201,6 @@
                 display.textContent = `${formatNumber(formData.max_mileage)} miles`;
             }
 
-            // Step 7a: Restore transmission type
-            if (formData.transmission_type) {
-                initializeStep7a();
-                const button = document.querySelector(`#transmissionGrid .option-button[data-value="${formData.transmission_type}"]`);
-                if (button) {
-                    button.classList.add('selected');
-                    document.getElementById('next7a').disabled = false;
-                }
-            }
             // Step 7b: Restore engine size
             if (formData.engine_size_min || formData.engine_size_max) {
                 initializeStep7b();
