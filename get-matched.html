@@ -2767,10 +2767,11 @@
         function handleNextButton(currentStepNumber) {
             // Special case: Step 1 needs to check if Step 2 should be shown
             if (currentStepNumber === 1) {
+                // Check if dealbreakers should be shown
                 if (formData.important_features.length >= 2) {
-                    goToStep(2); // Will auto-initialize via goToStep
+                    goToStep(2); // Go to dealbreakers
                 } else {
-                    goToStep('2b');
+                    goToStep('2a'); // Skip dealbreakers, go to transmission
                 }
                 return;
             }
