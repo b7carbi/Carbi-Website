@@ -1753,8 +1753,8 @@
             phone: '',
             contact_preferences: [],
             transmission_type: null,
-            engine_size_min: 1.0,
-            engine_size_max: 1.6,
+            engine_size_min: null,
+            engine_size_max: null,
             number_of_doors: []
         };
 
@@ -2435,6 +2435,16 @@
             const maxSlider = document.getElementById('engineMaxSlider');
             const display = document.getElementById('engineDisplay');
             const rangeHighlight = document.getElementById('engineRangeHighlight');
+
+            // Set defaults only if first time seeing this step
+            if (formData.engine_size_min === null) {
+                formData.engine_size_min = 1.0;
+                formData.engine_size_max = 1.6;
+            }
+
+            // Sync sliders with formData (for localStorage restore)
+            minSlider.value = formData.engine_size_min;
+            maxSlider.value = formData.engine_size_max;
 
             minSlider.addEventListener('input', updateEngineDisplay);
             maxSlider.addEventListener('input', updateEngineDisplay);
