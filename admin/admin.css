@@ -163,6 +163,12 @@ body {
     color: #065f46;
 }
 
+.status-test {
+    background: #fef3c7;
+    color: #92400e;
+    border: 2px dashed #f59e0b;
+}
+
 /* Forms */
 .form-group {
     margin-bottom: 1.5rem;

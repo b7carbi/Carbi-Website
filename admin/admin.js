@@ -98,7 +98,8 @@ function getStatusClass(status) {
     const statusClasses = {
         'new': 'status-new',
         'in_progress': 'status-progress',
-        'completed': 'status-completed'
+        'completed': 'status-completed',
+        'test_data': 'status-test'
     };
     return statusClasses[status] || 'status-new';
 }
@@ -108,7 +109,8 @@ function getStatusText(status) {
     const statusText = {
         'new': 'New',
         'in_progress': 'In Progress',
-        'completed': 'Completed'
+        'completed': 'Completed',
+        'test_data': 'Test Data'
     };
     return statusText[status] || status;
 }
