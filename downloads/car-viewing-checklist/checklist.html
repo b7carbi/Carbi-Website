@@ -120,6 +120,18 @@
             margin-right: 10px;
             margin-top: 2px;
             transform: scale(1.2);
+            flex-shrink: 0;
+        }
+
+        .checklist label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .checklist label strong {
+            display: inline;
         }
 
         .red-flag {
@@ -396,13 +408,43 @@
             /* Bigger checkboxes for easier tapping */
             .checklist input[type="checkbox"] {
                 transform: scale(1.5);
-                margin-right: 15px;
-                margin-top: 4px;
+                flex-shrink: 0;
+                margin: 0;
+                margin-top: 2px;
             }
 
             .checklist li {
-                margin: 12px 0;
+                margin: 0;
+                padding: 0;
+                line-height: 1.4;
+                border-bottom: 1px solid #F1F5F9;
+            }
+
+            .checklist li:last-child {
+                border-bottom: none;
+            }
+
+            .checklist label {
+                padding: 14px 0;
+                display: flex;
+                align-items: flex-start;
+                width: 100%;
+                cursor: pointer;
+                -webkit-tap-highlight-color: rgba(14, 165, 233, 0.1);
                 line-height: 1.5;
+            }
+
+            .checklist label strong {
+                font-weight: 600;
+                color: #0F172A;
+            }
+
+            /* Better text wrapping on mobile */
+            .checklist li {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 12px;
+                align-items: start;
             }
 
             /* Better form inputs on mobile */
@@ -1166,7 +1208,37 @@
         }
 
         // Load saved data on page load
-        window.addEventListener('DOMContentLoaded', loadFromLocalStorage);
+        window.addEventListener('DOMContentLoaded', () => {
+            // Transform checklist items to have tappable labels
+            document.querySelectorAll('.checklist li').forEach(li => {
+                const checkbox = li.querySelector('input[type="checkbox"]');
+                if (checkbox && !li.querySelector('label')) {
+                    // Get all content after the checkbox
+                    const content = [];
+                    let node = checkbox.nextSibling;
+                    while (node) {
+                        content.push(node);
+                        node = node.nextSibling;
+                    }
+
+                    // Create label and move content into it
+                    const label = document.createElement('label');
+                    content.forEach(node => {
+                        li.removeChild(node);
+                        label.appendChild(node);
+                    });
+
+                    // Add unique ID to checkbox and link label
+                    const id = 'check-' + Math.random().toString(36).substr(2, 9);
+                    checkbox.id = id;
+                    label.htmlFor = id;
+
+                    li.appendChild(label);
+                }
+            });
+
+            loadFromLocalStorage();
+        });
     </script>
 </body>
 
