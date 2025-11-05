@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First Car Viewing Checklist - Carbi</title>
+    <title>First car viewing checklist - carbi</title>
     <style>
         @media print {
             body {
@@ -370,6 +370,41 @@
             }
         }
 
+        /* Decision options styling */
+        .decision-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .decision-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .decision-option:hover {
+            border-color: #0EA5E9;
+            background: #F0F9FF;
+        }
+
+        .decision-option input[type="radio"] {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .decision-option span {
+            font-weight: 500;
+            color: #0F172A;
+        }
+
         textarea {
             font-family: inherit;
             resize: vertical;
@@ -429,31 +464,24 @@
 
             .checklist label {
                 padding: 14px 0;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
+                display: block;
                 width: 100%;
                 cursor: pointer;
                 -webkit-tap-highlight-color: rgba(14, 165, 233, 0.1);
                 line-height: 1.5;
-                gap: 4px;
             }
 
-            .checklist-title {
+            /* On mobile, make strong tags display as blocks to stack vertically */
+            .checklist label strong {
+                display: block;
                 font-weight: 600;
                 color: #0F172A;
-                font-size: 1em;
-                line-height: 1.4;
+                margin-bottom: 4px;
             }
 
-            .checklist-title strong {
-                font-weight: 600;
-            }
-
-            .checklist-desc {
-                font-size: 0.9em;
-                color: #64748B;
-                line-height: 1.4;
+            /* Style the text after the dash on mobile */
+            .checklist label {
+                font-size: 0.95em;
             }
 
             /* Better text wrapping on mobile */
@@ -501,25 +529,20 @@
                 padding: 8px;
             }
 
-            /* Better radio buttons on mobile */
-            .form-row input[type="radio"] {
-                transform: scale(1.3);
-                margin: 0 12px 0 0 !important;
+            /* Decision options - mobile styling */
+            .decision-options {
+                flex-direction: column;
+                gap: 10px;
             }
 
-            .form-row label:has(input[type="radio"]) {
-                display: flex;
-                align-items: center;
-                padding: 12px;
-                margin: 0 !important;
-                border: 1px solid #E2E8F0;
-                border-radius: 8px;
-                margin-bottom: 8px !important;
+            .decision-option {
+                width: 100%;
+                padding: 16px;
+                font-size: 1.05em;
             }
 
-            /* Stack decision radio buttons vertically */
-            .form-row:has(input[type="radio"]) {
-                gap: 5px;
+            .decision-option input[type="radio"] {
+                transform: scale(1.4);
             }
 
             /* Better CTA section */
@@ -628,8 +651,8 @@
                     font-weight="600" fill="#0F172A" text-anchor="start">carbi</text>
             </svg>
         </a>
-        <h1>First Car Viewing Checklist</h1>
-        <p class="subtitle">🍋 Lemon Avoidance 🍋</p>
+        <h1>First car viewing checklist</h1>
+        <p class="subtitle">🍋 Lemon avoidance 🍋</p>
         <p
             style="margin-top: 10px; font-size: 0.9em; color: #64748B; max-width: 600px; margin-left: auto; margin-right: auto;">
             Bring this checklist with you when you're viewing a car. Check off the items as you go. You can save after
@@ -644,20 +667,20 @@
     </div>
 
     <div class="section">
-        <h2><span class="icon">📋</span>Before You Go</h2>
+        <h2><span class="icon">📋</span>Before you go</h2>
         <p><strong>Print this checklist or save it to your phone.</strong></p>
 
-        <h3>What to Bring:</h3>
+        <h3>What to bring:</h3>
         <ul class="checklist">
             <li><input type="checkbox"> This checklist</li>
             <li><input type="checkbox"> Driving license</li>
-            <li><input type="checkbox"> Phone with torch/flashlight</li>
+            <li><input type="checkbox"> Phone with torch</li>
             <li><input type="checkbox"> Another sensible adult (if possible)</li>
             <li><input type="checkbox"> Pen for notes</li>
             <li><input type="checkbox"> Debit or Credit Card for deposit (if buying)</li>
         </ul>
 
-        <h3>Research Done:</h3>
+        <h3>Research done:</h3>
         <ul class="checklist">
             <li><input type="checkbox"> Checked insurance group and got quote</li>
             <li><input type="checkbox"> Researched typical problems for this model</li>
@@ -667,18 +690,18 @@
     </div>
 
     <div class="section">
-        <h2><span class="icon">✅</span>Paperwork Check</h2>
+        <h2><span class="icon">✅</span>Paperwork check</h2>
 
-        <h3>Essential Documents (Don't buy without these!):</h3>
+        <h3>Essential documents (Don't buy without these!):</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>V5C (Log Book)</strong> - check when the car was last bought or sold
+            <li><input type="checkbox"> <strong>V5C (log book)</strong>&nbsp;check when the car was last bought or sold
             </li>
-            <li><input type="checkbox"> <strong>MOT Certificate</strong> - and check the MOT history online</li>
-            <li><input type="checkbox"> <strong>Service History</strong> - stamped book and/or receipts</li>
+            <li><input type="checkbox"> <strong>MOT certificate</strong>&nbsp;and check the MOT history online</li>
+            <li><input type="checkbox"> <strong>Service history</strong>&nbsp;stamped book and/or receipts</li>
         </ul>
 
         <div class="red-flag">
-            <h3>Warning Signs (Walk away if):</h3>
+            <h3>Warning signs (Walk away if):</h3>
             <ul>
                 <li>No V5C ("it's in the post")</li>
                 <li>No service history on a car over 3 years old</li>
@@ -689,39 +712,41 @@
     </div>
 
     <div class="section">
-        <h2><span class="icon">🔍</span>Exterior Inspection</h2>
+        <h2><span class="icon">🔍</span>Exterior inspection</h2>
 
-        <h3>Body & Paint:</h3>
+        <h3>Body & paint:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Rust spots</strong> - check wheel arches, door frames, bumpers</li>
-            <li><input type="checkbox"> <strong>Dents & scratches</strong> - note location and severity</li>
-            <li><input type="checkbox"> <strong>Paint match</strong> - mismatched colors or overspary suggests accident
+            <li><input type="checkbox"> <strong>Rust spots</strong>&nbsp;check wheel arches, door frames, bumpers</li>
+            <li><input type="checkbox"> <strong>Dents & scratches</strong> &nbsp;note location and severity</li>
+            <li><input type="checkbox"> <strong>Paint match</strong> &nbsp;mismatched colors or overspary suggests
+                accident
                 damage</li>
-            <li><input type="checkbox"> <strong>Panel alignment</strong> - gaps should be even</li>
-            <li><input type="checkbox"> <strong>Stone chips</strong> - normal on front bumper/bonnet</li>
+            <li><input type="checkbox"> <strong>Panel alignment</strong>&nbsp;gaps should be even</li>
+            <li><input type="checkbox"> <strong>Stone chips</strong> &nbsp;normal on front bumper/bonnet</li>
         </ul>
 
         <h3>Tyres:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Tread depth</strong> - check wear indicators have some depth</li>
-            <li><input type="checkbox"> <strong>Even wear</strong> - uneven wear suggests alignment issues</li>
-            <li><input type="checkbox"> <strong>Correct pressure</strong> - should feel firm when pressed</li>
-            <li><input type="checkbox"> <strong>Same brand</strong> - mixed and/or unknown brand tyres suggest poor
+            <li><input type="checkbox"> <strong>Tread depth</strong>&nbsp;check wear indicators have some depth</li>
+            <li><input type="checkbox"> <strong>Even wear</strong> &nbsp;uneven wear suggests alignment issues</li>
+            <li><input type="checkbox"> <strong>Correct pressure</strong> &nbsp;should feel firm when pressed</li>
+            <li><input type="checkbox"> <strong>Same brand</strong> &nbsp;mixed and/or unknown brand tyres suggest poor
                 maintenance</li>
-            <li><input type="checkbox"> <strong>Spare tyre</strong> - check condition and pressure</li>
+            <li><input type="checkbox"> <strong>Spare tyre</strong> &nbsp;check condition and pressure</li>
         </ul>
 
-        <h3>Lights & Glass:</h3>
+        <h3>Lights & glass:</h3>
         <ul class="checklist">
             <li><input type="checkbox"> <strong>All lights work</strong> - headlights, brake lights, indicators, hazards
             </li>
-            <li><input type="checkbox"> <strong>Windscreen chips</strong> - small ones OK, cracks fail MOT</li>
-            <li><input type="checkbox"> <strong>Mirror condition</strong> - cracked mirrors are dangerous</li>
-            <li><input type="checkbox"> <strong>Number plates</strong> - should be secure and normal looking font</li>
+            <li><input type="checkbox"> <strong>Windscreen chips</strong> &nbsp;small ones OK, cracks fail MOT</li>
+            <li><input type="checkbox"> <strong>Mirror condition</strong> &nbsp;cracked mirrors are dangerous</li>
+            <li><input type="checkbox"> <strong>Number plates</strong> &nbsp;should be secure and normal looking font
+            </li>
         </ul>
 
         <div class="red-flag">
-            <h3>Red Flags:</h3>
+            <h3>Red flags:</h3>
             <ul>
                 <li>Significant rust (expensive to repair)</li>
                 <li>More than 2 tyres need replacing (£200-400 cost)</li>
@@ -733,34 +758,34 @@
     <div class="page-break"></div>
 
     <div class="section">
-        <h2><span class="icon">🪑</span>Interior Check</h2>
+        <h2><span class="icon">🪑</span>Interior check</h2>
 
-        <h3>Seats & Comfort:</h3>
+        <h3>Seats & comfort:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Driver's seat</strong> - not too worn, adjusts properly</li>
-            <li><input type="checkbox"> <strong>All seatbelts</strong> - clip in securely, no fraying</li>
-            <li><input type="checkbox"> <strong>Steering wheel</strong> - not excessively worn</li>
-            <li><input type="checkbox"> <strong>Pedals</strong> - not worn through to metal</li>
+            <li><input type="checkbox"> <strong>Driver's seat</strong>&nbsp;not too worn, adjusts properly</li>
+            <li><input type="checkbox"> <strong>All seatbelts</strong> &nbsp;clip in securely, no fraying</li>
+            <li><input type="checkbox"> <strong>Steering wheel</strong> &nbsp;not excessively worn</li>
+            <li><input type="checkbox"> <strong>Pedals</strong> &nbsp;not worn through to metal</li>
         </ul>
 
         <h3>Electronics:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Radio/infotainment</strong> - works and stays on</li>
-            <li><input type="checkbox"> <strong>Air conditioning</strong> - blows cold air</li>
-            <li><input type="checkbox"> <strong>All switches</strong> - lights, wipers, windows, etc.</li>
-            <li><input type="checkbox"> <strong>Warning lights</strong> - none illuminated when running</li>
-            <li><input type="checkbox"> <strong>USB/charging ports</strong> - work properly</li>
+            <li><input type="checkbox"> <strong>Radio/infotainment</strong> &nbsp;works and stays on</li>
+            <li><input type="checkbox"> <strong>Air conditioning</strong> &nbsp;blows cold air</li>
+            <li><input type="checkbox"> <strong>All switches</strong> &nbsp;lights, wipers, windows, etc.</li>
+            <li><input type="checkbox"> <strong>Warning lights</strong> &nbsp;none illuminated when running</li>
+            <li><input type="checkbox"> <strong>USB/charging ports</strong> &nbsp;work properly</li>
         </ul>
 
         <h3>Practicality:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Boot space</strong> - adequate for your needs</li>
-            <li><input type="checkbox"> <strong>Rear seats</strong> - fold down if needed</li>
-            <li><input type="checkbox"> <strong>Storage compartments</strong> - glove box, door pockets work</li>
+            <li><input type="checkbox"> <strong>Boot space</strong> &nbsp;adequate for your needs</li>
+            <li><input type="checkbox"> <strong>Rear seats</strong> &nbsp;fold down if needed</li>
+            <li><input type="checkbox"> <strong>Storage compartments</strong> &nbsp;glove box, door pockets work</li>
         </ul>
 
         <div class="red-flag">
-            <h3>Red Flags:</h3>
+            <h3>Red flags:</h3>
             <ul>
                 <li>Excessive wear on pedals (high mileage or hard use)</li>
                 <li>Dashboard warning lights on</li>
@@ -770,27 +795,27 @@
     </div>
 
     <div class="section">
-        <h2><span class="icon">🔧</span>Engine & Mechanical</h2>
+        <h2><span class="icon">🔧</span>Engine & mechanical</h2>
 
-        <h3>Under the Bonnet:</h3>
+        <h3>Under the bonnet:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Oil level</strong> - should be between min/max on dipstick</li>
-            <li><input type="checkbox"> <strong>Oil color</strong> - should be amber/black, not milky</li>
-            <li><input type="checkbox"> <strong>Coolant level</strong> - visible in expansion tank</li>
-            <li><input type="checkbox"> <strong>Belts</strong> - no fraying or cracks</li>
-            <li><input type="checkbox"> <strong>Unusual noises</strong> - engine should run smoothly</li>
+            <li><input type="checkbox"> <strong>Oil level</strong> &nbsp;should be between min/max on dipstick</li>
+            <li><input type="checkbox"> <strong>Oil color</strong> &nbsp;should be amber/black, not milky</li>
+            <li><input type="checkbox"> <strong>Coolant level</strong> &nbsp;visible in expansion tank</li>
+            <li><input type="checkbox"> <strong>Belts</strong> &nbsp;no fraying or cracks</li>
+            <li><input type="checkbox"> <strong>Unusual noises</strong> &nbsp;engine should run smoothly</li>
         </ul>
 
-        <h3>Fluids & Leaks:</h3>
+        <h3>Fluids & leaks:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Check ground</strong> - no oil/coolant puddles where parked</li>
-            <li><input type="checkbox"> <strong>Exhaust smoke</strong> - should be nearly invisible when warm</li>
-            <li><input type="checkbox"> <strong>Brake fluid</strong> - visible in reservoir, not black/thick</li>
-            <li><input type="checkbox"> <strong>Power steering</strong> - easy to turn when stationary</li>
+            <li><input type="checkbox"> <strong>Check ground</strong> &nbsp;no oil/coolant puddles where parked</li>
+            <li><input type="checkbox"> <strong>Exhaust smoke</strong> &nbsp;should be nearly invisible when warm</li>
+            <li><input type="checkbox"> <strong>Brake fluid</strong> &nbsp;visible in reservoir, not black/thick</li>
+            <li><input type="checkbox"> <strong>Power steering</strong> &nbsp;easy to turn when stationary</li>
         </ul>
 
         <div class="red-flag">
-            <h3>Red Flags:</h3>
+            <h3>Red flags:</h3>
             <ul>
                 <li>Milky oil or black gunk (head gasket problems - walk away)</li>
                 <li>Oil/coolant leaks under car</li>
@@ -803,34 +828,35 @@
     <div class="section">
         <h2><span class="icon">🛣️</span>Test Drive</h2>
 
-        <h3>Pre-Drive Checks:</h3>
+        <h3>Pre-drive checks:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Fuel range</strong> - enough for test drive</li>
-            <li><input type="checkbox"> <strong>Handbrake</strong> - holds car on slight slope</li>
-            <li><input type="checkbox"> <strong>Mirrors</strong> - adjusted properly</li>
+            <li><input type="checkbox"> <strong>Fuel range</strong> &nbsp;enough for test drive</li>
+            <li><input type="checkbox"> <strong>Handbrake</strong> &nbsp;holds car on slight slope</li>
+            <li><input type="checkbox"> <strong>Mirrors</strong> &nbsp;adjusted properly</li>
         </ul>
 
-        <h3>During the Drive:</h3>
+        <h3>During the drive:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Clutch</strong> - engages smoothly, not slipping</li>
-            <li><input type="checkbox"> <strong>Gears</strong> - select cleanly, no grinding</li>
-            <li><input type="checkbox"> <strong>Brakes</strong> - car stops straight, no grinding noise</li>
-            <li><input type="checkbox"> <strong>Steering</strong> - car drives straight, doesn't pull to one side</li>
-            <li><input type="checkbox"> <strong>Engine</strong> - accelerates smoothly, no hesitation</li>
-            <li><input type="checkbox"> <strong>Temperature</strong> - doesn't overheat during drive</li>
+            <li><input type="checkbox"> <strong>Clutch</strong> &nbsp;engages smoothly, not slipping</li>
+            <li><input type="checkbox"> <strong>Gears</strong> &nbsp;select cleanly, no grinding</li>
+            <li><input type="checkbox"> <strong>Brakes</strong> &nbsp;car stops straight, no grinding noise</li>
+            <li><input type="checkbox"> <strong>Steering</strong> &nbsp;car drives straight, doesn't pull to one side
+            </li>
+            <li><input type="checkbox"> <strong>Engine</strong> &nbsp;accelerates smoothly, no hesitation</li>
+            <li><input type="checkbox"> <strong>Temperature</strong> &nbsp;doesn't overheat during drive</li>
         </ul>
 
-        <h3>Different Driving Conditions:</h3>
+        <h3>Different driving conditions:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Cold start</strong> - engine starts easily from cold</li>
-            <li><input type="checkbox"> <strong>City driving</strong> - smooth at low speeds</li>
-            <li><input type="checkbox"> <strong>Motorway speed</strong> - stable at 60-70mph</li>
-            <li><input type="checkbox"> <strong>Hill starts</strong> - clutch doesn't slip</li>
-            <li><input type="checkbox"> <strong>Parking</strong> - easy to maneuver</li>
+            <li><input type="checkbox"> <strong>Cold start</strong> &nbsp;engine starts easily from cold</li>
+            <li><input type="checkbox"> <strong>City driving</strong> &nbsp;smooth at low speeds</li>
+            <li><input type="checkbox"> <strong>Motorway speed</strong> &nbsp;stable at 60-70mph</li>
+            <li><input type="checkbox"> <strong>Hill starts</strong> &nbsp;clutch doesn't slip</li>
+            <li><input type="checkbox"> <strong>Parking</strong> &nbsp;easy to maneuver</li>
         </ul>
 
         <div class="red-flag">
-            <h3>Red Flags:</h3>
+            <h3>Red flags:</h3>
             <ul>
                 <li>Clutch slips or is very high/low</li>
                 <li>Car pulls to one side (alignment/brake issues)</li>
@@ -843,35 +869,36 @@
     <div class="page-break"></div>
 
     <div class="section">
-        <h2><span class="icon">💰</span>Negotiation & Buying</h2>
+        <h2><span class="icon">💰</span>Negotiation & buying</h2>
 
-        <h3>Price Research:</h3>
+        <h3>Price research:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Market value</strong> - checked AutoTrader/Parkers guide price</li>
-            <li><input type="checkbox"> <strong>Similar cars</strong> - compared with others for sale locally</li>
-            <li><input type="checkbox"> <strong>Condition adjustment</strong> - factor in any issues found</li>
-            <li><input type="checkbox"> <strong>Negotiation room</strong> - some sellers expect haggling (check
+            <li><input type="checkbox"> <strong>Market value</strong> &nbsp;checked AutoTrader/Parkers guide price</li>
+            <li><input type="checkbox"> <strong>Similar cars</strong> &nbsp;compared with others for sale locally</li>
+            <li><input type="checkbox"> <strong>Condition adjustment</strong> &nbsp;factor in any issues found</li>
+            <li><input type="checkbox"> <strong>Negotiation room</strong> &nbsp;some sellers expect haggling (check
                 comparable cars first)</li>
         </ul>
 
-        <h3>Final Checks:</h3>
+        <h3>Final checks:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Outstanding finance</strong> - use HPI check or ask directly</li>
-            <li><input type="checkbox"> <strong>Write everything down</strong> - faults, agreements, contact details
+            <li><input type="checkbox"> <strong>Outstanding finance</strong> &nbsp;use HPI check or ask directly</li>
+            <li><input type="checkbox"> <strong>Write everything down</strong> &nbsp;faults, agreements, contact
+                details
             </li>
-            <li><input type="checkbox"> <strong>Get receipt</strong> - with seller details and what's included</li>
-            <li><input type="checkbox"> <strong>Arrange insurance</strong> - before you drive it home</li>
+            <li><input type="checkbox"> <strong>Get receipt</strong> &nbsp;with seller details and what's included</li>
+            <li><input type="checkbox"> <strong>Arrange insurance</strong> &nbsp;before you drive it home</li>
         </ul>
 
         <h3>Payment:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Card or bank transfer</strong> - avoid unusual payment methods</li>
-            <li><input type="checkbox"> <strong>Receipt given</strong> - with full seller details</li>
-            <li><input type="checkbox"> <strong>Keys & documents</strong> - get all keys, manuals, documents</li>
+            <li><input type="checkbox"> <strong>Card or bank transfer</strong> &nbsp;avoid unusual payment methods</li>
+            <li><input type="checkbox"> <strong>Receipt given</strong> &nbsp;with full seller details</li>
+            <li><input type="checkbox"> <strong>Keys & documents</strong> &nbsp;get all keys, manuals, documents</li>
         </ul>
 
         <div class="red-flag">
-            <h3>Red Flags:</h3>
+            <h3>Red flags:</h3>
             <ul>
                 <li>Price seems way too good to be true (usually is)</li>
                 <li>Seller pressuring quick decision</li>
@@ -882,7 +909,7 @@
     </div>
 
     <div class="notes-section">
-        <h3>📝 Your Notes Section</h3>
+        <h3>📝 Your notes section</h3>
 
         <div class="form-row">
             <label>Make/Model:</label>
@@ -899,16 +926,16 @@
         <div class="form-row">
             <label>Price:</label>
             <input type="text" style="flex: 0.4;">
-            <label>Insurance Group:</label>
+            <label>Insurance group:</label>
             <input type="text" style="flex: 0.6;">
         </div>
 
-        <h3 style="margin-top: 20px;">Issues Found:</h3>
+        <h3 style="margin-top: 20px;">Issues found:</h3>
         <textarea
             style="width: 100%; height: 100px; border: 1px solid #CBD5E1; border-radius: 5px; padding: 10px; resize: vertical; font-size: 16px;"></textarea>
 
         <div class="form-row" style="margin-top: 15px;">
-            <label>Overall Rating:</label>
+            <label>Overall rating:</label>
             <div class="rating">
                 <span data-rating="1">☆</span>
                 <span data-rating="2">☆</span>
@@ -918,18 +945,25 @@
             </div>
         </div>
 
-        <div class="form-row">
-            <label>Decision:</label>
-            <label><input type="radio" name="decision" value="buy" style="margin: 0 5px 0 20px;"> Buy</label>
-            <label><input type="radio" name="decision" value="keep_looking" style="margin: 0 5px 0 20px;"> Keep
-                Looking</label>
-            <label><input type="radio" name="decision" value="think_about_it" style="margin: 0 5px 0 20px;"> Think About
-                It</label>
+        <h3 style="margin-top: 20px;">Decision:</h3>
+        <div class="decision-options">
+            <label class="decision-option">
+                <input type="radio" name="decision" value="buy">
+                <span>Buy</span>
+            </label>
+            <label class="decision-option">
+                <input type="radio" name="decision" value="keep_looking">
+                <span>Keep looking</span>
+            </label>
+            <label class="decision-option">
+                <input type="radio" name="decision" value="think_about_it">
+                <span>Think about it</span>
+            </label>
         </div>
     </div>
 
     <div class="cta-section">
-        <h2>🛠️ Complete Car Buying Toolkit</h2>
+        <h2>🛠️ Complete car buying toolkit</h2>
         <p>You've got the viewing checklist. Now grab the other essential tools:</p>
 
         <div style="display: grid; gap: 15px; margin: 25px 0; text-align: left;">
@@ -938,7 +972,7 @@
                 style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: white; border: 2px solid #E2E8F0; border-radius: 10px; text-decoration: none; transition: all 0.3s ease;">
                 <img src="/images/calculator-icon.png" alt="" style="width: 48px; height: 48px; flex-shrink: 0;">
                 <div style="flex: 1;">
-                    <div style="color: #0F172A; font-weight: 600; font-size: 1.1em;">First Car Budget Calculator</div>
+                    <div style="color: #0F172A; font-weight: 600; font-size: 1.1em;">First car budget calculator</div>
                     <div style="color: #64748B; font-size: 0.95em;">Work out your realistic first year costs</div>
                 </div>
             </a>
@@ -949,7 +983,7 @@
                 <img src="/images/Insurance-comparison-icon.png" alt=""
                     style="width: 48px; height: 48px; flex-shrink: 0;">
                 <div style="flex: 1;">
-                    <div style="color: #0F172A; font-weight: 600; font-size: 1.1em;">Insurance Quote Comparison</div>
+                    <div style="color: #0F172A; font-weight: 600; font-size: 1.1em;">Insurance quote comparison</div>
                     <div style="color: #64748B; font-size: 0.95em;">Compare quotes side-by-side properly</div>
                 </div>
             </a>
@@ -959,7 +993,7 @@
                 style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: #f0f9ff; border: 2px solid #0EA5E9; border-radius: 10px;">
                 <img src="/images/viewing-checklist-icon.png" alt="" style="width: 48px; height: 48px; flex-shrink: 0;">
                 <div style="flex: 1;">
-                    <div style="color: #0F172A; font-weight: 600; font-size: 1.1em;">Car Viewing Checklist</div>
+                    <div style="color: #0F172A; font-weight: 600; font-size: 1.1em;">Car viewing checklist</div>
                     <div style="color: #64748B; font-size: 0.95em;">You're here! Print or save this page</div>
                 </div>
             </div>
@@ -967,7 +1001,7 @@
 
     </div>
     <div class="section safety-reminder">
-        <h2><span class="icon">⚠️</span>Final Safety Reminders</h2>
+        <h2><span class="icon">⚠️</span>Final safety reminders</h2>
         <ul class="checklist">
             <li><input type="checkbox"> <strong>Never go alone</strong> - bring another sensible adult if possible</li>
             <li><input type="checkbox"> <strong>Trust your instincts</strong> - if something feels wrong, walk away</li>
@@ -982,18 +1016,18 @@
 
     <!-- Bottom save controls -->
     <div class="section" style="background: #F8FAFC; border: 2px solid #1E40AF;">
-        <h2 style="text-align: center; color: #1E40AF; margin-bottom: 20px;">✅ All Done?</h2>
+        <h2 style="text-align: center; color: #1E40AF; margin-bottom: 20px;">✅ All done?</h2>
         <div class="save-controls" style="border-top: none; padding-top: 0; margin-top: 0;">
             <div>
                 <button onclick="generatePDF()" class="clear-btn no-print">💾 Save as PDF</button>
-                <button onclick="clearDataOnly()" class="clear-btn secondary no-print">Clear Form</button>
+                <button onclick="clearDataOnly()" class="clear-btn secondary no-print">Clear form</button>
             </div>
             <div id="lastSavedBottom"></div>
         </div>
     </div>
 
     <div class="footer">
-        <p>© 2025 Carbi <strong><a href="https://www.carbi.co" target="_blank"
+        <p>© 2025 carbi <strong><a href="https://www.carbi.co" target="_blank"
                     style="color: #1E40AF; text-decoration: none;">carbi.co</a></strong></p>
     </div>
 
@@ -1243,25 +1277,16 @@
 
         // Load saved data on page load
         window.addEventListener('DOMContentLoaded', () => {
-            // Transform checklist items to have tappable labels with stacked title/description
+            // Transform checklist items to have tappable labels
             document.querySelectorAll('.checklist li').forEach(li => {
                 const checkbox = li.querySelector('input[type="checkbox"]');
                 if (checkbox && !li.querySelector('label')) {
                     // Get all content after the checkbox
-                    let textContent = '';
+                    const content = [];
                     let node = checkbox.nextSibling;
                     while (node) {
-                        if (node.nodeType === Node.TEXT_NODE) {
-                            textContent += node.textContent;
-                        } else if (node.nodeType === Node.ELEMENT_NODE) {
-                            textContent += node.outerHTML;
-                        }
+                        content.push(node);
                         node = node.nextSibling;
-                    }
-
-                    // Clear content after checkbox
-                    while (checkbox.nextSibling) {
-                        li.removeChild(checkbox.nextSibling);
                     }
 
                     // Create label
@@ -1270,30 +1295,11 @@
                     checkbox.id = id;
                     label.htmlFor = id;
 
-                    // Parse content to separate title and description
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = textContent;
-
-                    const strong = tempDiv.querySelector('strong');
-                    if (strong) {
-                        // Has a title
-                        const titleDiv = document.createElement('div');
-                        titleDiv.className = 'checklist-title';
-                        titleDiv.appendChild(strong.cloneNode(true));
-                        label.appendChild(titleDiv);
-
-                        // Get description (everything after strong tag)
-                        const description = textContent.replace(strong.outerHTML, '').trim();
-                        if (description) {
-                            const descDiv = document.createElement('div');
-                            descDiv.className = 'checklist-desc';
-                            descDiv.textContent = description.replace(/^[\s\-]+/, ''); // Remove leading dash and spaces
-                            label.appendChild(descDiv);
-                        }
-                    } else {
-                        // No title, just text
-                        label.innerHTML = textContent.trim();
-                    }
+                    // Move all content into label
+                    content.forEach(node => {
+                        li.removeChild(node);
+                        label.appendChild(node);
+                    });
 
                     li.appendChild(label);
                 }
