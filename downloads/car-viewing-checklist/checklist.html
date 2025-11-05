@@ -427,22 +427,36 @@
             .checklist label {
                 padding: 14px 0;
                 display: flex;
+                flex-direction: column;
                 align-items: flex-start;
                 width: 100%;
                 cursor: pointer;
                 -webkit-tap-highlight-color: rgba(14, 165, 233, 0.1);
                 line-height: 1.5;
+                gap: 4px;
             }
 
-            .checklist label strong {
+            .checklist-title {
                 font-weight: 600;
                 color: #0F172A;
+                font-size: 1em;
+                line-height: 1.4;
+            }
+
+            .checklist-title strong {
+                font-weight: 600;
+            }
+
+            .checklist-desc {
+                font-size: 0.9em;
+                color: #64748B;
+                line-height: 1.4;
             }
 
             /* Better text wrapping on mobile */
             .checklist li {
                 display: grid;
-                grid-template-columns: auto 1fr;
+                grid-template-columns: 32px 1fr;
                 gap: 12px;
                 align-items: start;
             }
@@ -1209,29 +1223,57 @@
 
         // Load saved data on page load
         window.addEventListener('DOMContentLoaded', () => {
-            // Transform checklist items to have tappable labels
+            // Transform checklist items to have tappable labels with stacked title/description
             document.querySelectorAll('.checklist li').forEach(li => {
                 const checkbox = li.querySelector('input[type="checkbox"]');
                 if (checkbox && !li.querySelector('label')) {
                     // Get all content after the checkbox
-                    const content = [];
+                    let textContent = '';
                     let node = checkbox.nextSibling;
                     while (node) {
-                        content.push(node);
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            textContent += node.textContent;
+                        } else if (node.nodeType === Node.ELEMENT_NODE) {
+                            textContent += node.outerHTML;
+                        }
                         node = node.nextSibling;
                     }
 
-                    // Create label and move content into it
-                    const label = document.createElement('label');
-                    content.forEach(node => {
-                        li.removeChild(node);
-                        label.appendChild(node);
-                    });
+                    // Clear content after checkbox
+                    while (checkbox.nextSibling) {
+                        li.removeChild(checkbox.nextSibling);
+                    }
 
-                    // Add unique ID to checkbox and link label
+                    // Create label
+                    const label = document.createElement('label');
                     const id = 'check-' + Math.random().toString(36).substr(2, 9);
                     checkbox.id = id;
                     label.htmlFor = id;
+
+                    // Parse content to separate title and description
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = textContent;
+
+                    const strong = tempDiv.querySelector('strong');
+                    if (strong) {
+                        // Has a title
+                        const titleDiv = document.createElement('div');
+                        titleDiv.className = 'checklist-title';
+                        titleDiv.appendChild(strong.cloneNode(true));
+                        label.appendChild(titleDiv);
+
+                        // Get description (everything after strong tag)
+                        const description = textContent.replace(strong.outerHTML, '').trim();
+                        if (description) {
+                            const descDiv = document.createElement('div');
+                            descDiv.className = 'checklist-desc';
+                            descDiv.textContent = description.replace(/^[\s\-]+/, ''); // Remove leading dash and spaces
+                            label.appendChild(descDiv);
+                        }
+                    } else {
+                        // No title, just text
+                        label.innerHTML = textContent.trim();
+                    }
 
                     li.appendChild(label);
                 }
