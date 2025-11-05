@@ -766,7 +766,7 @@
     <div class="page-break"></div>
 
     <div class="section">
-        <h2><span class="icon">🪑</span>Interior check</h2>
+        <h2><span class="icon">🎲</span>Interior check</h2>
 
         <h3>Seats & comfort:</h3>
         <ul class="checklist">
@@ -1011,11 +1011,10 @@
     <div class="section safety-reminder">
         <h2><span class="icon">⚠️</span>Final safety reminders</h2>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Never go alone</strong> &nbsp;another sensible adult if possible</li>
-            <li><input type="checkbox"> <strong>Trust your instincts</strong> &nbsp;if something feels wrong, walk away
-            </li>
-            <li><input type="checkbox"> <strong>Don't rush</strong> &nbsp;there are always other cars</li>
-            <li><input type="checkbox"> <strong>Budget for repairs</strong> &nbsp;even good cars need maintenance</li>
+            <li><input type="checkbox"> <strong>Never go alone</strong> - bring another sensible adult if possible</li>
+            <li><input type="checkbox"> <strong>Trust your instincts</strong> - if something feels wrong, walk away</li>
+            <li><input type="checkbox"> <strong>Don't rush</strong> - there are always other cars</li>
+            <li><input type="checkbox"> <strong>Budget for repairs</strong> - even good cars need maintenance</li>
         </ul>
 
         <p style="text-align: center; margin-top: 20px; font-weight: 600; color: #92400E;">
@@ -1325,9 +1324,10 @@
 
                         nodesToWrap.forEach(node => {
                             label.removeChild(node);
-                            // If it's a text node, trim leading dash and spaces
+                            // If it's a text node, trim leading dash, spaces, and &nbsp; 
                             if (node.nodeType === Node.TEXT_NODE && nodesToWrap.indexOf(node) === 0) {
-                                node.textContent = node.textContent.replace(/^\s*[-–—]\s*/, '');
+                                // \u00A0 is &nbsp; - remove it along with dashes and regular spaces
+                                node.textContent = node.textContent.replace(/^[\s\u00A0]*[-–—][\s\u00A0]*/, '');
                             }
                             descSpan.appendChild(node);
                         });
