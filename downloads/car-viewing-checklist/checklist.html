@@ -479,7 +479,14 @@
                 margin-bottom: 4px;
             }
 
-            /* Style the text after the dash on mobile */
+            /* Style the description text on mobile */
+            .checklist-desc-text {
+                display: block;
+                font-size: 0.9em;
+                color: #64748B;
+                line-height: 1.4;
+            }
+
             .checklist label {
                 font-size: 0.95em;
             }
@@ -737,7 +744,8 @@
 
         <h3>Lights & glass:</h3>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>All lights work</strong> - headlights, brake lights, indicators, hazards
+            <li><input type="checkbox"> <strong>All lights work</strong> &nbsp;headlights, brake lights, indicators,
+                hazards
             </li>
             <li><input type="checkbox"> <strong>Windscreen chips</strong> &nbsp;small ones OK, cracks fail MOT</li>
             <li><input type="checkbox"> <strong>Mirror condition</strong> &nbsp;cracked mirrors are dangerous</li>
@@ -1003,10 +1011,11 @@
     <div class="section safety-reminder">
         <h2><span class="icon">⚠️</span>Final safety reminders</h2>
         <ul class="checklist">
-            <li><input type="checkbox"> <strong>Never go alone</strong> - bring another sensible adult if possible</li>
-            <li><input type="checkbox"> <strong>Trust your instincts</strong> - if something feels wrong, walk away</li>
-            <li><input type="checkbox"> <strong>Don't rush</strong> - there are always other cars</li>
-            <li><input type="checkbox"> <strong>Budget for repairs</strong> - even good cars need maintenance</li>
+            <li><input type="checkbox"> <strong>Never go alone</strong> &nbsp;another sensible adult if possible</li>
+            <li><input type="checkbox"> <strong>Trust your instincts</strong> &nbsp;if something feels wrong, walk away
+            </li>
+            <li><input type="checkbox"> <strong>Don't rush</strong> &nbsp;there are always other cars</li>
+            <li><input type="checkbox"> <strong>Budget for repairs</strong> &nbsp;even good cars need maintenance</li>
         </ul>
 
         <p style="text-align: center; margin-top: 20px; font-weight: 600; color: #92400E;">
@@ -1300,6 +1309,31 @@
                         li.removeChild(node);
                         label.appendChild(node);
                     });
+
+                    // If there's a strong tag, wrap the following text in a span for mobile styling
+                    const strong = label.querySelector('strong');
+                    if (strong) {
+                        const descSpan = document.createElement('span');
+                        descSpan.className = 'checklist-desc-text';
+
+                        let nextNode = strong.nextSibling;
+                        const nodesToWrap = [];
+                        while (nextNode) {
+                            nodesToWrap.push(nextNode);
+                            nextNode = nextNode.nextSibling;
+                        }
+
+                        nodesToWrap.forEach(node => {
+                            label.removeChild(node);
+                            // If it's a text node, trim leading dash and spaces
+                            if (node.nodeType === Node.TEXT_NODE && nodesToWrap.indexOf(node) === 0) {
+                                node.textContent = node.textContent.replace(/^\s*[-–—]\s*/, '');
+                            }
+                            descSpan.appendChild(node);
+                        });
+
+                        label.appendChild(descSpan);
+                    }
 
                     li.appendChild(label);
                 }
