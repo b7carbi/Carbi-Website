@@ -1322,12 +1322,16 @@
                             nextNode = nextNode.nextSibling;
                         }
 
-                        nodesToWrap.forEach(node => {
+                        nodesToWrap.forEach((node, index) => {
                             label.removeChild(node);
-                            // If it's a text node, trim leading dash, spaces, and &nbsp; 
-                            if (node.nodeType === Node.TEXT_NODE && nodesToWrap.indexOf(node) === 0) {
-                                // \u00A0 is &nbsp; - remove it along with dashes and regular spaces
-                                node.textContent = node.textContent.replace(/^[\s\u00A0]*[-–—][\s\u00A0]*/, '');
+
+                            // If it's a text node and mobile, trim leading dash, spaces, and &nbsp; 
+                            const isMobile = window.matchMedia('(max-width: 600px)').matches;
+                            if (node.nodeType === Node.TEXT_NODE && nodesToWrap.indexOf(node) === 0 && isMobile) {
+                                // Remove leading spaces, &nbsp; and optional dash
+                                // Made dash optional with ? since it might not be present
+                                node.textContent = node.textContent.replace(/^[\s\u00A0]+[-–—]?[\s\u00A0]*/, '');
+
                             }
                             descSpan.appendChild(node);
                         });
