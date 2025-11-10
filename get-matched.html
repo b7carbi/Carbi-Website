@@ -2418,6 +2418,11 @@
             const mileageSlider = document.getElementById('mileageSlider');
             const mileageDisplay = document.getElementById('mileageDisplay');
 
+            // Set initial value from slider's default if not already set
+            if (formData.max_mileage === null) {
+                formData.max_mileage = parseInt(mileageSlider.value);
+            }
+
             mileageSlider.addEventListener('input', () => {
                 const value = parseInt(mileageSlider.value);
                 const displayText = `${formatNumber(value)} miles`;
