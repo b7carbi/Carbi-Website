@@ -2418,11 +2418,6 @@
             const mileageSlider = document.getElementById('mileageSlider');
             const mileageDisplay = document.getElementById('mileageDisplay');
 
-            // Set initial value from slider's default if not already set
-            if (formData.max_mileage === null) {
-                formData.max_mileage = parseInt(mileageSlider.value);
-            }
-
             mileageSlider.addEventListener('input', () => {
                 const value = parseInt(mileageSlider.value);
                 const displayText = `${formatNumber(value)} miles`;
@@ -2808,6 +2803,8 @@
                 return;
             }
 
+
+
             // All other steps: use the standard flow
             const nextStep = getNextVisibleStep(currentStepNumber);
             if (nextStep) {
@@ -3086,6 +3083,13 @@
                 targetStepEl.classList.remove('completed');
                 targetStepEl.classList.add('active');
                 targetStepEl.style.display = 'block';
+            }
+
+            // Special handling for Step 7 - set default mileage when step first becomes visible
+            if (stepNumber === 7 && formData.max_mileage === null) {
+                const mileageSlider = document.getElementById('mileageSlider');
+                formData.max_mileage = parseInt(mileageSlider.value);
+                saveToLocalStorage();
             }
 
             currentStep = stepNumber;
