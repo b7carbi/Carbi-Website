@@ -96,10 +96,13 @@ function formatCurrency(amount) {
 // Get status badge class
 function getStatusClass(status) {
     const statusClasses = {
-        'new': 'status-new',
-        'in_progress': 'status-progress',
-        'completed': 'status-completed',
-        'test_data': 'status-test'
+        'new': 'status-new',                      // Blue - not started
+        'first_email_sent': 'status-searching',   // Yellow - actively searching
+        'car_found': 'status-searching',          // Yellow - found but not connected
+        'dealer_contacted': 'status-connecting',  // Purple - making connections
+        'customer_matched': 'status-completed',   // Green - successfully matched
+        'followed_up': 'status-completed',        // Green - completed & followed up
+        'test_data': 'status-test'                // Dashed yellow border
     };
     return statusClasses[status] || 'status-new';
 }
@@ -108,8 +111,11 @@ function getStatusClass(status) {
 function getStatusText(status) {
     const statusText = {
         'new': 'New',
-        'in_progress': 'In Progress',
-        'completed': 'Completed',
+        'first_email_sent': 'First Email Sent',
+        'car_found': 'Car Found',
+        'dealer_contacted': 'Dealer Contacted',
+        'customer_matched': 'Customer Matched',
+        'followed_up': 'Followed Up',
         'test_data': 'Test Data'
     };
     return statusText[status] || status;

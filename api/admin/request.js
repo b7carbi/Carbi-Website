@@ -83,7 +83,7 @@ export default async function handler(req, res) {
             const { status, admin_notes } = req.body;
 
             // Validate status
-            const validStatuses = ['new', 'in_progress', 'completed', 'test_data'];
+            const validStatuses = ['new', 'first_email_sent', 'car_found', 'dealer_contacted', 'customer_matched', 'followed_up', 'test_data'];
             if (status && !validStatuses.includes(status)) {
                 return res.status(400).json({
                     error: `Invalid status. Must be one of: ${validStatuses.join(', ')}`

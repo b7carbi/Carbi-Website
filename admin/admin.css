@@ -153,9 +153,14 @@ body {
     color: #1e40af;
 }
 
-.status-progress {
+.status-searching {
     background: #fef3c7;
     color: #92400e;
+}
+
+.status-connecting {
+    background: #e0e7ff;
+    color: #4338ca;
 }
 
 .status-completed {
