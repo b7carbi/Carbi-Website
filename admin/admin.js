@@ -186,3 +186,71 @@ function generateAutoTraderURL(request) {
 
     return `${baseURL}?${params.toString()}`;
 }
+
+// Generate CarGurus search URL
+function generateCarGurusURL(request) {
+    const baseURL = 'https://www.cargurus.co.uk/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action';
+    const params = new URLSearchParams();
+
+    // Fixed parameters
+    params.append('sourceContext', 'carGurusHomePageModel');
+    params.append('sortDir', 'ASC');
+    params.append('sortType', 'MILEAGE');
+    params.append('srpVariation', 'DEFAULT_SEARCH');
+    params.append('isDeliveryEnabled', 'true');
+    params.append('nonShippableBaseline', '0');
+
+    // Insurance group - always set to 1-10 for young drivers
+    params.append('insuranceGroupLevels', '1-10');
+
+    // Location (zip/postcode)
+    if (request.postcode) {
+        params.append('zip', request.postcode);
+    }
+
+    // Search radius (distance in miles)
+    if (request.search_radius) {
+        params.append('distance', request.search_radius);
+    }
+
+    // Budget
+    if (request.budget_min) {
+        params.append('minPrice', request.budget_min);
+    }
+    if (request.budget_max) {
+        params.append('maxPrice', request.budget_max);
+    }
+
+    // Transmission
+    if (request.transmission_type) {
+        // CarGurus uses uppercase (MANUAL/AUTOMATIC)
+        const transmission = request.transmission_type.toUpperCase();
+        params.append('transmissionTypes', transmission);
+    }
+
+    // Engine size (displacement in liters)
+    if (request.engine_size_min) {
+        params.append('minEngineDisplacement', request.engine_size_min);
+    }
+    if (request.engine_size_max) {
+        params.append('maxEngineDisplacement', request.engine_size_max);
+    }
+
+    // Number of doors
+    if (request.number_of_doors && request.number_of_doors.length > 0) {
+        // CarGurus takes a single value, use the first one or the most common (5)
+        const doors = request.number_of_doors.includes('5') ? '5' : request.number_of_doors[0];
+        params.append('doors', doors);
+    }
+
+    // Maximum mileage
+    if (request.max_mileage) {
+        params.append('maxMileage', request.max_mileage);
+    }
+
+    // Note: CarGurus doesn't have a direct "make" filter in the URL like AutoTrader
+    // Brand filtering would need to be done through their entitySelectingHelper parameter
+    // which is more complex, so we'll leave brands out for now
+
+    return `${baseURL}?${params.toString()}`;
+}
