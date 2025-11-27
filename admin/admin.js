@@ -120,3 +120,68 @@ function getStatusText(status) {
     };
     return statusText[status] || status;
 }
+
+// Generate AutoTrader search URL
+function generateAutoTraderURL(request) {
+    const baseURL = 'https://www.autotrader.co.uk/car-search';
+    const params = new URLSearchParams();
+
+    // Fixed parameters
+    params.append('channel', 'cars');
+    params.append('flrfc', '1');
+    params.append('sort', 'mileage');
+
+    // Insurance group - always set to 10U for young drivers
+    params.append('insuranceGroup', '10U');
+
+    // Location (postcode)
+    if (request.postcode) {
+        params.append('postcode', request.postcode);
+    }
+
+    // Search radius
+    if (request.search_radius) {
+        params.append('radius', request.search_radius);
+    }
+
+    // Budget
+    if (request.budget_min) {
+        params.append('price-from', request.budget_min);
+    }
+    if (request.budget_max) {
+        params.append('price-to', request.budget_max);
+    }
+
+    // Brands - if they selected specific brands
+    if (request.brand_preference === 'specific' && request.selected_brands && request.selected_brands.length > 0) {
+        request.selected_brands.forEach(brand => {
+            params.append('make', brand);
+        });
+    }
+
+    // Transmission
+    if (request.transmission_type) {
+        // Capitalize first letter for AutoTrader (Manual/Automatic)
+        const transmission = request.transmission_type.charAt(0).toUpperCase() + request.transmission_type.slice(1);
+        params.append('transmission', transmission);
+    }
+
+    // Engine size - use maximum if specified
+    if (request.engine_size_max) {
+        params.append('maximum-badge-engine-size', request.engine_size_max);
+    }
+
+    // Number of doors
+    if (request.number_of_doors && request.number_of_doors.length > 0) {
+        // AutoTrader takes a single value, use the first one or the most common (5)
+        const doors = request.number_of_doors.includes('5') ? '5' : request.number_of_doors[0];
+        params.append('quantity-of-doors', doors);
+    }
+
+    // Maximum mileage
+    if (request.max_mileage) {
+        params.append('maximum-mileage', request.max_mileage);
+    }
+
+    return `${baseURL}?${params.toString()}`;
+}

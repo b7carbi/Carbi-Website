@@ -69,6 +69,29 @@
                 </form>
             </div>
 
+            <!-- Quick Search Links -->
+            <div class="card">
+                <h3>Quick Search Links</h3>
+                <p style="color: #64748B; font-size: 0.875rem; margin-bottom: 1rem;">
+                    Pre-configured search URLs based on this customer's requirements
+                </p>
+                <div class="search-links">
+                    <a id="autotraderLink" href="#" target="_blank" class="search-link">
+                        <div class="search-link-icon">🚗</div>
+                        <div class="search-link-content">
+                            <div class="search-link-title">AutoTrader Search</div>
+                            <div class="search-link-subtitle">Opens with all filters applied</div>
+                        </div>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
             <!-- Contact Information -->
             <div class="card">
                 <h3>Contact Information</h3>
@@ -318,6 +341,10 @@
                 document.getElementById('additionalNotesCard').style.display = 'block';
                 document.getElementById('additionalNotes').textContent = request.additional_notes;
             }
+
+            // Generate AutoTrader URL
+            const autotraderURL = generateAutoTraderURL(request);
+            document.getElementById('autotraderLink').href = autotraderURL;
         }
 
         // Handle form submission
