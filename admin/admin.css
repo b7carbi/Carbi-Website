@@ -438,3 +438,102 @@ body {
         color: #92400e;
     }
 }
+
+/* Copy Button Styles */
+.copyable-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.copyable-field p {
+    flex: 1;
+    margin: 0;
+}
+
+.copy-btn {
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #64748B;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.copy-btn:hover {
+    background: #f8fafc;
+    border-color: #0EA5E9;
+    color: #0EA5E9;
+}
+
+.copy-btn:active {
+    transform: scale(0.95);
+}
+
+.copy-btn.copied {
+    background: #d1fae5;
+    border-color: #10b981;
+    color: #065f46;
+}
+
+.copy-btn svg {
+    display: block;
+}
+
+/* Toast Notification Styles */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: white;
+    color: #0F172A;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    font-size: 0.875rem;
+    font-weight: 600;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: all 0.3s ease;
+    max-width: 400px;
+    word-wrap: break-word;
+    border-left: 4px solid #10b981;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-success {
+    border-left-color: #10b981;
+}
+
+.toast-error {
+    border-left-color: #ef4444;
+    color: #991b1b;
+}
+
+@media (max-width: 768px) {
+    .toast {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        max-width: calc(100% - 2rem);
+    }
+
+    .copyable-field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .copy-btn {
+        align-self: flex-start;
+    }
+}
