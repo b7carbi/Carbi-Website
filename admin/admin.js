@@ -130,6 +130,7 @@ function generateAutoTraderURL(request) {
     params.append('channel', 'cars');
     params.append('flrfc', '1');
     params.append('sort', 'mileage');
+    params.append('seller-type', 'trade');
 
     // Insurance group - always set to 10U for young drivers
     params.append('insuranceGroup', '10U');
