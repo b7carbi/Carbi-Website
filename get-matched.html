@@ -2882,61 +2882,20 @@
         let stripe = null;
         let elements = null;
         let paymentIntentId = null;
+        let paymentInitialized = false;
 
         async function initializeStep11() {
-            // Initialize Stripe with your publishable key
-            stripe = Stripe('pk_test_51SacQwLi621zOxsghHBkNfRdc59NiZmIpIUv7uOLyHsecaMyDdL0mbrLU9aPSk0XdxERgqJMsgXEmnTd488oMLbo00yNZQiCnq'); // ⚠️ REPLACE WITH YOUR ACTUAL KEY
+            // Only initialize Stripe once
+            if (!stripe) {
+                stripe = Stripe('pk_test_YOUR_ACTUAL_KEY_HERE'); // Replace with your key
+            }
 
             const termsCheckbox = document.getElementById('paymentTerms');
             const submitButton = document.getElementById('submitPayment');
             const paymentError = document.getElementById('payment-error');
 
-            // Create Payment Intent when step loads
-            try {
-                const response = await fetch('/api/create-payment-intent', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: formData.email,
-                        firstName: formData.first_name,
-                        lastName: formData.last_name
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-
-                paymentIntentId = data.paymentIntentId;
-
-                // Create Payment Element with custom styling
-                elements = stripe.elements({
-                    clientSecret: data.clientSecret,
-                    appearance: {
-                        theme: 'stripe',
-                        variables: {
-                            colorPrimary: '#0EA5E9',
-                            colorBackground: '#ffffff',
-                            colorText: '#0F172A',
-                            colorDanger: '#DC2626',
-                            fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
-                            borderRadius: '10px'
-                        }
-                    }
-                });
-
-                const paymentElement = elements.create('payment');
-                paymentElement.mount('#payment-element');
-
-            } catch (error) {
-                console.error('Error initializing payment:', error);
-                paymentError.textContent = 'Failed to initialize payment. Please refresh the page.';
-                paymentError.style.display = 'block';
-            }
+            // Don't create Payment Intent yet - wait until step is actually shown
+            // This will be called by createPaymentIntent() when user navigates to Step 11
 
             // Terms checkbox handler
             if (termsCheckbox && submitButton) {
@@ -3001,6 +2960,106 @@
             }
         }
 
+        // Create Payment Intent when user actually reaches Step 11
+        async function createPaymentIntent() {
+            if (paymentInitialized) return; // Already initialized
+
+            const paymentError = document.getElementById('payment-error');
+
+            try {
+                const response = await fetch('/api/create-payment-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: formData.email || 'temp@example.com', // Fallback if no email
+                        firstName: formData.first_name,
+                        lastName: formData.last_name
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                paymentIntentId = data.paymentIntentId;
+
+                // Create Payment Element with custom styling
+                elements = stripe.elements({
+                    clientSecret: data.clientSecret,
+                    appearance: {
+                        theme: 'stripe',
+                        variables: {
+                            colorPrimary: '#0EA5E9',
+                            colorBackground: '#ffffff',
+                            colorText: '#0F172A',
+                            colorDanger: '#DC2626',
+                            fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
+                            borderRadius: '10px'
+                        }
+                    }
+                });
+
+                const paymentElement = elements.create('payment');
+                paymentElement.mount('#payment-element');
+
+                paymentInitialized = true;
+
+            } catch (error) {
+                console.error('Error creating payment intent:', error);
+                paymentError.textContent = 'Failed to initialize payment. Please refresh the page.';
+                paymentError.style.display = 'block';
+            }
+        }
+
+        // Submit form after successful payment
+        async function submitFormWithPayment(paymentIntentId) {
+            // Add payment info to formData
+            formData.payment_status = 'paid';
+            formData.payment_intent_id = paymentIntentId;
+            formData.payment_amount = 4900;
+            formData.payment_currency = 'gbp';
+            formData.paid_at = new Date().toISOString();
+
+            // Submit to your existing endpoint
+            try {
+                const response = await fetch('/api/submit-match', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    // Clear localStorage
+                    localStorage.removeItem('carbi_match_form');
+
+                    // Track conversion
+                    window.carbiTracking.safeGtag('event', 'purchase', {
+                        transaction_id: paymentIntentId,
+                        value: 49.00,
+                        currency: 'GBP',
+                        items: [{
+                            item_name: 'Car Matching Service',
+                            price: 49.00,
+                            quantity: 1
+                        }]
+                    });
+
+                    // Redirect to success page
+                    window.location.href = '/success.html';
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('Payment succeeded but there was an error saving your request. Please contact support with this payment ID: ' + paymentIntentId);
+            }
+        }
         // Submit form after successful payment
         async function submitFormWithPayment(paymentIntentId) {
             // Add payment info to formData
@@ -3368,6 +3427,11 @@
                 const mileageSlider = document.getElementById('mileageSlider');
                 formData.max_mileage = parseInt(mileageSlider.value);
                 saveToLocalStorage();
+            }
+
+            // Special handling for Step 11 - initialize Stripe payment when step becomes visible
+            if (stepNumber === 11) {
+                createPaymentIntent();
             }
 
             currentStep = stepNumber;
