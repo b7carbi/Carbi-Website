@@ -3117,6 +3117,13 @@
                 formData.last_name = document.getElementById('lastName').value.trim();
                 formData.email = document.getElementById('email').value.trim();
                 formData.phone = document.getElementById('phone').value.trim();
+
+                // Save contact preferences
+                formData.contact_preferences = [];
+                if (document.getElementById('prefEmail').checked) formData.contact_preferences.push('Email');
+                if (document.getElementById('prefText').checked) formData.contact_preferences.push('Text');
+                if (document.getElementById('prefPhone').checked) formData.contact_preferences.push('Phone Call');
+
                 saveToLocalStorage();
             }
 
