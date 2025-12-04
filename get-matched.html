@@ -93,16 +93,17 @@
             opacity: 0.8;
         }
 
-        .intro-badge {
-            background: #FED7AA;
-            color: #9A3412;
+        .intro-offer-badge {
+            background: #FF6B35;
+            color: white;
             padding: 6px 14px;
             border-radius: 20px;
-            font-size: 1em;
+            font-size: var(--text-sm);
             font-weight: 600;
-            border: 2px solid #F97316;
+            border: 2px solid #FF8C61;
             font-family: 'Rubik', sans-serif;
-            transform: rotate(-1deg);
+            transform: rotate(2deg);
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
         }
 
         /* Intro Screen */
@@ -435,6 +436,11 @@
 
             #mainDriverGroup .radio-description {
                 text-align: center;
+            }
+
+            .intro-offer-badge {
+                font-size: 0.75em;
+                padding: 5px 10px;
             }
         }
 
@@ -1286,8 +1292,8 @@
                     </a>
                 </div>
 
-                <div class="beta-badge">
-                    INTRO OFFER
+                <div class="intro-offer-badge" role="status" aria-live="polite">
+                    £49 intro offer
                 </div>
             </div>
         </div>
