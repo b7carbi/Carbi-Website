@@ -16,6 +16,33 @@
 
 
     <style>
+        :root {
+            /* Typography Scale */
+            --text-xs: 0.875rem;
+            --text-sm: 1rem;
+            --text-md: 1.125rem;
+            --text-lg: 1.25rem;
+            --text-xl: 1.5rem;
+            --text-2xl: 2rem;
+            --text-3xl: 2.5rem;
+            --text-4xl: 3rem;
+
+            /* Font Weights */
+            --font-normal: 400;
+            --font-semibold: 600;
+            --font-bold: 700;
+
+            /* Colors */
+            --color-primary: #0EA5E9;
+            --color-primary-dark: #1E40AF;
+            --color-text-primary: #0F172A;
+            --color-text-secondary: #475569;
+            --color-text-tertiary: #64748B;
+            --color-background: #ffffff;
+            --color-background-alt: #F8FAFC;
+            --color-border: #E2E8F0;
+        }
+
         @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap');
 
         * {
@@ -1719,7 +1746,7 @@
 
                         <!-- Submit Button -->
                         <button type="button" id="submitPayment" class="primary-button" disabled style="width: 100%;">
-                            <span id="paymentButtonText">Pay £49 & Find My Car</span>
+                            <span id="paymentButtonText">Pay £49 & find my car</span>
                             <span id="paymentButtonSpinner" style="display: none;">Processing...</span>
                         </button>
 
