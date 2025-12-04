@@ -50,7 +50,9 @@ export default async function handler(req, res) {
       'postcode',
       'first_name',
       'last_name',
-      'contact_preferences'
+      'contact_preferences',
+      'payment_status',
+      'payment_intent_id'
     ];
 
     const missingFields = requiredFields.filter(field => {
@@ -65,6 +67,14 @@ export default async function handler(req, res) {
       return res.status(400).json({
         success: false,
         error: `Missing required fields: ${missingFields.join(', ')}`
+      });
+    }
+
+    // Validate payment status
+    if (formData.payment_status !== 'paid') {
+      return res.status(400).json({
+        success: false,
+        error: 'Payment must be completed before submitting'
       });
     }
 
@@ -178,7 +188,7 @@ export default async function handler(req, res) {
       // Mileage
       max_mileage: formData.max_mileage || null,
 
-      // NEW FIELDS - Technical specifications
+      // Technical specifications
       transmission_type: formData.transmission_type || null,
       engine_size_min: formData.engine_size_min || null,
       engine_size_max: formData.engine_size_max || null,
@@ -191,6 +201,13 @@ export default async function handler(req, res) {
 
       // Additional info
       additional_notes: formData.additional_notes || null,
+
+      // Payment information
+      payment_status: formData.payment_status,
+      payment_intent_id: formData.payment_intent_id,
+      payment_amount: formData.payment_amount || 4900,
+      payment_currency: formData.payment_currency || 'gbp',
+      paid_at: formData.paid_at || new Date().toISOString(),
 
       // Metadata
       status: 'new',
@@ -216,6 +233,7 @@ export default async function handler(req, res) {
     console.log('Match request created:', {
       id: data.id,
       name: `${formData.first_name} ${formData.last_name}`,
+      payment_intent: formData.payment_intent_id,
       timestamp: new Date().toISOString()
     });
 

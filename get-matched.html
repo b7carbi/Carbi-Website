@@ -13,7 +13,8 @@
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
     <!-- Shared Tracking Script -->
     <script src="/js/tracking.js"></script>
-
+    <!-- Stripe payments-->
+    <script src="https://js.stripe.com/v3/"></script>
 
     <style>
         :root {
@@ -1722,15 +1723,13 @@
                             <span><strong>Full refund </strong>if we don't find you a suitable car.</span>
                         </div>
 
-                        <!-- Payment Form Placeholder -->
+
+                        <!-- Stripe Payment Element -->
                         <div id="payment-element" style="margin-bottom: 20px;">
-                            <!-- Stripe or other payment provider will insert their form here -->
-                            <div
-                                style="padding: 40px; background: #F8FAFC; border: 2px dashed #CBD5E1; border-radius: 8px; text-align: center; color: #64748B;">
-                                <p style="margin: 0;">💳 Payment form will be integrated here</p>
-                                <p style="margin: 10px 0 0 0; font-size: 0.9em;">(Stripe/GoCardless/etc)</p>
-                            </div>
+                            <!-- Stripe will inject the payment form here -->
                         </div>
+                        <div id="payment-error"
+                            style="color: #DC2626; margin-bottom: 15px; display: none; font-weight: 500;"></div>
 
                         <!-- Terms Checkbox -->
                         <div style="margin-bottom: 20px;">
@@ -2879,11 +2878,67 @@
             return true;
         }
 
-        // Step 11: Payment
-        function initializeStep11() {
+        // Step 11: Payment - Stripe integration
+        let stripe = null;
+        let elements = null;
+        let paymentIntentId = null;
+
+        async function initializeStep11() {
+            // Initialize Stripe with your publishable key
+            stripe = Stripe('pk_test_51SacQwLi621zOxsghHBkNfRdc59NiZmIpIUv7uOLyHsecaMyDdL0mbrLU9aPSk0XdxERgqJMsgXEmnTd488oMLbo00yNZQiCnq'); // ⚠️ REPLACE WITH YOUR ACTUAL KEY
+
             const termsCheckbox = document.getElementById('paymentTerms');
             const submitButton = document.getElementById('submitPayment');
+            const paymentError = document.getElementById('payment-error');
 
+            // Create Payment Intent when step loads
+            try {
+                const response = await fetch('/api/create-payment-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: formData.email,
+                        firstName: formData.first_name,
+                        lastName: formData.last_name
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                paymentIntentId = data.paymentIntentId;
+
+                // Create Payment Element with custom styling
+                elements = stripe.elements({
+                    clientSecret: data.clientSecret,
+                    appearance: {
+                        theme: 'stripe',
+                        variables: {
+                            colorPrimary: '#0EA5E9',
+                            colorBackground: '#ffffff',
+                            colorText: '#0F172A',
+                            colorDanger: '#DC2626',
+                            fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
+                            borderRadius: '10px'
+                        }
+                    }
+                });
+
+                const paymentElement = elements.create('payment');
+                paymentElement.mount('#payment-element');
+
+            } catch (error) {
+                console.error('Error initializing payment:', error);
+                paymentError.textContent = 'Failed to initialize payment. Please refresh the page.';
+                paymentError.style.display = 'block';
+            }
+
+            // Terms checkbox handler
             if (termsCheckbox && submitButton) {
                 termsCheckbox.addEventListener('change', function () {
                     submitButton.disabled = !this.checked;
@@ -2896,18 +2951,99 @@
                     }
                 });
 
-                // Submit button handler (will be enhanced with payment provider later)
-                submitButton.addEventListener('click', function () {
+                // Submit button handler
+                submitButton.addEventListener('click', async function () {
                     if (!termsCheckbox.checked) {
                         alert('Please agree to the terms and conditions');
                         return;
                     }
 
-                    // TODO: Integrate payment provider here
-                    // For now, just show a placeholder message
-                    alert('Payment integration coming next! Form data is ready to submit.');
-                    console.log('Form data ready for submission:', formData);
+                    // Disable button and show loading state
+                    submitButton.disabled = true;
+                    document.getElementById('paymentButtonText').style.display = 'none';
+                    document.getElementById('paymentButtonSpinner').style.display = 'inline';
+                    paymentError.style.display = 'none';
+
+                    try {
+                        // Confirm the payment
+                        const { error, paymentIntent } = await stripe.confirmPayment({
+                            elements,
+                            redirect: 'if_required',
+                            confirmParams: {
+                                return_url: window.location.origin + '/success.html',
+                            }
+                        });
+
+                        if (error) {
+                            // Payment failed
+                            paymentError.textContent = error.message;
+                            paymentError.style.display = 'block';
+
+                            // Re-enable button
+                            submitButton.disabled = false;
+                            document.getElementById('paymentButtonText').style.display = 'inline';
+                            document.getElementById('paymentButtonSpinner').style.display = 'none';
+                        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+                            // Payment succeeded! Now submit the form
+                            await submitFormWithPayment(paymentIntent.id);
+                        }
+                    } catch (err) {
+                        console.error('Payment error:', err);
+                        paymentError.textContent = 'An unexpected error occurred. Please try again.';
+                        paymentError.style.display = 'block';
+
+                        // Re-enable button
+                        submitButton.disabled = false;
+                        document.getElementById('paymentButtonText').style.display = 'inline';
+                        document.getElementById('paymentButtonSpinner').style.display = 'none';
+                    }
                 });
+            }
+        }
+
+        // Submit form after successful payment
+        async function submitFormWithPayment(paymentIntentId) {
+            // Add payment info to formData
+            formData.payment_status = 'paid';
+            formData.payment_intent_id = paymentIntentId;
+            formData.payment_amount = 4900;
+            formData.payment_currency = 'gbp';
+            formData.paid_at = new Date().toISOString();
+
+            // Submit to your existing endpoint
+            try {
+                const response = await fetch('/api/submit-match', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    // Clear localStorage
+                    localStorage.removeItem('carbi_match_form');
+
+                    // Track conversion
+                    window.carbiTracking.safeGtag('event', 'purchase', {
+                        transaction_id: paymentIntentId,
+                        value: 49.00,
+                        currency: 'GBP',
+                        items: [{
+                            item_name: 'Car Matching Service',
+                            price: 49.00,
+                            quantity: 1
+                        }]
+                    });
+
+                    // Redirect to success page
+                    window.location.href = '/success.html';
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('Payment succeeded but there was an error saving your request. Please contact support with this payment ID: ' + paymentIntentId);
             }
         }
 
