@@ -1718,8 +1718,7 @@
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="button" id="submitPayment" class="cta-button" disabled
-                            style="width: 100%; opacity: 0.5; cursor: not-allowed;">
+                        <button type="button" id="submitPayment" class="cta-button" disabled style="width: 100%;">
                             <span id="paymentButtonText">Pay £49 & Find My Car</span>
                             <span id="paymentButtonSpinner" style="display: none;">Processing...</span>
                         </button>
@@ -2861,8 +2860,8 @@
                 termsCheckbox.addEventListener('change', function () {
                     submitButton.disabled = !this.checked;
                     if (this.checked) {
-                        submitButton.style.opacity = '1';
-                        submitButton.style.cursor = 'pointer';
+                        submitButton.style.opacity = '';
+                        submitButton.style.cursor = '';
                     } else {
                         submitButton.style.opacity = '0.5';
                         submitButton.style.cursor = 'not-allowed';
