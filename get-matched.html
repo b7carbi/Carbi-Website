@@ -93,18 +93,16 @@
             opacity: 0.8;
         }
 
-        .beta-badge {
-            background: #FEF3C7;
-            color: #92400E;
+        .intro-badge {
+            background: #FED7AA;
+            color: #9A3412;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 1em;
-            /* Changed from 0.9em */
             font-weight: 600;
-            border: 2px dashed #F59E0B;
+            border: 2px solid #F97316;
             font-family: 'Rubik', sans-serif;
-            /* Changed from Caveat */
-            transform: rotate(2deg);
+            transform: rotate(-1deg);
         }
 
         /* Intro Screen */
@@ -1289,7 +1287,7 @@
                 </div>
 
                 <div class="beta-badge">
-                    BETA EARLY ACCESS :)
+                    INTRO OFFER
                 </div>
             </div>
         </div>
@@ -1654,7 +1652,7 @@
                     </div>
 
                     <div class="error-message" id="error10" role="alert" aria-live="polite"></div>
-                    <button type="submit" class="primary-button" id="submitBtn" disabled>Find my car</button>
+                    <button type="button" class="primary-button" id="next10" disabled>Next</button>
                 </div>
             </form>
 
@@ -1811,7 +1809,7 @@
 
 
         let currentStep = 1;
-        const totalSteps = 10;
+        const totalSteps = 11;
         let formStarted = false;
         let formStartTime = null;
         let stepStartTimes = {};
@@ -1834,7 +1832,7 @@
         };
 
         // Step order - single source of truth for form flow
-        const STEP_ORDER = [1, 2, '2a', '2b', 3, 4, 5, 6, 7, '7b', '7c', 8, 9, 10];
+        const STEP_ORDER = [1, 2, '2a', '2b', 3, 4, 5, 6, 7, '7b', '7c', 8, 9, 10, 11];
 
         // Analytics step names mapping
         const STEP_NAMES = {
@@ -1851,7 +1849,8 @@
             '7c': 'number_of_doors',
             8: 'location',
             9: 'notes',
-            10: 'contact_details'
+            10: 'contact_details',
+            11: 'payment'
         };
 
         // Initialize form
@@ -1893,7 +1892,7 @@
 
             // Track abandonment
             window.addEventListener('beforeunload', function () {
-                if (formStarted && currentStep < 10) {
+                if (formStarted && currentStep < 11) {
                     window.carbiTracking.safeGtag('event', 'form_abandon', {
                         'form_name': 'car_matching',
                         'abandoned_at_step': currentStep
