@@ -3050,8 +3050,12 @@
                         }]
                     });
 
-                    // Redirect to success page
-                    window.location.href = '/success.html';
+                    // Hide form and show success screen
+                    document.querySelector('.form-wrapper').classList.add('hidden');
+                    document.getElementById('successScreen').classList.remove('hidden');
+
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
                     throw new Error('Form submission failed');
                 }
