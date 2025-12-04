@@ -3111,6 +3111,15 @@
                  * Handles special cases, then uses getNextVisibleStep for everything else
                  */
         function handleNextButton(currentStepNumber) {
+            // Special case: Step 10 - save contact details before proceeding
+            if (currentStepNumber === 10) {
+                formData.first_name = document.getElementById('firstName').value.trim();
+                formData.last_name = document.getElementById('lastName').value.trim();
+                formData.email = document.getElementById('email').value.trim();
+                formData.phone = document.getElementById('phone').value.trim();
+                saveToLocalStorage();
+            }
+
             // Special case: Step 1 needs to check if Step 2 should be shown
             if (currentStepNumber === 1) {
                 // Check if dealbreakers should be shown
