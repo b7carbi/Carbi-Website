@@ -2929,7 +2929,7 @@
                             elements,
                             redirect: 'if_required',
                             confirmParams: {
-                                return_url: window.location.origin + '/success.html',
+                                return_url: window.location.href, // Stay on same page
                             }
                         });
 
@@ -3099,8 +3099,12 @@
                         }]
                     });
 
-                    // Redirect to success page
-                    window.location.href = '/success.html';
+                    // Hide form and show success screen
+                    document.querySelector('.form-wrapper').classList.add('hidden');
+                    document.getElementById('successScreen').classList.remove('hidden');
+
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
                     throw new Error('Form submission failed');
                 }
