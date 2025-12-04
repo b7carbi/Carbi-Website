@@ -1660,6 +1660,120 @@
                     <div class="error-message" id="error10" role="alert" aria-live="polite"></div>
                     <button type="button" class="primary-button" id="next10" disabled>Next</button>
                 </div>
+
+                <!-- Step 11: Payment -->
+                <div class="step" id="step11">
+                    <div class="step-heading">Secure your match</div>
+                    <div class="step-subtitle">
+                        <em>Want to review your choices? Just scroll up to edit any section above.</em>
+                    </div>
+
+                    <!-- What Happens Next Banner -->
+                    <div
+                        style="background: linear-gradient(135deg, #0EA5E9 0%, #1E40AF 100%); border-radius: 12px; padding: 30px; margin-bottom: 30px;">
+                        <div style="color: white;">
+                            <h3 style="font-size: 1.4em; margin-bottom: 15px; font-weight: 600; color: white;">What
+                                happens next?</h3>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li
+                                    style="padding-left: 30px; margin-bottom: 12px; position: relative; line-height: 1.5;">
+                                    <span
+                                        style="position: absolute; left: 0; font-weight: bold; font-size: 1.2em; color: #10B981;">✓</span>
+                                    We manually search 100+ trusted dealers for cars matching your criteria
+                                </li>
+                                <li
+                                    style="padding-left: 30px; margin-bottom: 12px; position: relative; line-height: 1.5;">
+                                    <span
+                                        style="position: absolute; left: 0; font-weight: bold; font-size: 1.2em; color: #10B981;">✓</span>
+                                    We filter for insurance groups 1-10 to keep costs low
+                                </li>
+                                <li
+                                    style="padding-left: 30px; margin-bottom: 12px; position: relative; line-height: 1.5;">
+                                    <span
+                                        style="position: absolute; left: 0; font-weight: bold; font-size: 1.2em; color: #10B981;">✓</span>
+                                    Average match time: 8 hours (usually much faster)
+                                </li>
+                                <li style="padding-left: 30px; margin-bottom: 0; position: relative; line-height: 1.5;">
+                                    <span
+                                        style="position: absolute; left: 0; font-weight: bold; font-size: 1.2em; color: #10B981;">✓</span>
+                                    We'll connect you directly with the dealer who has your perfect car
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Payment Section -->
+                    <div style="background: white; border: 2px solid #E2E8F0; border-radius: 12px; padding: 30px;">
+
+                        <!-- Price Header -->
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #E2E8F0; flex-wrap: wrap; gap: 15px;">
+                            <h3 style="font-size: 1.5em; color: #0F172A; margin: 0;">Payment Details</h3>
+                            <div style="text-align: right;">
+                                <div style="font-size: 2.5em; font-weight: 700; color: #0EA5E9; line-height: 1;">£49
+                                </div>
+                                <div style="font-size: 0.85em; color: #64748B; margin-top: 4px;">One-time fee</div>
+                            </div>
+                        </div>
+
+                        <!-- Money-Back Guarantee Badge -->
+                        <div
+                            style="display: flex; align-items: center; gap: 12px; background: #F0FDF4; border: 2px solid #10B981; border-radius: 10px; padding: 15px 20px; margin-bottom: 30px; color: #065F46;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                style="flex-shrink: 0; color: #10B981;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span><strong>100% Money-Back Guarantee</strong> - Full refund if we don't find a suitable
+                                car for you</span>
+                        </div>
+
+                        <!-- Payment Form Placeholder -->
+                        <div id="payment-element" style="margin-bottom: 20px;">
+                            <!-- Stripe or other payment provider will insert their form here -->
+                            <div
+                                style="padding: 40px; background: #F8FAFC; border: 2px dashed #CBD5E1; border-radius: 8px; text-align: center; color: #64748B;">
+                                <p style="margin: 0;">💳 Payment form will be integrated here</p>
+                                <p style="margin: 10px 0 0 0; font-size: 0.9em;">(Stripe/GoCardless/etc)</p>
+                            </div>
+                        </div>
+
+                        <!-- Terms Checkbox -->
+                        <div style="margin-bottom: 20px;">
+                            <label
+                                style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.95em; color: #475569; cursor: pointer;">
+                                <input type="checkbox" id="paymentTerms"
+                                    style="margin-top: 4px; width: 18px; height: 18px; cursor: pointer;">
+                                <span>I agree to the <a href="/terms" target="_blank"
+                                        style="color: #0EA5E9; text-decoration: underline;">terms & conditions</a> and
+                                    <a href="/refund-policy" target="_blank"
+                                        style="color: #0EA5E9; text-decoration: underline;">refund policy</a></span>
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="button" id="submitPayment" class="cta-button" disabled
+                            style="width: 100%; opacity: 0.5; cursor: not-allowed;">
+                            <span id="paymentButtonText">Pay £49 & Find My Car</span>
+                            <span id="paymentButtonSpinner" style="display: none;">Processing...</span>
+                        </button>
+
+                        <!-- Trust Badges -->
+                        <div
+                            style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #E2E8F0; flex-wrap: wrap;">
+                            <span style="color: #64748B; font-size: 0.9em;">🔒 256-bit SSL encrypted</span>
+                            <span style="color: #64748B; font-size: 0.9em;">Powered by Stripe</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="form-navigation" style="margin-top: 30px;">
+                        <button type="button" class="back-button" onclick="goToPreviousStep()">Back</button>
+                        <div></div> <!-- Empty div for spacing -->
+                    </div>
+                </div>
+
             </form>
 
             <!-- Success Screen -->
@@ -1834,7 +1948,8 @@
             '7c': { init: 'initializeStep7c' },
             8: { init: 'initializeStep8' },
             9: { init: 'initializeStep9' },
-            10: { init: 'initializeStep10Validation' }
+            10: { init: 'initializeStep10Validation' },
+            11: { init: 'initializeStep11' }
         };
 
         // Step order - single source of truth for form flow
@@ -1873,6 +1988,7 @@
             initializeStep8();
             initializeStep9();
             initializeStep10Validation();
+            initializeStep11();
             setupNextButtonHandlers();
             restoreFormState();
             // Show debug button if ?debug=true in URL
@@ -2774,6 +2890,24 @@
             submitBtn.disabled = false;
             return true;
         }
+        // Payment terms checkbox handler
+        function initializeStep11() {
+            const termsCheckbox = document.getElementById('paymentTerms');
+            const submitButton = document.getElementById('submitPayment');
+
+            if (termsCheckbox && submitButton) {
+                termsCheckbox.addEventListener('change', function () {
+                    submitButton.disabled = !this.checked;
+                    if (this.checked) {
+                        submitButton.style.opacity = '1';
+                        submitButton.style.cursor = 'pointer';
+                    } else {
+                        submitButton.style.opacity = '0.5';
+                        submitButton.style.cursor = 'not-allowed';
+                    }
+                });
+            }
+        }
 
         /**
                  * Generic handler for "Next" button clicks
@@ -2836,7 +2970,8 @@
                 { id: 'next7b', step: '7b' },
                 { id: 'next7c', step: '7c' },
                 { id: 'next8', step: 8 },
-                { id: 'next9', step: 9 }
+                { id: 'next9', step: 9 },
+                { id: 'next10', step: 10 }
             ];
 
             // Attach handlers to all next buttons
