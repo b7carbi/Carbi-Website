@@ -1675,7 +1675,7 @@
                         <!-- Price Header -->
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #E2E8F0; flex-wrap: wrap; gap: 15px;">
-                            <h3 style="font-size: 1.5em; color: #0F172A; margin: 0;">Payment Details</h3>
+                            <h3 style="font-size: 1.5em; color: #0F172A; margin: 0;">Payment details</h3>
                             <div style="text-align: right;">
                                 <div style="font-size: 2.5em; font-weight: 700; color: #0EA5E9; line-height: 1;">£49
                                 </div>
@@ -1691,8 +1691,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span>Full refund if we don't find a suitable
-                                car for you</span>
+                            <span><strong>Full refund </strong>if we don't find you a suitable car.</span>
                         </div>
 
                         <!-- Payment Form Placeholder -->
@@ -1734,12 +1733,7 @@
 
                     </div>
 
-                    <!-- Navigation -->
-                    <div class="form-navigation" style="margin-top: 30px;">
-                        <button type="button" class="back-button" onclick="goToPreviousStep()">Back</button>
-                        <div></div> <!-- Empty div for spacing -->
-                    </div>
-                </div>
+
 
             </form>
 
@@ -2857,7 +2851,8 @@
             submitBtn.disabled = false;
             return true;
         }
-        // Payment terms checkbox handler
+
+        // Step 11: Payment
         function initializeStep11() {
             const termsCheckbox = document.getElementById('paymentTerms');
             const submitButton = document.getElementById('submitPayment');
@@ -2872,6 +2867,19 @@
                         submitButton.style.opacity = '0.5';
                         submitButton.style.cursor = 'not-allowed';
                     }
+                });
+
+                // Submit button handler (will be enhanced with payment provider later)
+                submitButton.addEventListener('click', function () {
+                    if (!termsCheckbox.checked) {
+                        alert('Please agree to the terms and conditions');
+                        return;
+                    }
+
+                    // TODO: Integrate payment provider here
+                    // For now, just show a placeholder message
+                    alert('Payment integration coming next! Form data is ready to submit.');
+                    console.log('Form data ready for submission:', formData);
                 });
             }
         }
