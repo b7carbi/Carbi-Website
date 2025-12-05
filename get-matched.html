@@ -1322,7 +1322,7 @@
                 </div>
 
                 <div class="intro-offer-badge" role="status" aria-live="polite">
-                    Â£49 intro offer
+                    £49 intro offer
                 </div>
             </div>
         </div>
@@ -1423,9 +1423,9 @@
                                         <div class="comparison-section">
                                             <h5>Typical Cars</h5>
                                             <div class="example-cars">
-                                                <span>â€¢ Fiat 500</span>
-                                                <span>â€¢ Toyota Aygo</span>
-                                                <span>â€¢ Volkswagen UP!</span>
+                                                <span>• Fiat 500</span>
+                                                <span>• Toyota Aygo</span>
+                                                <span>• Volkswagen UP!</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1455,9 +1455,9 @@
                                         <div class="comparison-section">
                                             <h5>Typical Cars</h5>
                                             <div class="example-cars">
-                                                <span>â€¢ VW Golf (1.0)</span>
-                                                <span>â€¢ Ford Focus (1.0)</span>
-                                                <span>â€¢ Skoda Octavia (1.6)</span>
+                                                <span>• VW Golf (1.0)</span>
+                                                <span>• Ford Focus (1.0)</span>
+                                                <span>• Skoda Octavia (1.6)</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1479,8 +1479,7 @@
                 <div class="step" id="step3">
                     <h2 class="step-heading">What's your budget?</h2>
                     <p class="step-subtitle">Set your price range.</p>
-                    <div class="budget-display" id="budgetDisplay" aria-live="polite" aria-atomic="true">Â£6,000 -
-                        Â£8,000
+                    <div class="budget-display" id="budgetDisplay" aria-live="polite" aria-atomic="true">£6,000 - £8,000
                     </div>
 
                     <!-- Dual Handle Range Slider -->
@@ -1489,21 +1488,21 @@
                         <div class="range-slider-range" id="rangeHighlight"></div>
                         <input type="range" id="budgetMinSlider" class="range-slider" min="1000" max="20000"
                             value="6000" step="100" aria-label="Minimum budget slider" aria-valuemin="1000"
-                            aria-valuemax="20000" aria-valuenow="6000" aria-valuetext="Â£6,000">
+                            aria-valuemax="20000" aria-valuenow="6000" aria-valuetext="£6,000">
                         <input type="range" id="budgetMaxSlider" class="range-slider" min="1000" max="20000"
                             value="8000" step="100" aria-label="Maximum budget slider" aria-valuemin="1000"
-                            aria-valuemax="20000" aria-valuenow="8000" aria-valuetext="Â£8,000">
+                            aria-valuemax="20000" aria-valuenow="8000" aria-valuetext="£8,000">
                     </div>
 
                     <div class="budget-inputs">
                         <div class="input-group">
                             <label class="input-label" for="budgetMin">Minimum</label>
-                            <input type="tel" id="budgetMin" class="budget-input" value="Â£6,000"
+                            <input type="tel" id="budgetMin" class="budget-input" value="£6,000"
                                 aria-describedby="budgetDisplay">
                         </div>
                         <div class="input-group">
                             <label class="input-label" for="budgetMax">Maximum</label>
-                            <input type="tel" id="budgetMax" class="budget-input" value="Â£8,000"
+                            <input type="tel" id="budgetMax" class="budget-input" value="£8,000"
                                 aria-describedby="budgetDisplay">
                         </div>
                     </div>
@@ -1707,7 +1706,7 @@
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #E2E8F0; flex-wrap: wrap; gap: 15px;">
                             <h3 style="font-size: 1.5em; color: #0F172A; margin: 0;">Payment details</h3>
                             <div style="text-align: right;">
-                                <div style="font-size: 2.5em; font-weight: 700; color: #0EA5E9; line-height: 1;">Â£49
+                                <div style="font-size: 2.5em; font-weight: 700; color: #0EA5E9; line-height: 1;">£49
                                 </div>
                                 <div style="font-size: 0.85em; color: #64748B; margin-top: 4px;">One-time fee</div>
                             </div>
@@ -1747,7 +1746,7 @@
 
                         <!-- Submit Button -->
                         <button type="button" id="submitPayment" class="primary-button" disabled style="width: 100%;">
-                            <span id="paymentButtonText">Pay Â£49 & find my car</span>
+                            <span id="paymentButtonText">Pay £49 & find my car</span>
                             <span id="paymentButtonSpinner" style="display: none;">Processing...</span>
                         </button>
 
@@ -2028,8 +2027,8 @@
         function formatCurrency(value) {
             // Remove non-digits
             const num = parseInt(value.toString().replace(/[^\d]/g, ''));
-            if (isNaN(num)) return 'Â£0';
-            return 'Â£' + formatNumber(num);
+            if (isNaN(num)) return '£0';
+            return '£' + formatNumber(num);
         }
 
         // Helper: Parse currency to number
