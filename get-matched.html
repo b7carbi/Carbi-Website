@@ -2884,6 +2884,9 @@
         let paymentIntentId = null;
         let paymentInitialized = false;
 
+
+        let step11Initialized = false; // Track if event listeners are already attached
+
         async function initializeStep11() {
             // Only initialize Stripe once
             if (!stripe) {
@@ -2897,8 +2900,11 @@
             // Don't create Payment Intent yet - wait until step is actually shown
             // This will be called by createPaymentIntent() when user navigates to Step 11
 
-            // Terms checkbox handler
-            if (termsCheckbox && submitButton) {
+            // Only attach event listeners once
+            if (termsCheckbox && submitButton && !step11Initialized) {
+                step11Initialized = true;
+
+                // Terms checkbox handler
                 termsCheckbox.addEventListener('change', function () {
                     submitButton.disabled = !this.checked;
                     if (this.checked) {
@@ -2934,14 +2940,20 @@
                         });
 
                         if (error) {
-                            // Payment failed
-                            paymentError.textContent = error.message;
-                            paymentError.style.display = 'block';
+                            // Check if payment actually succeeded despite the error
+                            if (error.payment_intent && error.payment_intent.status === 'succeeded') {
+                                // Payment already succeeded! Submit the form
+                                await submitFormWithPayment(error.payment_intent.id);
+                            } else {
+                                // Genuine payment failure
+                                paymentError.textContent = error.message;
+                                paymentError.style.display = 'block';
 
-                            // Re-enable button
-                            submitButton.disabled = false;
-                            document.getElementById('paymentButtonText').style.display = 'inline';
-                            document.getElementById('paymentButtonSpinner').style.display = 'none';
+                                // Re-enable button
+                                submitButton.disabled = false;
+                                document.getElementById('paymentButtonText').style.display = 'inline';
+                                document.getElementById('paymentButtonSpinner').style.display = 'none';
+                            }
                         } else if (paymentIntent && paymentIntent.status === 'succeeded') {
                             // Payment succeeded! Now submit the form
                             await submitFormWithPayment(paymentIntent.id);
