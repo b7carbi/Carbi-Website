@@ -1601,7 +1601,7 @@
 
                     <button type="button" class="location-button" id="useLocationBtn"
                         aria-label="Use my current location to set postcode">
-                        <span aria-hidden="true">ðŸ“</span> Use my current location
+                        <span aria-hidden="true">📍</span> Use my current location
                     </button>
 
                     <label for="postcode" class="visually-hidden">Postcode or town</label>
@@ -1753,7 +1753,7 @@
                         <!-- Trust Badges -->
                         <div
                             style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #E2E8F0; flex-wrap: wrap;">
-                            <span style="color: #64748B; font-size: 0.9em;">ðŸ”’ 256-bit SSL encrypted</span>
+                            <span style="color: #64748B; font-size: 0.9em;">🔒 256-bit SSL encrypted</span>
                             <span style="color: #64748B; font-size: 0.9em;">Powered by Stripe</span>
                         </div>
 
@@ -2731,7 +2731,7 @@
                         console.error('Geolocation error:', error);
                         alert('Enable location in your browser or type it in manually.');
                         useLocationBtn.disabled = false;
-                        useLocationBtn.innerHTML = '<span>ðŸ“</span> Use my current location';
+                        useLocationBtn.innerHTML = '<span>📍</span> Use my current location';
                     }
                 );
             });
