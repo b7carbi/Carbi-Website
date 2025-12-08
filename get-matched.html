@@ -1457,7 +1457,7 @@
                                             <div class="example-cars">
                                                 <span>VW Golf (1.0)</span>
                                                 <span>Ford Focus (1.0)</span>
-                                                <span>• Skoda Octavia (1.6)</span>
+                                                <span>Skoda Octavia (1.6)</span>
                                             </div>
                                         </div>
                                     </div>
@@ -3204,6 +3204,7 @@
         document.getElementById('matchForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            const submitBtn = document.getElementById('submitBtn');
             const errorMsg = document.getElementById('error10');
 
             // Check contact preferences before submission
@@ -3233,7 +3234,6 @@
                 return;
             }
 
-            const submitBtn = document.getElementById('submitBtn');
             submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
 
