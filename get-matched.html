@@ -1664,11 +1664,11 @@
                     <!-- Part 2: Name fields (always shown) -->
                     <label for="firstName" class="input-label">First name <span style="color: #ef4444;">*</span></label>
                     <input type="text" id="firstName" name="given-name" class="text-input" placeholder="First name"
-                        autocomplete="given-name" required aria-required="true" aria-describedby="error10">
+                        autocomplete="given-name" aria-required="true" aria-describedby="error10">
 
                     <label for="lastName" class="input-label">Last name <span style="color: #ef4444;">*</span></label>
                     <input type="text" id="lastName" name="family-name" class="text-input" placeholder="Last name"
-                        autocomplete="family-name" required aria-required="true" aria-describedby="error10">
+                        autocomplete="family-name" aria-required="true" aria-describedby="error10">
 
                     <!-- Part 3: Email field (conditional - shown only if Email selected) -->
                     <div id="emailContainer" style="display: none;">
@@ -2655,7 +2655,7 @@
                 }
 
                 useLocationBtn.disabled = true;
-                useLocationBtn.innerHTML = '<span>â³</span> Getting location...';
+                useLocationBtn.innerHTML = '<span>⏳</span> Getting location...';
 
                 navigator.geolocation.getCurrentPosition(
                     async (position) => {
