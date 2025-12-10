@@ -1,0 +1,10 @@
+{
+  "name": "carbi-website",
+  "version": "1.0.0",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "jsonwebtoken": "^9.0.2",
+    "resend": "^6.1.2",
+    "stripe": "^20.0.0"
+  }
+}
