@@ -21,13 +21,13 @@ import Step11Payment from './steps/Step11Payment';
 
 // Helper to render the "Next" button for a specific step section
 // Always renders to prevent layout shift when step changes
-const RenderNextButton = ({ onClick, disabled = false, isLast = false, isCurrentStep = true }: { onClick: () => void, disabled?: boolean, isLast?: boolean, isCurrentStep?: boolean }) => (
+const RenderNextButton = ({ onClick, disabled = false, isLast = false }: { onClick: () => void, disabled?: boolean, isLast?: boolean }) => (
     <div className="mt-6 pt-4 border-t border-slate-100 flex justify-center w-full">
         {!isLast && (
             <button
                 onClick={onClick}
-                disabled={disabled || !isCurrentStep}
-                className={`w-full py-3 md:py-4 bg-primary text-white rounded-xl font-semibold hover:bg-primary-dark hover:shadow-[0_4px_15px_rgba(14,165,233,0.3)] hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-lg ${!isCurrentStep ? 'opacity-0 pointer-events-none' : ''}`}
+                disabled={disabled}
+                className="w-full py-3 md:py-4 bg-primary text-white rounded-xl font-semibold hover:bg-primary-dark hover:shadow-[0_4px_15px_rgba(14,165,233,0.3)] hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-lg"
             >
                 Next
             </button>
@@ -43,21 +43,29 @@ const StepWrapper = ({ children, stepNum, 'data-testid': testId }: { children: R
 );
 
 export default function GetMatchedForm() {
-    // 'step' tracks how many steps constitute the "unlocked" flow
-    const [step, setStep] = useState(1);
+    // 'activeStep' tracks the current step the user is interacting with (editing input or viewing)
+    const [activeStep, setActiveStep] = useState(1);
+    // 'maxStep' tracks the furthest step validly reached (controls visibility of future sections)
+    const [maxStep, setMaxStep] = useState(1);
+
     const [formData, setFormData] = useState<MatchRequestFormData>(INITIAL_FORM_DATA);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const scrollPositionRef = useRef<number>(0); // Track scroll position before step change
-    // const bottomRef = useRef<HTMLDivElement>(null); // Removed bottom ref
+    const scrollPositionRef = useRef<number>(0);
 
-    const updateFormData = (updates: Partial<MatchRequestFormData>) => {
+    // Helper to create a specific updater for each step
+    // This ensures that when a user interacts with a step, it becomes the "Active" step
+    const createStepUpdater = (stepNum: number) => (updates: Partial<MatchRequestFormData>) => {
         setFormData(prev => ({ ...prev, ...updates }));
+        // If we are editing a previous step, make it active (enabling its Next button)
+        if (activeStep !== stepNum) {
+            setActiveStep(stepNum);
+        }
     };
 
-    const nextStep = () => {
+    const nextStep = (fromStep: number) => {
         // Validation for Step 1
-        if (step === 1) {
+        if (fromStep === 1) {
             if (formData.important_features.length === 0) {
                 setError("Please select at least one feature.");
                 return;
@@ -66,12 +74,12 @@ export default function GetMatchedForm() {
 
         setError(null);
 
-        let next = step + 1;
+        let next = fromStep + 1;
 
         // Skip logic helper
         const shouldSkip = (s: number) => {
             if (s === 2) return formData.important_features.length <= 1; // Dealbreakers
-            if (s === 7) return (!formData.brand_preference || formData.brand_preference === 'dont_mind') && formData.selected_brands.length === 0;    // Favourite (Skip if don't mind or no brands)
+            if (s === 7) return formData.selected_brands.length <= 1;    // Favourite (Skip if 0 or 1 brand selected)
             if (s === 8) return !formData.important_features.includes('Colour');
             if (s === 9) return !formData.important_features.includes('Low mileage');
             if (s === 10) return !formData.important_features.includes('Engine size');
@@ -87,21 +95,24 @@ export default function GetMatchedForm() {
         // Save current scroll position before changing step
         scrollPositionRef.current = window.pageYOffset;
 
-        setStep(next);
+        // Advance active step
+        setActiveStep(next);
+        // Update high-water mark if we progressed further
+        if (next > maxStep) {
+            setMaxStep(next);
+        }
     };
 
-    // Effect to scroll to the NEW step when it appears
-    // Replicating exact behavior from legacy vanilla JS version
+    // Effect to scroll to the active step
     useEffect(() => {
-        if (step > 1) {
+        if (activeStep > 1) {
             // Immediately restore the saved scroll position to prevent browser auto-scroll
             window.scrollTo({ top: scrollPositionRef.current, behavior: 'auto' });
 
             // Longer delay so user can see the section appear below before scroll starts
             setTimeout(() => {
-                const el = document.getElementById(`step-${step}`);
+                const el = document.getElementById(`step-${activeStep}`);
                 if (el) {
-                    // Calculate exact scroll position like the legacy version
                     const headerHeight = 70; // Sticky header height
                     const elementPosition = el.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
@@ -113,7 +124,7 @@ export default function GetMatchedForm() {
                 }
             }, 150);
         }
-    }, [step]);
+    }, [activeStep]);
 
     const handlePaymentSuccess = async (paymentId: string) => {
         // Final submission
@@ -127,162 +138,164 @@ export default function GetMatchedForm() {
             if (error) throw error;
 
             alert("Success! We'll be in touch.");
-            // Redirect or show success state
         } catch (e: any) {
             setError(e.message);
-            setIsSubmitting(false); // Only stop submitting on error
+            setIsSubmitting(false);
         }
     };
-
-
 
     return (
         <div className="max-w-3xl mx-auto space-y-6 pb-20">
             {/* Step 1 */}
             <StepWrapper stepNum={1}>
-                <Step1Features formData={formData} updateFormData={updateFormData} />
-                <RenderNextButton onClick={nextStep} disabled={formData.important_features.length === 0} isCurrentStep={step === 1} />
+                <Step1Features formData={formData} updateFormData={createStepUpdater(1)} />
+                <RenderNextButton
+                    onClick={() => nextStep(1)}
+                    disabled={activeStep !== 1 || formData.important_features.length === 0}
+                />
             </StepWrapper>
 
-            {/* Step 2: Dealbreakers - Only show if > 1 feature selected */}
-            {step >= 2 && formData.important_features.length > 1 && (
+            {/* Step 2: Dealbreakers */}
+            {maxStep >= 2 && formData.important_features.length > 1 && (
                 <StepWrapper stepNum={2}>
-                    <Step2Dealbreakers formData={formData} updateFormData={updateFormData} />
-                    <RenderNextButton onClick={nextStep} isCurrentStep={step === 2} />
+                    <Step2Dealbreakers formData={formData} updateFormData={createStepUpdater(2)} />
+                    <RenderNextButton onClick={() => nextStep(2)} disabled={activeStep !== 2} />
                 </StepWrapper>
             )}
 
             {/* Step 3 (2a) */}
-            {step >= 3 && (
+            {maxStep >= 3 && (
                 <StepWrapper stepNum={3}>
-                    <Step2aTransmission formData={formData} updateFormData={updateFormData} />
-                    <RenderNextButton onClick={nextStep} disabled={!formData.transmission_type} isCurrentStep={step === 3} />
+                    <Step2aTransmission formData={formData} updateFormData={createStepUpdater(3)} />
+                    <RenderNextButton
+                        onClick={() => nextStep(3)}
+                        disabled={activeStep !== 3 || !formData.transmission_type}
+                    />
                 </StepWrapper>
             )}
 
             {/* Step 4 (2b) */}
-            {step >= 4 && (
+            {maxStep >= 4 && (
                 <StepWrapper stepNum={4}>
-                    <Step2bDriver formData={formData} updateFormData={updateFormData} />
-                    <RenderNextButton onClick={nextStep} disabled={!formData.main_driver_type} isCurrentStep={step === 4} />
+                    <Step2bDriver formData={formData} updateFormData={createStepUpdater(4)} />
+                    <RenderNextButton
+                        onClick={() => nextStep(4)}
+                        disabled={activeStep !== 4 || !formData.main_driver_type}
+                    />
                 </StepWrapper>
             )}
 
             {/* Step 5 (3 Budget) */}
-            {step >= 5 && (
+            {maxStep >= 5 && (
                 <StepWrapper stepNum={5}>
-                    <Step3Budget formData={formData} updateFormData={updateFormData} />
-                    <RenderNextButton onClick={nextStep} isCurrentStep={step === 5} />
+                    <Step3Budget formData={formData} updateFormData={createStepUpdater(5)} />
+                    <RenderNextButton onClick={() => nextStep(5)} disabled={activeStep !== 5} />
                 </StepWrapper>
             )}
 
             {/* Step 6 (4 Brands) */}
-            {step >= 6 && (
+            {maxStep >= 6 && (
                 <StepWrapper stepNum={6}>
-                    <Step4Brands formData={formData} updateFormData={updateFormData} />
+                    <Step4Brands formData={formData} updateFormData={createStepUpdater(6)} />
                     <RenderNextButton
-                        onClick={nextStep}
-                        disabled={formData.brand_preference === 'specific' && formData.selected_brands.length === 0}
-                        isCurrentStep={step === 6}
+                        onClick={() => nextStep(6)}
+                        disabled={activeStep !== 6 || (formData.brand_preference === 'specific' && formData.selected_brands.length === 0)}
                     />
                 </StepWrapper>
             )}
 
             {/* Step 7 (5 Favourite - Conditional) */}
-            {step >= 7 && formData.selected_brands.length > 1 && (
+            {maxStep >= 7 && formData.selected_brands.length > 1 && (
                 <StepWrapper stepNum={7}>
-                    <Step5Favourite formData={formData} updateFormData={updateFormData} />
+                    <Step5Favourite formData={formData} updateFormData={createStepUpdater(7)} />
                     <RenderNextButton
-                        onClick={nextStep}
-                        disabled={!formData.favourite_brand}
-                        isCurrentStep={step === 7}
+                        onClick={() => nextStep(7)}
+                        disabled={activeStep !== 7 || !formData.favourite_brand}
                     />
                 </StepWrapper>
             )}
 
             {/* Step 8 (6 Colour) */}
-            {step >= 8 && formData.important_features.includes('Colour') && (
+            {maxStep >= 8 && formData.important_features.includes('Colour') && (
                 <StepWrapper stepNum={8} data-testid="step-colour">
-                    <Step6Colour formData={formData} updateFormData={updateFormData} />
+                    <Step6Colour formData={formData} updateFormData={createStepUpdater(8)} />
                     <RenderNextButton
-                        onClick={nextStep}
+                        onClick={() => nextStep(8)}
                         disabled={
+                            activeStep !== 8 ||
                             formData.preferred_colours.length === 0 ||
                             (formData.preferred_colours.includes('Other') && !formData.custom_colour)
                         }
-                        isCurrentStep={step === 8}
                     />
                 </StepWrapper>
             )}
 
             {/* Step 9 (7 Mileage) */}
-            {step >= 9 && formData.important_features.includes('Low mileage') && (
+            {maxStep >= 9 && formData.important_features.includes('Low mileage') && (
                 <StepWrapper stepNum={9} data-testid="step-mileage">
-                    <Step7Mileage formData={formData} updateFormData={updateFormData} />
-                    <RenderNextButton onClick={nextStep} isCurrentStep={step === 9} />
+                    <Step7Mileage formData={formData} updateFormData={createStepUpdater(9)} />
+                    <RenderNextButton onClick={() => nextStep(9)} disabled={activeStep !== 9} />
                 </StepWrapper>
             )}
 
             {/* Step 10 (7b Engine) */}
-            {step >= 10 && formData.important_features.includes('Engine size') && (
+            {maxStep >= 10 && formData.important_features.includes('Engine size') && (
                 <StepWrapper stepNum={10} data-testid="step-engine">
-                    <Step7bEngine formData={formData} updateFormData={updateFormData} />
-                    <RenderNextButton onClick={nextStep} isCurrentStep={step === 10} />
+                    <Step7bEngine formData={formData} updateFormData={createStepUpdater(10)} />
+                    <RenderNextButton onClick={() => nextStep(10)} disabled={activeStep !== 10} />
                 </StepWrapper>
             )}
 
             {/* Step 11 (7c Doors) */}
-            {step >= 11 && formData.important_features.includes('Number of doors') && (
+            {maxStep >= 11 && formData.important_features.includes('Number of doors') && (
                 <StepWrapper stepNum={11} data-testid="step-doors">
-                    <Step7cDoors formData={formData} updateFormData={updateFormData} />
+                    <Step7cDoors formData={formData} updateFormData={createStepUpdater(11)} />
                     <RenderNextButton
-                        onClick={nextStep}
-                        disabled={formData.number_of_doors.length === 0}
-                        isCurrentStep={step === 11}
+                        onClick={() => nextStep(11)}
+                        disabled={activeStep !== 11 || formData.number_of_doors.length === 0}
                     />
                 </StepWrapper>
             )}
 
             {/* Step 12 (8 Location) */}
-            {step >= 12 && (
+            {maxStep >= 12 && (
                 <StepWrapper stepNum={12}>
-                    <Step8Location formData={formData} updateFormData={updateFormData} />
+                    <Step8Location formData={formData} updateFormData={createStepUpdater(12)} />
                     <RenderNextButton
-                        onClick={nextStep}
-                        disabled={!formData.postcode || formData.postcode.length < 3}
-                        isCurrentStep={step === 12}
+                        onClick={() => nextStep(12)}
+                        disabled={activeStep !== 12 || !formData.postcode || formData.postcode.length < 3}
                     />
                 </StepWrapper>
             )}
 
             {/* Step 13 (9 Notes) */}
-            {step >= 13 && (
+            {maxStep >= 13 && (
                 <StepWrapper stepNum={13}>
-                    <Step9Notes formData={formData} updateFormData={updateFormData} />
-                    <RenderNextButton onClick={nextStep} isCurrentStep={step === 13} />
+                    <Step9Notes formData={formData} updateFormData={createStepUpdater(13)} />
+                    <RenderNextButton onClick={() => nextStep(13)} disabled={activeStep !== 13} />
                 </StepWrapper>
             )}
 
             {/* Step 14 (10 Contact) */}
-            {step >= 14 && (
+            {maxStep >= 14 && (
                 <StepWrapper stepNum={14}>
-                    <Step10Contact formData={formData} updateFormData={updateFormData} />
+                    <Step10Contact formData={formData} updateFormData={createStepUpdater(14)} />
                     <RenderNextButton
-                        onClick={nextStep}
+                        onClick={() => nextStep(14)}
                         disabled={
+                            activeStep !== 14 ||
                             !formData.first_name ||
                             !formData.last_name ||
                             formData.contact_preferences.length === 0 ||
                             (formData.contact_preferences.includes('Email') && !formData.email) ||
                             ((formData.contact_preferences.includes('Text') || formData.contact_preferences.includes('Phone Call')) && !formData.phone)
                         }
-                        isCurrentStep={step === 14}
                     />
                 </StepWrapper>
             )}
 
             {/* Step 15 (11 Payment / Confirmation) */}
-            {step >= 15 && (
+            {maxStep >= 15 && (
                 <StepWrapper stepNum={15}>
                     <Step11Payment formData={formData} onPaymentSuccess={handlePaymentSuccess} />
                     {/* Payment step has its own submit button */}
@@ -301,7 +314,8 @@ export default function GetMatchedForm() {
                     onClick={() => {
                         if (confirm('Are you sure you want to clear all data?')) {
                             setFormData(INITIAL_FORM_DATA);
-                            setStep(1);
+                            setActiveStep(1);
+                            setMaxStep(1);
                             setError(null);
                         }
                     }}

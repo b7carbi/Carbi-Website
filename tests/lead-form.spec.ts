@@ -31,13 +31,17 @@ test.describe('Get Matched Form Conditional Logic', () => {
         const step3 = page.locator('#step-3'); // Step 3 logic mapped to stepNum=3 in GetMatchedForm (Step2aTransmission)
         await expect(step3).toBeVisible();
         await step3.getByRole('button', { name: 'Automatic' }).click();
-        await step3.getByRole('button', { name: 'Next' }).click();
+        const next3 = step3.getByRole('button', { name: 'Next' });
+        await expect(next3).toBeEnabled();
+        await next3.click();
 
         // --- Step 4: Driver Type ---
         const step4 = page.locator('#step-4'); // Step2bDriver
         await expect(step4).toBeVisible();
         await step4.getByRole('button', { name: 'The young driver' }).click();
-        await step4.getByRole('button', { name: 'Next' }).click();
+        const next4 = step4.getByRole('button', { name: 'Next' });
+        await expect(next4).toBeEnabled();
+        await next4.click();
 
         // --- Step 5: Budget ---
         const step5 = page.locator('#step-5'); // Step3Budget
@@ -114,5 +118,74 @@ test.describe('Get Matched Form Conditional Logic', () => {
         await step14.getByRole('button', { name: 'Email' }).click();
 
         await expect(step14.getByRole('button', { name: 'Next' })).not.toBeDisabled();
+    });
+
+    test('should correctly handle changing mind at Brand step & verify automatic skipping validation', async ({ page }) => {
+        // --- Step 1: Features ---
+        const step1 = page.locator('#step-1');
+        await step1.getByTestId('feature-option-colour').click();
+        await step1.getByTestId('feature-option-low-mileage').click(); // Select >1 feature to ensure Step 2 shows
+        await step1.getByRole('button', { name: 'Next' }).click();
+
+        // --- Step 2: Dealbreakers ---
+        await page.locator('#step-2').getByRole('button', { name: 'Next' }).click();
+
+        // --- Step 3: Transmission ---
+        const step3 = page.locator('#step-3');
+        await step3.getByRole('button', { name: 'Manual' }).click();
+        await step3.getByRole('button', { name: 'Next' }).click();
+
+        // --- Step 4: Driver Type ---
+        const step4 = page.locator('#step-4');
+        await step4.getByRole('button', { name: 'The young driver' }).click();
+        await step4.getByRole('button', { name: 'Next' }).click();
+
+        // --- Step 5: Budget ---
+        await page.locator('#step-5').getByRole('button', { name: 'Next' }).click();
+
+        // --- Step 6: Brands ---
+        const step6 = page.locator('#step-6');
+        const nextBtn = step6.getByRole('button', { name: 'Next' });
+
+        // 1. Click "Don't mind" (Triggers Skip Logic: Brands=0)
+        await step6.getByRole('button', { name: /don['’]t mind/i }).first().click();
+        await expect(nextBtn).toBeEnabled();
+
+        // 2. Change mind: Select a SINGLE specific brand (e.g. Audi)
+        // This sets Brands=1.
+        // BUG REGRESSION CHECK: Previously logic skipped if Brands=0 but NOT if Brands=1, while Render hid if Brands<=1.
+        // Result was invisible step.
+        // Correct logic: Skip if Brands<=1.
+        await step6.getByRole('button', { name: 'Audi' }).click();
+        await expect(nextBtn).toBeEnabled();
+        await nextBtn.click();
+
+        // --- Verify Step 7 (Favourite) is SKIPPED ---
+        // Logic: You can't have a "Favourite" if you only picked one brand.
+        const step8 = page.getByTestId('step-colour');
+        await expect(step8).toBeVisible();
+
+        // --- Go Back and Select MULTIPLE Brands ---
+        // Scroll/click back to Step 6 is implied by just clicking the element again in long form
+        await step6.getByRole('button', { name: 'BMW' }).click();
+        // Wait for state update to reflect selection
+        await expect(step6.getByRole('button', { name: 'BMW' })).toHaveClass(/bg-sky-50/);
+
+        // Now Brands=2 (Audi + BMW)
+        // Step 7 SHOULD appear now? 
+        // Logic: "Next" takes us forwards. We are technically on Step 8.
+        // If we click "Next" on Step 6 again, it should re-evaluate and take us to Step 7.
+        await nextBtn.click();
+
+        // --- Step 7: Favourite Brand ---
+        // Check if we are on Step 7
+        const step7 = page.locator('#step-7');
+        await expect(step7).toBeVisible();
+        await expect(step7.getByText('Do you have a favourite?')).toBeVisible();
+
+        // Ensure Step 8 is VISIBLE (due to maxStep persistence) but DISABLED (we are on Step 7)
+        const step8Again = page.getByTestId('step-colour');
+        await expect(step8Again).toBeVisible();
+        await expect(step8Again.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 });
