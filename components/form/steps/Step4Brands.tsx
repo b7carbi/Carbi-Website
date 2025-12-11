@@ -81,7 +81,7 @@ export default function Step4Brands({ formData, updateFormData }: Step4Props) {
                 {Object.entries(brands).map(([category, brandList]) => (
                     <div key={category}>
                         <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 pl-1">{category}</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                             {brandList.map(brand => {
                                 const isSelected = formData.selected_brands.includes(brand);
                                 return (
@@ -90,7 +90,7 @@ export default function Step4Brands({ formData, updateFormData }: Step4Props) {
                                         type="button"
                                         onClick={() => toggleBrand(brand)}
                                         className={`
-                                            relative flex flex-row items-center p-3 rounded-xl border transition-all duration-200
+                                            relative flex flex-row items-center p-4 rounded-xl border transition-all duration-200
                                             ${isSelected
                                                 ? 'bg-sky-50 border-primary shadow-sm'
                                                 : 'bg-white border-slate-200 hover:border-primary'
@@ -105,7 +105,7 @@ export default function Step4Brands({ formData, updateFormData }: Step4Props) {
                                                 loading="lazy"
                                             />
                                         </div>
-                                        <span className={`text-sm md:text-base flex-1 text-center ${isSelected ? 'text-slate-800 font-medium' : 'text-slate-600'}`}>
+                                        <span className={`text-base flex-1 text-center pr-6 ${isSelected ? 'text-slate-800' : 'text-slate-600'}`}>
                                             {brand}
                                         </span>
                                     </button>

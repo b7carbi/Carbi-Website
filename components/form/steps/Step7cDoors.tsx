@@ -29,7 +29,7 @@ export default function Step7cDoors({ formData, updateFormData }: Step7cProps) {
             <h2 className="text-3xl lg:text-4xl font-bold text-slate-800 mb-2">How many doors?</h2>
             <p className="text-lg text-slate-500 mb-8">Select all you'd be happy with.</p>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {options.map(option => {
                     const val = option.replace(' doors', '');
                     return (

@@ -7,7 +7,7 @@ export default function GetMatchedPage() {
         <div className="min-h-screen flex flex-col font-sans text-text-primary bg-background-alt">
             <Header />
 
-            <main className="flex-grow py-10 md:py-20">
+            <main className="flex-grow py-5 md:py-10">
                 <div className="container mx-auto px-5">
                     <GetMatchedForm />
                 </div>

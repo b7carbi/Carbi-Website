@@ -21,13 +21,13 @@ export default function Step10Contact({ formData, updateFormData }: Step10Props)
 
     return (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-800 mb-2">How can we reach you?</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-2">How can we reach you?</h2>
             <p className="text-lg text-slate-500 mb-8">We'll be in touch within 24 hours.</p>
 
             {/* Contact Preferences */}
             <div className="mb-8">
-                <label className="block text-sm font-semibold text-slate-700 mb-4">How would you like to be contacted? <span className="text-red-500">*</span></label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <label className="block text-base font-bold text-slate-700 mb-4">How would you like to be contacted? <span className="text-red-500">*</span></label>
+                <div className="space-y-3">
                     {preferences.map(method => {
                         const isSelected = formData.contact_preferences.includes(method);
                         return (
@@ -36,15 +36,28 @@ export default function Step10Contact({ formData, updateFormData }: Step10Props)
                                 type="button"
                                 onClick={() => togglePreference(method)}
                                 className={`
-                                    flex flex-col items-center justify-center py-4 px-2 rounded-xl border-2 transition-all duration-200
+                                    w-full flex items-center py-3 px-4 rounded-xl border-2 transition-all duration-200 group text-left
                                     ${isSelected
-                                        ? 'bg-sky-50 border-primary shadow-sm text-primary'
-                                        : 'bg-white border-slate-200 hover:border-primary text-slate-600'
+                                        ? 'bg-white border-[#0EA5E9]'
+                                        : 'bg-white border-slate-200 hover:border-slate-300'
                                     }
                                 `}
                             >
-                                <span className={`font-semibold ${isSelected ? 'text-slate-900' : 'text-slate-600'}`}>
-                                    {method}
+                                <div className={`
+                                    w-6 h-6 rounded flex items-center justify-center mr-3 transition-colors border
+                                    ${isSelected
+                                        ? 'bg-[#0EA5E9] border-[#0EA5E9]'
+                                        : 'bg-white border-slate-300 group-hover:border-slate-400'
+                                    }
+                                `}>
+                                    {isSelected && (
+                                        <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    )}
+                                </div>
+                                <span className={`text-base ${isSelected ? 'text-slate-900' : 'text-slate-600'}`}>
+                                    {method === 'Phone Call' ? 'Phone call' : method}
                                 </span>
                             </button>
                         );
@@ -53,9 +66,9 @@ export default function Step10Contact({ formData, updateFormData }: Step10Props)
             </div>
 
             {/* Name Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="space-y-6">
                 <div>
-                    <label className="block text-sm font-semibold text-slate-500 mb-2">
+                    <label className="block text-base font-bold text-slate-500 mb-2">
                         First name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -63,12 +76,12 @@ export default function Step10Contact({ formData, updateFormData }: Step10Props)
                         value={formData.first_name}
                         onChange={(e) => updateFormData({ first_name: e.target.value })}
                         placeholder="First name"
-                        className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl font-medium text-slate-700 focus:border-primary focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl font-medium text-slate-700 focus:border-[#0EA5E9] focus:outline-none transition-colors placeholder:text-slate-400"
                         autoComplete="given-name"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-semibold text-slate-500 mb-2">
+                    <label className="block text-base font-bold text-slate-500 mb-2">
                         Last name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -76,16 +89,12 @@ export default function Step10Contact({ formData, updateFormData }: Step10Props)
                         value={formData.last_name}
                         onChange={(e) => updateFormData({ last_name: e.target.value })}
                         placeholder="Last name"
-                        className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl font-medium text-slate-700 focus:border-primary focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl font-medium text-slate-700 focus:border-[#0EA5E9] focus:outline-none transition-colors placeholder:text-slate-400"
                         autoComplete="family-name"
                     />
                 </div>
-            </div>
-
-            {/* Conditional Email */}
-            {showEmail && (
-                <div className="mb-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                    <label className="block text-sm font-semibold text-slate-500 mb-2">
+                <div>
+                    <label className="block text-base font-bold text-slate-500 mb-2">
                         Email address <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -93,28 +102,28 @@ export default function Step10Contact({ formData, updateFormData }: Step10Props)
                         value={formData.email}
                         onChange={(e) => updateFormData({ email: e.target.value })}
                         placeholder="your.email@example.com"
-                        className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl font-medium text-slate-700 focus:border-primary focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl font-medium text-slate-700 focus:border-[#0EA5E9] focus:outline-none transition-colors placeholder:text-slate-400"
                         autoComplete="email"
                     />
                 </div>
-            )}
 
-            {/* Conditional Phone */}
-            {showPhone && (
-                <div className="mb-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                    <label className="block text-sm font-semibold text-slate-500 mb-2">
-                        Phone number <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        type="tel"
-                        value={formData.phone || ''}
-                        onChange={(e) => updateFormData({ phone: e.target.value })}
-                        placeholder="07x xxxxxxxx"
-                        className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl font-medium text-slate-700 focus:border-primary focus:outline-none transition-colors"
-                        autoComplete="tel"
-                    />
-                </div>
-            )}
+                {/* Conditional Phone Input - Kept for functionality if Phone/Text is selected */}
+                {showPhone && (
+                    <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                        <label className="block text-base font-bold text-slate-500 mb-2">
+                            Phone number <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                            type="tel"
+                            value={formData.phone || ''}
+                            onChange={(e) => updateFormData({ phone: e.target.value })}
+                            placeholder="07x xxxxxxxx"
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl font-medium text-slate-700 focus:border-[#0EA5E9] focus:outline-none transition-colors placeholder:text-slate-400"
+                            autoComplete="tel"
+                        />
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

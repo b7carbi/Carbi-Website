@@ -9,7 +9,7 @@ interface Step6Props {
 export default function Step6Colour({ formData, updateFormData }: Step6Props) {
     const colours = [
         'Black', 'White', 'Silver', 'Grey', 'Blue', 'Red', 'Green',
-        'Yellow', 'Orange', 'Brown', 'Purple', 'Gold', 'Other'
+        'Gold', 'Orange', 'Brown', 'Purple', 'Yellow', 'Other'
     ];
 
     const toggleColour = (colour: string) => {
@@ -26,7 +26,7 @@ export default function Step6Colour({ formData, updateFormData }: Step6Props) {
             <h2 className="text-3xl lg:text-4xl font-bold text-slate-800 mb-2">What colour car?</h2>
             <p className="text-lg text-slate-500 mb-8">Pick your preferred colours.</p>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
                 {colours.map(colour => {
                     const isSelected = formData.preferred_colours.includes(colour);
                     const dotColor = {
@@ -37,11 +37,11 @@ export default function Step6Colour({ formData, updateFormData }: Step6Props) {
                         'Blue': '#3B82F6',
                         'Red': '#EF4444',
                         'Green': '#22C55E',
-                        'Yellow': '#EAB308',
+                        'Gold': '#D4AF37',
                         'Orange': '#F97316',
                         'Brown': '#A52A2A',
                         'Purple': '#A855F7',
-                        'Gold': '#FFD700',
+                        'Yellow': '#FDE047',
                         'Other': 'linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%)'
                     }[colour] || '#ccc';
 
@@ -51,7 +51,7 @@ export default function Step6Colour({ formData, updateFormData }: Step6Props) {
                             type="button"
                             onClick={() => toggleColour(colour)}
                             className={`
-                                flex items-center gap-3 px-6 py-4 rounded-xl border-2 font-semibold text-lg transition-all duration-200
+                                relative flex items-center px-4 py-4 rounded-xl border-2 text-base transition-all duration-200
                                 ${isSelected
                                     ? 'bg-sky-50 border-primary text-slate-800 shadow-sm'
                                     : 'bg-white border-slate-200 text-slate-600 hover:border-primary hover:text-primary'
@@ -59,10 +59,12 @@ export default function Step6Colour({ formData, updateFormData }: Step6Props) {
                             `}
                         >
                             <span
-                                className="w-6 h-6 rounded-full border border-slate-200 shadow-sm shrink-0"
+                                className="w-6 h-6 rounded-full border border-slate-200 shadow-sm shrink-0 mr-3"
                                 style={{ background: dotColor }}
                             />
-                            {colour}
+                            <span className="flex-1 text-center pr-6">
+                                {colour}
+                            </span>
                         </button>
                     );
                 })}

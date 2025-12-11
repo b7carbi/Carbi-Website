@@ -19,12 +19,36 @@ import Step9Notes from './steps/Step9Notes';
 import Step10Contact from './steps/Step10Contact';
 import Step11Payment from './steps/Step11Payment';
 
+// Helper to render the "Next" button for a specific step section
+// Always renders to prevent layout shift when step changes
+const RenderNextButton = ({ onClick, disabled = false, isLast = false, isCurrentStep = true }: { onClick: () => void, disabled?: boolean, isLast?: boolean, isCurrentStep?: boolean }) => (
+    <div className="mt-6 pt-4 border-t border-slate-100 flex justify-center w-full">
+        {!isLast && (
+            <button
+                onClick={onClick}
+                disabled={disabled || !isCurrentStep}
+                className={`w-full py-3 md:py-4 bg-primary text-white rounded-xl font-semibold hover:bg-primary-dark hover:shadow-[0_4px_15px_rgba(14,165,233,0.3)] hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-lg ${!isCurrentStep ? 'opacity-0 pointer-events-none' : ''}`}
+            >
+                Next
+            </button>
+        )}
+    </div>
+);
+
+// Wrapper for steps to reduce repetition and manage ID/styling
+const StepWrapper = ({ children, stepNum }: { children: React.ReactNode, stepNum: number }) => (
+    <div id={`step-${stepNum}`} className="bg-white p-6 md:p-10 rounded-3xl shadow-xl shadow-slate-200/50 animate-in fade-in duration-500 mb-6 scroll-mt-20">
+        {children}
+    </div>
+);
+
 export default function GetMatchedForm() {
     // 'step' tracks how many steps constitute the "unlocked" flow
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState<MatchRequestFormData>(INITIAL_FORM_DATA);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const scrollPositionRef = useRef<number>(0); // Track scroll position before step change
     // const bottomRef = useRef<HTMLDivElement>(null); // Removed bottom ref
 
     const updateFormData = (updates: Partial<MatchRequestFormData>) => {
@@ -60,24 +84,34 @@ export default function GetMatchedForm() {
             next++;
         }
 
+        // Save current scroll position before changing step
+        scrollPositionRef.current = window.pageYOffset;
+
         setStep(next);
     };
 
     // Effect to scroll to the NEW step when it appears
+    // Replicating exact behavior from legacy vanilla JS version
     useEffect(() => {
         if (step > 1) {
-            // Small timeout to allow render
+            // Immediately restore the saved scroll position to prevent browser auto-scroll
+            window.scrollTo({ top: scrollPositionRef.current, behavior: 'auto' });
+
+            // Longer delay so user can see the section appear below before scroll starts
             setTimeout(() => {
                 const el = document.getElementById(`step-${step}`);
                 if (el) {
-                    const yOffset = -20; // Scroll a bit above to show previous context or just ensure header is visible
-                    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                    window.scrollTo({ top: y, behavior: 'smooth' });
+                    // Calculate exact scroll position like the legacy version
+                    const headerHeight = 70; // Sticky header height
+                    const elementPosition = el.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
 
-                    // Fallback to scrollIntoView if manual calculation is weird, but usually yOffset is better
-                    // el.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
                 }
-            }, 100);
+            }, 150);
         }
     }, [step]);
 
@@ -100,41 +134,21 @@ export default function GetMatchedForm() {
         }
     };
 
-    // Helper to render the "Next" button for a specific step section
-    const RenderNextButton = ({ onClick, disabled = false, isLast = false }: { onClick: () => void, disabled?: boolean, isLast?: boolean }) => (
-        <div className="mt-6 pt-4 border-t border-slate-100 flex justify-center w-full">
-            {!isLast ? (
-                <button
-                    onClick={onClick}
-                    disabled={disabled}
-                    className="w-full py-3 md:py-4 bg-primary text-white rounded-xl font-semibold hover:bg-primary-dark hover:shadow-[0_4px_15px_rgba(14,165,233,0.3)] hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-lg"
-                >
-                    Next
-                </button>
-            ) : null}
-        </div>
-    );
 
-    // Wrapper for steps to reduce repetition and manage ID/styling
-    const StepWrapper = ({ children, stepNum }: { children: React.ReactNode, stepNum: number }) => (
-        <div id={`step-${stepNum}`} className="bg-white p-6 md:p-10 rounded-3xl shadow-xl shadow-slate-200/50 animate-in fade-in slide-in-from-bottom-8 duration-700 mb-6">
-            {children}
-        </div>
-    );
 
     return (
         <div className="max-w-3xl mx-auto space-y-6 pb-20">
             {/* Step 1 */}
             <StepWrapper stepNum={1}>
                 <Step1Features formData={formData} updateFormData={updateFormData} />
-                {step === 1 && <RenderNextButton onClick={nextStep} disabled={formData.important_features.length === 0} />}
+                <RenderNextButton onClick={nextStep} disabled={formData.important_features.length === 0} isCurrentStep={step === 1} />
             </StepWrapper>
 
             {/* Step 2: Dealbreakers - Only show if > 1 feature selected */}
             {step >= 2 && formData.important_features.length > 1 && (
                 <StepWrapper stepNum={2}>
                     <Step2Dealbreakers formData={formData} updateFormData={updateFormData} />
-                    {step === 2 && <RenderNextButton onClick={nextStep} />}
+                    <RenderNextButton onClick={nextStep} isCurrentStep={step === 2} />
                 </StepWrapper>
             )}
 
@@ -142,7 +156,7 @@ export default function GetMatchedForm() {
             {step >= 3 && (
                 <StepWrapper stepNum={3}>
                     <Step2aTransmission formData={formData} updateFormData={updateFormData} />
-                    {step === 3 && <RenderNextButton onClick={nextStep} disabled={!formData.transmission_type} />}
+                    <RenderNextButton onClick={nextStep} disabled={!formData.transmission_type} isCurrentStep={step === 3} />
                 </StepWrapper>
             )}
 
@@ -150,7 +164,7 @@ export default function GetMatchedForm() {
             {step >= 4 && (
                 <StepWrapper stepNum={4}>
                     <Step2bDriver formData={formData} updateFormData={updateFormData} />
-                    {step === 4 && <RenderNextButton onClick={nextStep} disabled={!formData.main_driver_type} />}
+                    <RenderNextButton onClick={nextStep} disabled={!formData.main_driver_type} isCurrentStep={step === 4} />
                 </StepWrapper>
             )}
 
@@ -158,7 +172,7 @@ export default function GetMatchedForm() {
             {step >= 5 && (
                 <StepWrapper stepNum={5}>
                     <Step3Budget formData={formData} updateFormData={updateFormData} />
-                    {step === 5 && <RenderNextButton onClick={nextStep} />}
+                    <RenderNextButton onClick={nextStep} isCurrentStep={step === 5} />
                 </StepWrapper>
             )}
 
@@ -166,10 +180,11 @@ export default function GetMatchedForm() {
             {step >= 6 && (
                 <StepWrapper stepNum={6}>
                     <Step4Brands formData={formData} updateFormData={updateFormData} />
-                    {step === 6 && <RenderNextButton
+                    <RenderNextButton
                         onClick={nextStep}
                         disabled={formData.brand_preference === 'specific' && formData.selected_brands.length === 0}
-                    />}
+                        isCurrentStep={step === 6}
+                    />
                 </StepWrapper>
             )}
 
@@ -177,10 +192,11 @@ export default function GetMatchedForm() {
             {step >= 7 && formData.selected_brands.length > 1 && (
                 <StepWrapper stepNum={7}>
                     <Step5Favourite formData={formData} updateFormData={updateFormData} />
-                    {step === 7 && <RenderNextButton
+                    <RenderNextButton
                         onClick={nextStep}
                         disabled={!formData.favourite_brand}
-                    />}
+                        isCurrentStep={step === 7}
+                    />
                 </StepWrapper>
             )}
 
@@ -188,13 +204,14 @@ export default function GetMatchedForm() {
             {step >= 8 && formData.important_features.includes('Colour') && (
                 <StepWrapper stepNum={8}>
                     <Step6Colour formData={formData} updateFormData={updateFormData} />
-                    {step === 8 && <RenderNextButton
+                    <RenderNextButton
                         onClick={nextStep}
                         disabled={
                             formData.preferred_colours.length === 0 ||
                             (formData.preferred_colours.includes('Other') && !formData.custom_colour)
                         }
-                    />}
+                        isCurrentStep={step === 8}
+                    />
                 </StepWrapper>
             )}
 
@@ -202,7 +219,7 @@ export default function GetMatchedForm() {
             {step >= 9 && formData.important_features.includes('Low mileage') && (
                 <StepWrapper stepNum={9}>
                     <Step7Mileage formData={formData} updateFormData={updateFormData} />
-                    {step === 9 && <RenderNextButton onClick={nextStep} />}
+                    <RenderNextButton onClick={nextStep} isCurrentStep={step === 9} />
                 </StepWrapper>
             )}
 
@@ -210,7 +227,7 @@ export default function GetMatchedForm() {
             {step >= 10 && formData.important_features.includes('Engine size') && (
                 <StepWrapper stepNum={10}>
                     <Step7bEngine formData={formData} updateFormData={updateFormData} />
-                    {step === 10 && <RenderNextButton onClick={nextStep} />}
+                    <RenderNextButton onClick={nextStep} isCurrentStep={step === 10} />
                 </StepWrapper>
             )}
 
@@ -218,10 +235,11 @@ export default function GetMatchedForm() {
             {step >= 11 && formData.important_features.includes('Number of doors') && (
                 <StepWrapper stepNum={11}>
                     <Step7cDoors formData={formData} updateFormData={updateFormData} />
-                    {step === 11 && <RenderNextButton
+                    <RenderNextButton
                         onClick={nextStep}
                         disabled={formData.number_of_doors.length === 0}
-                    />}
+                        isCurrentStep={step === 11}
+                    />
                 </StepWrapper>
             )}
 
@@ -229,10 +247,11 @@ export default function GetMatchedForm() {
             {step >= 12 && (
                 <StepWrapper stepNum={12}>
                     <Step8Location formData={formData} updateFormData={updateFormData} />
-                    {step === 12 && <RenderNextButton
+                    <RenderNextButton
                         onClick={nextStep}
                         disabled={!formData.postcode || formData.postcode.length < 3}
-                    />}
+                        isCurrentStep={step === 12}
+                    />
                 </StepWrapper>
             )}
 
@@ -240,7 +259,7 @@ export default function GetMatchedForm() {
             {step >= 13 && (
                 <StepWrapper stepNum={13}>
                     <Step9Notes formData={formData} updateFormData={updateFormData} />
-                    {step === 13 && <RenderNextButton onClick={nextStep} />}
+                    <RenderNextButton onClick={nextStep} isCurrentStep={step === 13} />
                 </StepWrapper>
             )}
 
@@ -248,7 +267,7 @@ export default function GetMatchedForm() {
             {step >= 14 && (
                 <StepWrapper stepNum={14}>
                     <Step10Contact formData={formData} updateFormData={updateFormData} />
-                    {step === 14 && <RenderNextButton
+                    <RenderNextButton
                         onClick={nextStep}
                         disabled={
                             !formData.first_name ||
@@ -257,7 +276,8 @@ export default function GetMatchedForm() {
                             (formData.contact_preferences.includes('Email') && !formData.email) ||
                             ((formData.contact_preferences.includes('Text') || formData.contact_preferences.includes('Phone Call')) && !formData.phone)
                         }
-                    />}
+                        isCurrentStep={step === 14}
+                    />
                 </StepWrapper>
             )}
 
