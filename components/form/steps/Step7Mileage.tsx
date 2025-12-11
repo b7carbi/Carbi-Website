@@ -32,6 +32,7 @@ export default function Step7Mileage({ formData, updateFormData }: Step7Props) {
                     value={[formData.max_mileage || 50000]}
                     onValueChange={handleSliderChange}
                     formatLabel={formatMileage}
+                    data-testid="mileage-slider"
                 />
             </div>
         </div>

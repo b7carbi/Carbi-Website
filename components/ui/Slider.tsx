@@ -9,9 +9,10 @@ interface SliderProps {
     step?: number;
     onValueChange: (value: number[]) => void;
     formatLabel?: (value: number) => string;
+    'data-testid'?: string;
 }
 
-export default function Slider({ value, min, max, step = 1, onValueChange, formatLabel }: SliderProps) {
+export default function Slider({ value, min, max, step = 1, onValueChange, formatLabel, 'data-testid': testId }: SliderProps) {
     // Optimization: Keep a local state for the slider to ensure smooth dragging
     const [localValue, setLocalValue] = React.useState(value);
 
@@ -56,6 +57,7 @@ export default function Slider({ value, min, max, step = 1, onValueChange, forma
             step={step}
             onValueChange={handleChange}
             onValueCommit={handleCommit}
+            data-testid={testId}
         >
             <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-slate-200">
                 <SliderPrimitive.Range className="absolute h-full bg-[#0EA5E9]" />
@@ -65,6 +67,7 @@ export default function Slider({ value, min, max, step = 1, onValueChange, forma
                     key={i}
                     className="block h-6 w-6 rounded-full bg-[#0EA5E9] shadow-sm hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                     aria-label={formatLabel ? formatLabel(localValue[i]) : "Slider Value"}
+                    data-testid={testId ? `${testId}-thumb-${i}` : undefined}
                 />
             ))}
         </SliderPrimitive.Root>

@@ -38,6 +38,7 @@ export default function Step7bEngine({ formData, updateFormData }: Step7bProps) 
                     value={[min, max]}
                     onValueChange={handleSliderChange}
                     formatLabel={formatEngine}
+                    data-testid="engine-slider"
                 />
             </div>
         </div>

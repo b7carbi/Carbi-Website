@@ -50,6 +50,7 @@ export default function Step6Colour({ formData, updateFormData }: Step6Props) {
                             key={colour}
                             type="button"
                             onClick={() => toggleColour(colour)}
+                            data-testid={`colour-option-${colour.toLowerCase()}`}
                             className={`
                                 relative flex items-center px-4 py-4 rounded-xl border-2 text-base transition-all duration-200
                                 ${isSelected

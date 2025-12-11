@@ -36,8 +36,8 @@ const RenderNextButton = ({ onClick, disabled = false, isLast = false, isCurrent
 );
 
 // Wrapper for steps to reduce repetition and manage ID/styling
-const StepWrapper = ({ children, stepNum }: { children: React.ReactNode, stepNum: number }) => (
-    <div id={`step-${stepNum}`} className="bg-white p-6 md:p-10 rounded-3xl shadow-xl shadow-slate-200/50 animate-in fade-in duration-500 mb-6 scroll-mt-20">
+const StepWrapper = ({ children, stepNum, 'data-testid': testId }: { children: React.ReactNode, stepNum: number, 'data-testid'?: string }) => (
+    <div id={`step-${stepNum}`} data-testid={testId} className="bg-white p-6 md:p-10 rounded-3xl shadow-xl shadow-slate-200/50 animate-in fade-in duration-500 mb-6 scroll-mt-20">
         {children}
     </div>
 );
@@ -202,7 +202,7 @@ export default function GetMatchedForm() {
 
             {/* Step 8 (6 Colour) */}
             {step >= 8 && formData.important_features.includes('Colour') && (
-                <StepWrapper stepNum={8}>
+                <StepWrapper stepNum={8} data-testid="step-colour">
                     <Step6Colour formData={formData} updateFormData={updateFormData} />
                     <RenderNextButton
                         onClick={nextStep}
@@ -217,7 +217,7 @@ export default function GetMatchedForm() {
 
             {/* Step 9 (7 Mileage) */}
             {step >= 9 && formData.important_features.includes('Low mileage') && (
-                <StepWrapper stepNum={9}>
+                <StepWrapper stepNum={9} data-testid="step-mileage">
                     <Step7Mileage formData={formData} updateFormData={updateFormData} />
                     <RenderNextButton onClick={nextStep} isCurrentStep={step === 9} />
                 </StepWrapper>
@@ -225,7 +225,7 @@ export default function GetMatchedForm() {
 
             {/* Step 10 (7b Engine) */}
             {step >= 10 && formData.important_features.includes('Engine size') && (
-                <StepWrapper stepNum={10}>
+                <StepWrapper stepNum={10} data-testid="step-engine">
                     <Step7bEngine formData={formData} updateFormData={updateFormData} />
                     <RenderNextButton onClick={nextStep} isCurrentStep={step === 10} />
                 </StepWrapper>
@@ -233,7 +233,7 @@ export default function GetMatchedForm() {
 
             {/* Step 11 (7c Doors) */}
             {step >= 11 && formData.important_features.includes('Number of doors') && (
-                <StepWrapper stepNum={11}>
+                <StepWrapper stepNum={11} data-testid="step-doors">
                     <Step7cDoors formData={formData} updateFormData={updateFormData} />
                     <RenderNextButton
                         onClick={nextStep}

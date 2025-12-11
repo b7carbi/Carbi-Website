@@ -33,6 +33,7 @@ export default function Step1Features({ formData, updateFormData }: Step1Props) 
                                     label={feature}
                                     selected={formData.important_features.includes(feature)}
                                     onClick={() => toggleFeature(feature)}
+                                    data-testid={`feature-option-${feature.replace(/\s+/g, '-').toLowerCase()}`}
                                 />
                             ))}
                         </div>

@@ -3,12 +3,14 @@ interface OptionButtonProps {
     selected: boolean;
     onClick: () => void;
     icon?: React.ReactNode;
+    'data-testid'?: string;
 }
 
-export default function OptionButton({ label, selected, onClick, icon }: OptionButtonProps) {
+export default function OptionButton({ label, selected, onClick, icon, 'data-testid': testId }: OptionButtonProps) {
     return (
         <button
             type="button"
+            data-testid={testId}
             onClick={onClick}
             aria-pressed={selected}
             className={`
