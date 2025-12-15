@@ -27,7 +27,7 @@ const RenderNextButton = ({ onClick, disabled = false, isLast = false }: { onCli
             <button
                 onClick={onClick}
                 disabled={disabled}
-                className="w-full py-3 md:py-4 bg-primary text-white rounded-xl font-semibold hover:bg-primary-dark hover:shadow-[0_4px_15px_rgba(14,165,233,0.3)] hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-lg"
+                className="w-full py-3 md:py-4 bg-primary text-white rounded-xl font-medium hover:bg-primary-dark hover:shadow-[0_4px_15px_rgba(14,165,233,0.3)] hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-xl"
             >
                 Next
             </button>
@@ -59,6 +59,8 @@ export default function GetMatchedForm() {
         setFormData(prev => ({ ...prev, ...updates }));
         // If we are editing a previous step, make it active (enabling its Next button)
         if (activeStep !== stepNum) {
+            // Update scroll ref to current position to prevent jumping to stale 'nextStep' position
+            scrollPositionRef.current = window.pageYOffset;
             setActiveStep(stepNum);
         }
     };
@@ -126,14 +128,20 @@ export default function GetMatchedForm() {
         }
     }, [activeStep]);
 
-    const handlePaymentSuccess = async (paymentId: string) => {
+    const handlePaymentSuccess = async (paymentId: string, plan: any, amount: number) => {
         // Final submission
         setIsSubmitting(true);
         setError(null);
         try {
             const { error } = await supabase
                 .from('match_requests')
-                .insert([{ ...formData, payment_intent_id: paymentId, status: 'paid' }]);
+                .insert([{
+                    ...formData,
+                    payment_intent_id: paymentId,
+                    payment_status: 'paid',
+                    plan_type: plan,
+                    payment_amount: amount
+                }]);
 
             if (error) throw error;
 

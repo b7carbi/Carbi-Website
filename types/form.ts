@@ -2,6 +2,8 @@ export type MatchRequestStatus = 'new' | 'first_email_sent' | 'car_found' | 'dea
 export type PaymentStatus = 'pending' | 'paid' | 'refunded' | 'failed';
 export type ContactPreference = 'Email' | 'Text' | 'Phone Call';
 
+export type PlanType = 'basic' | 'weekly' | 'instant';
+
 export interface MatchRequestFormData {
     // Step 1: Requirements
     important_features: string[];
@@ -44,6 +46,10 @@ export interface MatchRequestFormData {
     email: string;
     phone?: string;
     contact_preferences: ContactPreference[];
+
+    // Payment
+    plan_type?: PlanType;
+    payment_amount?: number;
 }
 
 export const INITIAL_FORM_DATA: MatchRequestFormData = {
