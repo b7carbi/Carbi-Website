@@ -14,7 +14,7 @@ export default function Step11Payment({ formData, onPaymentSuccess }: Step11Prop
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1500));
 
-        const amoutMap: Record<PlanType, number> = {
+        const amountMap: Record<PlanType, number> = {
             'basic': 0,
             'weekly': 4900,
             'instant': 9900
@@ -25,7 +25,7 @@ export default function Step11Payment({ formData, onPaymentSuccess }: Step11Prop
         onPaymentSuccess(
             'pi_fake_' + plan + '_' + Math.random().toString(36).substring(7),
             plan,
-            amoutMap[plan]
+            amountMap[plan]
         );
     };
 
