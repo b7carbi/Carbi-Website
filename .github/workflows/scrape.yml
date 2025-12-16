@@ -5,7 +5,9 @@ on:
   schedule:
     - cron: '0 8,12,16,20 * * *'
   workflow_dispatch:
-
+push:                   # <--- ADD THIS
+    branches:
+      - 'refactor/nextjs-migration'  # Run on your specific branch
 jobs:
   scrape:
     runs-on: ubuntu-latest
